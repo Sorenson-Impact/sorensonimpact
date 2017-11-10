@@ -1,7 +1,7 @@
 #' Extract duplicate rows
 #' @description Extract all rows with duplicated values in the given columns
 #' @importFrom magrittr "%>%"
-#' @param ... Columns to evaluation for duplication. Works via \code{group_by()}.
+#' @param ... Columns to evaluate for duplication. Works via \code{group_by()}.
 #' @return Filtered dataframe with duplicates in given columns
 #' @examples
 #' mtcars %>% duplicates(mpg)
