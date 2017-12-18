@@ -11,3 +11,10 @@ duplicates <- function(data, ...) {
     filter(n() > 1) %>%
     arrange_(.dots = lazyeval::lazy_dots(...))
 }
+
+
+
+col_sum_na <- function(data) {
+  data %>%
+    summarize_all(funs(sum(is.na(.))))
+}
