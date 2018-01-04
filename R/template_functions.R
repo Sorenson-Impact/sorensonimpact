@@ -1,10 +1,10 @@
-# new_project <- function(repo_url, local_parent = "~/Github") {
-#   #create local folder based on repo name, either in default local_parent or one that is specified
-#
-#   #clone from github
-#   #HOW DO CREDENTIALS WORK
-#
-# }
+#' Install template files for SI to a project directory.
+#' @description Installs SI template files to project directory
+#' @param local_github_dir Where the cloned repo is.
+#' @param overwrite If the files already exist, do you want to overwrite (default = FALSE)_
+#' @examples
+#' install_project_files()
+#' @export
 
 install_project_files <- function(local_github_dir, overwrite = F) {
 
