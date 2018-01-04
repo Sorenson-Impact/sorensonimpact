@@ -5,6 +5,7 @@
 #' @return Filtered dataframe with duplicates in given columns
 #' @examples
 #' mtcars %>% duplicates(mpg)
+#' @export
 duplicates <- function(data, ...) {
   data %>%
     group_by_(.dots = lazyeval::lazy_dots(...)) %>%
@@ -13,7 +14,11 @@ duplicates <- function(data, ...) {
 }
 
 
-
+#' Count the NAs in each column
+#' @description Count all the NAs in each column of a data frame
+#' @importFrom magrittr "%>%"
+#' @return NA count for each
+#' @export
 col_sum_na <- function(data) {
   data %>%
     summarize_all(funs(sum(is.na(.))))

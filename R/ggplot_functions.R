@@ -2,7 +2,8 @@
 #' Save a branded plot
 #' @description Save a \code{ggplot2} plot as png with an optional Sorenson Impact branding bar.
 #' @importFrom magrittr "%>%"
-#' @param filename Filename to create on disk. Defaults to the title of the \code{last_plot} within the \code{plot_directory}.
+#' @param filename Filename to create on disk. If "auto", defaults to the title of the \code{last_plot} within the \code{plot_directory}.
+#' @param dir Directory to save file to.  Defaults to "./Plots".
 #' @param plot Plot to save, defaults to last plot displayed.
 #' @param width Width in inches (default: 6).
 #' @param height Height in inches (default: 4).
@@ -12,25 +13,39 @@
 #' @param band_color The color of the SI Logo band.  Defaults to \code{SI_design$granite}.
 #' @return A png of the last plot with optional SI logo band.
 #' @examples
-#' ggplot(mtcars, aes(mpg, wt)) + geom_point()
+#' SI_colorplot() + ggplot2::ggtitle("My Title")
 #' SI_ggsave(add_logo = TRUE)
-SI_ggsave <- function(filename = paste0(plot_directory, last_plot()$labels$title, "_", ab_report, ".png"),
-                      plot = last_plot(), width = 6, height = 4, dpi = 300,
+#' @export
+SI_ggsave <- function(filename = "auto", dir = "./Plots", plot = ggplot2::last_plot(), width = 6, height = 4, dpi = 300,
                       add_logo = FALSE, logo_height_ratio = .05, band_color = SI_design$granite) {
 
-  # Abbreviated name of the report:
-  # We did this because it's nice to know which report the saved graphs are coming from
-  ab_report <- abbreviate(params$set_title)
-  # We use that and the plot title to create the file name
-  # !Be careful not to use the same plot title more than once!
-  # The following default variable is how the file is saved
-  # filename <- paste0(plot_directory, last_plot()$labels$title, "_", ab_report, ".png")
+  if(is.null(ggplot2::last_plot()$labels$title)) stop("Plot must have a title to use SI_ggsave.") #Prevent sloppiness.
+
+  if(!dir.exists(dir)) {
+    warning(paste("Provided dir", dir, "does not exist. Saving in current working directory."))
+    dir <- "."
+  }
+
+  if(filename == "auto") { #if the default "auto" is left, generate a dynamic file name.
+
+    # We use the plot title and (if coming from an Rmd) the title parameter to create the file name
+    # !Be careful not to use the same plot title more than once!
+    # The following default variable is how the file is saved
+
+    if(exists("params$set_title")) {
+      # Abbreviated name of the report:
+      # We did this because it's nice to know which report the saved graphs are coming from
+      ab_report <- abbreviate(params$set_title)
+      filename <- file.path(dir, ggplot2::last_plot()$labels$title, "_", ab_report, ".png")
+    } else filename <- file.path(dir, paste0(ggplot2::last_plot()$labels$title, ".png"))
+
+  }
 
   # First we save the last plot with sensible defaults
   ggplot2::ggsave(filename, plot, width = width, height = height, dpi = dpi)
 
   # Now bring it back if we are adding the band
-  if(add_logo){
+  if(add_logo) {
     plot <- magick::image_read(filename)
     pwidth <- as.data.frame(magick::image_info(plot))$width
     pheight <- as.data.frame(magick::image_info(plot))$height
@@ -53,6 +68,7 @@ SI_ggsave <- function(filename = paste0(plot_directory, last_plot()$labels$title
 #' @return A plot of SI colors
 #' @examples
 #' SI_colorplot()
+#' @export
 SI_colorplot <- function() {
   data.frame("color" = names(unlist(SI_design)),
              "code" = unlist(SI_design), stringsAsFactors = F) %>%
@@ -67,6 +83,7 @@ SI_colorplot <- function() {
 #' @return Invisibly sets SI ggplot theme values.
 #' @examples
 #' SI_ggplot_update()
+#' @export
 SI_ggplot_update <- function() {
   ggplot2::update_geom_defaults("bar", list(fill = SI_design$pacific))
   ggplot2::update_geom_defaults("smooth", list(colour = SI_design$pacific, fill = SI_design$arctic, alpha = I(2/10)))
@@ -75,7 +92,15 @@ SI_ggplot_update <- function() {
 
   ggplot2::theme_set(ggplot2::theme_minimal())
 
-  ggplot2::theme_update(text = ggplot2::element_text(family = "Roboto"),
-                        axis.text = ggplot2::element_text(family = "Roboto"),
-                        strip.text = ggplot2::element_text(family = "Roboto"))
+  if("extrafont" %in% installed.packages()) {
+    if("Roboto" %in% extrafont::fonts()) {
+
+      #In order to use the SI font, Roboto, it needs to be installed.  See https://github.com/wch/extrafont
+      #Once on the system and imported, also use loadfonts() and loadfonts(device="postscript")
+
+      ggplot2::theme_update(text = ggplot2::element_text(family = "Roboto"),
+                            axis.text = ggplot2::element_text(family = "Roboto"),
+                            strip.text = ggplot2::element_text(family = "Roboto"))
+    }
+  } else warning("Package extrafont not installed or Roboto font family not installed.")
 }

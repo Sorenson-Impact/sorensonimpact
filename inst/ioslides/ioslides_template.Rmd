@@ -1,0 +1,64 @@
+---
+title: "Untitled"
+author: "Sorenson Impact Center Data Science Team"
+date: "5/10/2017"
+output: 
+  ioslides_presentation:
+    logo: template_files/ioslides/SI_mobius_logo_large_white.png
+    template: template_files/ioslides/SI_ioslides.html
+    css: template_files/ioslides/SI_styles.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+<!-- Go to: http://rmarkdown.rstudio.com/ioslides_presentation_format.html#overview for info on how to customize individual slides (centering, changing colors, etc).  I can also create custom css if we want a couple versions of slide templates that can be called from within this document. - Jon -->
+
+<!-- The following is script for the footer. It must remain before the first slide: -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+    $('slide:not(.title-slide, .backdrop, .segue)').append('<footer></footer>');    
+    $('footer').attr('label', 'Draft -- Do not circulate');
+  })
+</script>
+<style>
+  footer:after {
+    font-size: 12pt;
+    content: attr(label);
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 60px;
+    right: 0;
+    text-align:left;
+    bottom: 20px;
+    line-height: 1.9;
+    display: block;
+  }
+</style>
+<!-- End Footer -->
+
+## R Markdown
+
+Text goes here.
+
+## Slide with Bullets
+
+- Bullet 1
+- Bullet 2
+- Bullet 3
+
+## Slide with R Output
+
+```{r cars, echo = TRUE}
+summary(cars)
+```
+
+## Slide with Plot
+
+```{r pressure}
+plot(pressure)
+```
+
