@@ -3,7 +3,7 @@
 #' @description Save a \code{ggplot2} plot as png with an optional Sorenson Impact branding bar.
 #' @importFrom magrittr "%>%"
 #' @param filename Filename to create on disk. If "auto", defaults to the title of the \code{last_plot} within the \code{plot_directory}.
-#' @param dir Directory to save file to.  Defaults to "./Plots".
+#' @param dir Directory to save file to.  Defaults to "plots". Relative to script dir.
 #' @param plot Plot to save, defaults to last plot displayed.
 #' @param width Width in inches (default: 6).
 #' @param height Height in inches (default: 4).
@@ -16,18 +16,17 @@
 #' SI_colorplot() + ggplot2::ggtitle("My Title")
 #' SI_ggsave(add_logo = TRUE)
 #' @export
-SI_ggsave <- function(filename = "auto", dir = "./plots", plot = ggplot2::last_plot(), width = 6, height = 4, dpi = 300,
-                      add_logo = FALSE, logo_height_ratio = .05, band_color = SI_design$granite) {
+SI_ggsave <- function(filename = "auto", dir = "plots", plot = ggplot2::last_plot(), width = 6, height = 4, dpi = 300, add_logo = FALSE, logo_height_ratio = .05, band_color = SI_design$granite) {
 
-  if(is.null(ggplot2::last_plot()$labels$title)) stop("Plot must have a title to use SI_ggsave.") #Prevent sloppiness.
 
-  if(!dir.exists(dir)) {
-    warning(paste("Provided dir", dir, "does not exist. Saving in current working directory."))
+  if(!dir.exists(file.path(dirname(rstudioapi::getSourceEditorContext()$path), dir))) {
+    warning(cat("Provided dir \"", dir, "\" does not exist in this script dir: ", dirname(rstudioapi::getSourceEditorContext()$path),". Saving in script dir.", sep = ""))
     dir <- dirname(rstudioapi::getSourceEditorContext()$path) #saves to the dir where the calling file is.
   } else dir <- file.path(dirname(rstudioapi::getSourceEditorContext()$path), dir) #saves to the specified subdir of where the calling file is
 
-  if(filename == "auto") { #if the default "auto" is left, generate a dynamic file name.
 
+
+  if(filename == "auto" & !is.null(ggplot2::last_plot()$labels$title)) { #if the default "auto" is left, generate a dynamic file name.
     # We use the plot title and (if coming from an Rmd) the title parameter to create the file name
     # !Be careful not to use the same plot title more than once!
     # The following default variable is how the file is saved
@@ -39,7 +38,10 @@ SI_ggsave <- function(filename = "auto", dir = "./plots", plot = ggplot2::last_p
       filename <- file.path(dir, ggplot2::last_plot()$labels$title, "_", ab_report, ".png")
     } else filename <- file.path(dir, paste0(ggplot2::last_plot()$labels$title, ".png"))
 
-  }
+  } else stop("Plot must have a title to use auto filename with SI_ggsave. Add a title or specify the filename.") #User must choose one or the other.
+
+
+
 
   # First we save the last plot with sensible defaults
   ggplot2::ggsave(filename, plot, width = width, height = height, dpi = dpi)
