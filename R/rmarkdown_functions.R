@@ -34,6 +34,7 @@ si_draft_full_report <- function(file) {
                    template = "si_full_report",
                    package = "sorensonimpact",
                    edit = F)
+  dir.create(file.path(tools::file_path_sans_ext(file), "plots"))
   file.edit(file.path(tools::file_path_sans_ext(file), file))
 }
 
@@ -49,5 +50,6 @@ si_draft_presentation <- function(file) {
                   template = "si_ioslides",
                   package = "sorensonimpact",
                   edit = F)
+  dir.create(file.path(tools::file_path_sans_ext(file), "plots"))
   file.edit(file.path(tools::file_path_sans_ext(file), file))
 }

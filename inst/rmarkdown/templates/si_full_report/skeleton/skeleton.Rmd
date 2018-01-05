@@ -22,19 +22,22 @@ if(gdrive_dir == "~/Google Drive/SI/DataScience/") stop("Working directory not c
 
 # Load packages 
 library(sorensonimpact)
+library(knitr)
+library(rmarkdown)
 
-
+SI_ggplot_update()
+SI_knitr_update()
 #options(scipen = 100) #this prevents numbers from showing up in scientific notation
 
 ```
 
 <br>
 
-`r include_graphics(path.expand("./template_files/si_full_report/skeleton/SI_logo.png"))`
+`r include_graphics(path.expand("./template_files/SI_logo.png"))`
 
 <br>
 
-`r include_graphics(path.expand("./template_files/si_full_report/skeleton/earth_map.jpeg"))`
+`r include_graphics(path.expand("./template_files/earth_map.jpeg"))`
 
 
 #### A report prepared by the data science team on behalf of **YOUR NAME HERE**.
