@@ -16,15 +16,15 @@
 #' SI_colorplot() + ggplot2::ggtitle("My Title")
 #' SI_ggsave(add_logo = TRUE)
 #' @export
-SI_ggsave <- function(filename = "auto", dir = "./Plots", plot = ggplot2::last_plot(), width = 6, height = 4, dpi = 300,
+SI_ggsave <- function(filename = "auto", dir = "./plots", plot = ggplot2::last_plot(), width = 6, height = 4, dpi = 300,
                       add_logo = FALSE, logo_height_ratio = .05, band_color = SI_design$granite) {
 
   if(is.null(ggplot2::last_plot()$labels$title)) stop("Plot must have a title to use SI_ggsave.") #Prevent sloppiness.
 
   if(!dir.exists(dir)) {
     warning(paste("Provided dir", dir, "does not exist. Saving in current working directory."))
-    dir <- "."
-  }
+    dir <- dirname(rstudioapi::getSourceEditorContext()$path) #saves to the dir where the calling file is.
+  } else dir <- file.path(dirname(rstudioapi::getSourceEditorContext()$path), dir) #saves to the specified subdir of where the calling file is
 
   if(filename == "auto") { #if the default "auto" is left, generate a dynamic file name.
 

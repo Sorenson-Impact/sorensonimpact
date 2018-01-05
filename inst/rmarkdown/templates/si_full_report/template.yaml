@@ -1,4 +1,4 @@
-name: Sorenson Impact (Markdown)
+name: Sorenson Impact - Full Report
 description: >
-  Template for documents created by SI Data Team.
-create_dir: false
+  Template for rmarkdown full report.
+create_dir: true

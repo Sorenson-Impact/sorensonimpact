@@ -1,12 +1,12 @@
 ---
 title: "Untitled"
 author: "Sorenson Impact Center Data Science Team"
-date: "5/10/2017"
+date: "1/1/1901"
 output: 
   ioslides_presentation:
-    logo: template_files/ioslides/SI_mobius_logo_large_white.png
-    template: template_files/ioslides/SI_ioslides.html
-    css: template_files/ioslides/SI_styles.css
+    logo: template_files/si_ioslides/skeleton/SI_mobius_logo_large_white.png
+    template: template_files/si_ioslides/skeleton/SI_ioslides.html
+    css: template_files/si_ioslides/skeleton/SI_styles.css
 ---
 
 ```{r setup, include=FALSE}

@@ -7,7 +7,7 @@ mainfont: Roboto
 output:
   word_document:
       
-    reference_docx: ./template_files/si_full_report/skeleton/mystyles.docx
+    reference_docx: template_files/mystyles.docx
     fig_width: 6
     fig_height: 4
 editor_options: 
@@ -17,38 +17,13 @@ editor_options:
 ```{r setup, include=FALSE}
 # Set directories
 gdrive_dir <- "~/Google Drive/SI/DataScience/" #This must be customized.
-plot_directory <- "./Plots" #Leave this unless you want a custom dir.  Can be relative or absolute.  It will be created automatically.
-# Set the plot directory, which will the be default location for all saved plots
-# This is used by the custom SI_ggsave function below
-if(!dir.exists(plot_directory)) dir.create(plot_directory)
 
 if(gdrive_dir == "~/Google Drive/SI/DataScience/") stop("Working directory not customized. Please set paths in setup chunk.")
 
-  
 # Load packages 
-library(knitr)
-library(readxl)
-library(scales)
-library(forcats)
-library(lubridate)
-library(stringr)
-library(tidyverse)
 library(sorensonimpact)
 
-# Echo=FALSE means the code does not show up in the document
-# Caching allows you to re-run the report quickly
-knitr::opts_chunk$set(echo=FALSE)
-knitr::opts_chunk$set(cache=TRUE)
-knitr::opts_chunk$set(message = T) #Use F to suppress all messages from chunks for finalized report
-knitr::opts_chunk$set(warning = T) #Use F to suppress all warnings from chunks for finalized report
 
-# Setting the default resolution of plots
-knitr::opts_chunk$set(dpi = 300)
-
-# Setting how numbers are displayed
-knit_hooks$set(inline = function(x) { #This puts a nice comma in large inline numbers to group by 3 digits
-  prettyNum(x, big.mark=",")
-})
 #options(scipen = 100) #this prevents numbers from showing up in scientific notation
 
 ```
