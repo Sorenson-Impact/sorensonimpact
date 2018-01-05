@@ -31,10 +31,10 @@ SI_knitr_update <- function() {
 #' @export
 si_draft_full_report <- function(file) {
   rmarkdown::draft(file = file,
-                   template = "si_ioslides",
+                   template = "si_full_report",
                    package = "sorensonimpact",
                    edit = F)
-  file.edit(file)
+  file.edit(file.path(tools::file_path_sans_ext(file), file))
 }
 
 
@@ -46,8 +46,8 @@ si_draft_full_report <- function(file) {
 #' @export
 si_draft_presentation <- function(file) {
   rmarkdown::draft(file = file,
-                  template = "si_full_report",
+                  template = "si_ioslides",
                   package = "sorensonimpact",
                   edit = F)
-  file.edit(file)
+  file.edit(file.path(tools::file_path_sans_ext(file), file))
 }
