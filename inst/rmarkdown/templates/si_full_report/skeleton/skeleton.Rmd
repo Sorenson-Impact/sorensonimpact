@@ -7,7 +7,7 @@ mainfont: Roboto
 output:
   word_document:
       
-    reference_docx: template_files/mystyles.docx
+    reference_docx: template/mystyles.docx
     fig_width: 6
     fig_height: 4
 editor_options: 
@@ -31,11 +31,11 @@ si_knitr_settings()
 
 <br>
 
-`r include_graphics(path.expand("./template_files/SI_logo.png"))`
+`r include_graphics(path.expand("./template/SI_logo.png"))`
 
 <br>
 
-`r include_graphics(path.expand("./template_files/earth_map.jpeg"))`
+`r include_graphics(path.expand("./template/earth_map.jpeg"))`
 
 
 #### A report prepared by the data science team on behalf of **YOUR NAME HERE**.
