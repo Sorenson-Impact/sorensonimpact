@@ -3,7 +3,7 @@
 #' @description Save a \code{ggplot2} plot as png with an optional Sorenson Impact branding bar.
 #' @importFrom magrittr "%>%"
 #' @param filename Filename to create on disk. If "auto", defaults to the title of the \code{last_plot} within the \code{plot_directory}.
-#' @param dir Directory to save file to.  Defaults to "plots". Relative to script dir.
+#' @param dir Directory to save file to.  Defaults to "auto", which places plots in a "plots" subdir of the script dir.
 #' @param plot Plot to save, defaults to last plot displayed.
 #' @param width Width in inches (default: 6).
 #' @param height Height in inches (default: 4).
@@ -16,13 +16,14 @@
 #' SI_colorplot() + ggplot2::ggtitle("My Title")
 #' SI_ggsave(add_logo = TRUE)
 #' @export
-SI_ggsave <- function(filename = "auto", dir = "plots", plot = ggplot2::last_plot(), width = 6, height = 4, dpi = 300, add_logo = FALSE, logo_height_ratio = .05, band_color = SI_design$granite) {
+si_ggsave <- function(filename = "auto", dir = "auto", plot = ggplot2::last_plot(), width = 6, height = 4, dpi = 300, add_logo = FALSE, logo_height_ratio = .05, band_color = SI_design$granite) {
 
 
-  if(!dir.exists(file.path(dirname(rstudioapi::getSourceEditorContext()$path), dir))) {
-    warning(cat("Provided dir \"", dir, "\" does not exist in this script dir: ", dirname(rstudioapi::getSourceEditorContext()$path),". Saving in script dir.", sep = ""))
-    dir <- dirname(rstudioapi::getSourceEditorContext()$path) #saves to the dir where the calling file is.
-  } else dir <- file.path(dirname(rstudioapi::getSourceEditorContext()$path), dir) #saves to the specified subdir of where the calling file is
+  if(dir == "auto"){
+    dir <- file.path(dirname(rstudioapi::getSourceEditorContext()$path), "plots")
+    if(!dir.exists(dir)) dir.create(dir)
+  }
+  if(!dir.exists(dir)) stop(cat("Provided dir \"", dir, "\" does not exist."))
 
 
 
@@ -71,7 +72,7 @@ SI_ggsave <- function(filename = "auto", dir = "plots", plot = ggplot2::last_plo
 #' @examples
 #' SI_colorplot()
 #' @export
-SI_colorplot <- function() {
+si_colorplot <- function() {
   data.frame("color" = names(unlist(SI_design)),
              "code" = unlist(SI_design), stringsAsFactors = F) %>%
     ggplot2::ggplot() +
@@ -86,7 +87,7 @@ SI_colorplot <- function() {
 #' @examples
 #' SI_ggplot_update()
 #' @export
-SI_ggplot_update <- function() {
+si_ggplot_update <- function() {
   ggplot2::update_geom_defaults("bar", list(fill = SI_design$pacific))
   ggplot2::update_geom_defaults("smooth", list(colour = SI_design$pacific, fill = SI_design$arctic, alpha = I(2/10)))
   ggplot2::update_geom_defaults("point", list(colour = SI_design$pacific, fill = SI_design$pacific))
