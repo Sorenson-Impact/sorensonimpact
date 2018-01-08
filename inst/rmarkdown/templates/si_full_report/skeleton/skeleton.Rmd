@@ -18,7 +18,7 @@ editor_options:
 # Set directories
 gdrive_dir <- "~/Google Drive/SI/DataScience/" #This must be customized.
 
-if(gdrive_dir == "~/Google Drive/SI/DataScience/") stop("Working directory not customized. Please set paths in setup chunk.")
+if(gdrive_dir == "~/Google Drive/SI/DataScience/") warning("Working directory not customized. Please set paths in setup chunk.")
 
 # Load packages 
 library(sorensonimpact)
