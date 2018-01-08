@@ -87,7 +87,7 @@ si_colorplot <- function() {
 #' @examples
 #' SI_ggplot_update()
 #' @export
-si_ggplot_update <- function() {
+si_ggplot_theme_update <- function() {
   ggplot2::update_geom_defaults("bar", list(fill = SI_design$pacific))
   ggplot2::update_geom_defaults("smooth", list(colour = SI_design$pacific, fill = SI_design$arctic, alpha = I(2/10)))
   ggplot2::update_geom_defaults("point", list(colour = SI_design$pacific, fill = SI_design$pacific))

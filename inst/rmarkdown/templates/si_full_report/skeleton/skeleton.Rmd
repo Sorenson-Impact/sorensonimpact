@@ -21,12 +21,10 @@ gdrive_dir <- "~/Google Drive/SI/DataScience/" #This must be customized.
 if(gdrive_dir == "~/Google Drive/SI/DataScience/") warning("Working directory not customized. Please set paths in setup chunk.")
 
 # Load packages 
-library(sorensonimpact)
-library(knitr)
-library(rmarkdown)
+library(sorensonimpact) 
 
-SI_ggplot_update()
-SI_knitr_update()
+si_ggplot_theme_update()
+si_knitr_settings()
 #options(scipen = 100) #this prevents numbers from showing up in scientific notation
 
 ```

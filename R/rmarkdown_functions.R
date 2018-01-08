@@ -5,7 +5,7 @@
 #' SI_knitr_update()
 #' @export
 
-si_knitr_update <- function() {
+si_knitr_settings <- function(verbose = F) {
   # Echo=FALSE means the code does not show up in the document
   # Caching allows you to re-run the report quickly
   knitr::opts_chunk$set(echo=FALSE)
@@ -20,6 +20,9 @@ si_knitr_update <- function() {
   knit_hooks$set(inline = function(x) { #This puts a nice comma in large inline numbers to group by 3 digits
     prettyNum(x, big.mark=",")
   })
+
+  if(verbose) message("knitr opts_chunk set to: echo = F, cache = T, message = T, warning = T, dpi = 300, comma bigmark for inline numbers.")
+
 }
 
 
