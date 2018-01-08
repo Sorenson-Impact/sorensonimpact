@@ -3,9 +3,4 @@
 #' A dataset containing a name listed of hex values used in SI themes
 #'
 #' @format A named list of color hex values.
-#' \describe{
-#'   \item{price}{price, in US dollars}
-#'   \item{carat}{weight of the diamond, in carats}
-#'   ...
-#' }
-"SI_design"
+"si_design"

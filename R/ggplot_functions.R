@@ -10,13 +10,13 @@
 #' @param dpi Dots per inch. Defaults to 300.  The resolution of the file will be width*DPI by height*DPI.
 #' @param add_logo Logical. Add the sorenson impact branding bar?
 #' @param logo_height_ratio Number between 0 and 1, with sensibile values between .01 and .1.  The percent of the image height that the bar should be. Default is 0.05.
-#' @param band_color The color of the SI Logo band.  Defaults to \code{SI_design$granite}.
+#' @param band_color The color of the SI Logo band.  Defaults to \code{si_design$granite}.
 #' @return A png of the last plot with optional SI logo band.
 #' @examples
 #' SI_colorplot() + ggplot2::ggtitle("My Title")
 #' SI_ggsave(add_logo = TRUE)
 #' @export
-si_ggsave <- function(filename = "auto", dir = "auto", plot = ggplot2::last_plot(), width = 6, height = 4, dpi = 300, add_logo = FALSE, logo_height_ratio = .05, band_color = SI_design$granite) {
+si_ggsave <- function(filename = "auto", dir = "auto", plot = ggplot2::last_plot(), width = 6, height = 4, dpi = 300, add_logo = FALSE, logo_height_ratio = .05, band_color = si_design$granite) {
 
 
   if(dir == "auto"){
@@ -73,8 +73,8 @@ si_ggsave <- function(filename = "auto", dir = "auto", plot = ggplot2::last_plot
 #' SI_colorplot()
 #' @export
 si_colorplot <- function() {
-  data.frame("color" = names(unlist(SI_design)),
-             "code" = unlist(SI_design), stringsAsFactors = F) %>%
+  data.frame("color" = names(unlist(si_design)),
+             "code" = unlist(si_design), stringsAsFactors = F) %>%
     ggplot2::ggplot() +
       ggplot2::geom_rect(ggplot2::aes(fill = I(code)), xmin = 0, xmax = 1, ymin = 0, ymax = 1) +
     ggplot2::facet_wrap(~color)
@@ -88,10 +88,10 @@ si_colorplot <- function() {
 #' SI_ggplot_update()
 #' @export
 si_ggplot_theme_update <- function() {
-  ggplot2::update_geom_defaults("bar", list(fill = SI_design$pacific))
-  ggplot2::update_geom_defaults("smooth", list(colour = SI_design$pacific, fill = SI_design$arctic, alpha = I(2/10)))
-  ggplot2::update_geom_defaults("point", list(colour = SI_design$pacific, fill = SI_design$pacific))
-  ggplot2::update_geom_defaults("col", list(fill = SI_design$pacific))
+  ggplot2::update_geom_defaults("bar", list(fill = si_design$pacific))
+  ggplot2::update_geom_defaults("smooth", list(colour = si_design$pacific, fill = si_design$arctic, alpha = I(2/10)))
+  ggplot2::update_geom_defaults("point", list(colour = si_design$pacific, fill = si_design$pacific))
+  ggplot2::update_geom_defaults("col", list(fill = si_design$pacific))
 
   ggplot2::theme_set(ggplot2::theme_minimal())
 

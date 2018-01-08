@@ -6,7 +6,7 @@
 \usage{
 si_ggsave(filename = "auto", dir = "auto", plot = ggplot2::last_plot(),
   width = 6, height = 4, dpi = 300, add_logo = FALSE,
-  logo_height_ratio = 0.05, band_color = SI_design$granite)
+  logo_height_ratio = 0.05, band_color = si_design$granite)
 }
 \arguments{
 \item{filename}{Filename to create on disk. If "auto", defaults to the title of the \code{last_plot} within the \code{plot_directory}.}
@@ -25,7 +25,7 @@ si_ggsave(filename = "auto", dir = "auto", plot = ggplot2::last_plot(),
 
 \item{logo_height_ratio}{Number between 0 and 1, with sensibile values between .01 and .1.  The percent of the image height that the bar should be. Default is 0.05.}
 
-\item{band_color}{The color of the SI Logo band.  Defaults to \code{SI_design$granite}.}
+\item{band_color}{The color of the SI Logo band.  Defaults to \code{si_design$granite}.}
 }
 \value{
 A png of the last plot with optional SI logo band.
