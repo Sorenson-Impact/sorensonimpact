@@ -10,6 +10,7 @@ duplicates <- function(data, ...) {
   data %>%
     group_by_(.dots = lazyeval::lazy_dots(...)) %>%
     filter(n() > 1) %>%
+    ungroup() %>%
     arrange_(.dots = lazyeval::lazy_dots(...))
 }
 
