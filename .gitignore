@@ -20,4 +20,5 @@ vignettes/*.pdf
 *.html
 *.DS_Store
 /*.DS_Store
+inst/.DS_Store
 .gitignore
