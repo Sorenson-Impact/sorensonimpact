@@ -5,8 +5,8 @@ date: "1/1/1901"
 output: 
   ioslides_presentation:
     logo: template/SI_mobius_logo_large_white.png
-    template: template/SI_ioslides.html
-    css: template/SI_styles.css
+    template: template/si_ioslides.html
+    css: template/si_styles.css
 ---
 
 ```{r setup, include=FALSE}
@@ -64,3 +64,13 @@ summary(cars)
 plot(pressure)
 ```
 
+## Slide with Columns
+<div class="column-3-left">
+**1** one  
+**2** two  
+</div>
+<div class="column-2-right">
+**3** three  
+**4** four  
+</div>
+<!-- 3 column layout also exists with column-3-center (and right and left)-->
