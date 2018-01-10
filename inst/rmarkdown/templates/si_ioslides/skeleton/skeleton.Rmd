@@ -5,8 +5,8 @@ date: "1/1/1901"
 output: 
   ioslides_presentation:
     logo: template/SI_mobius_logo_large_white.png
-    template: template/si_ioslides.html
-    css: template/si_styles.css
+    template: template/SI_ioslides.html
+    css: template/SI_styles.css
 ---
 
 ```{r setup, include=FALSE}
