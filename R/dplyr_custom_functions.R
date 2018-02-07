@@ -7,11 +7,12 @@
 #' mtcars %>% duplicates(mpg)
 #' @export
 duplicates <- function(data, ...) {
+  columns <- rlang::enquos(...)
   data %>%
-    group_by_(.dots = lazyeval::lazy_dots(...)) %>%
-    filter(n() > 1) %>%
-    ungroup() %>%
-    arrange_(.dots = lazyeval::lazy_dots(...))
+    dplyr::group_by(!!!columns) %>%
+    dplyr::filter(n() > 1) %>%
+    dplyr::ungroup() %>%
+    dplyr::arrange(!!!columns)
 }
 
 
@@ -22,7 +23,8 @@ duplicates <- function(data, ...) {
 #' @export
 col_sum_na <- function(data) {
   data %>%
-    summarize_all(funs(sum(is.na(.))))
+    purrr::map_dfc(is.na) %>%
+    purrr::map_dfc(sum)
 }
 
 
