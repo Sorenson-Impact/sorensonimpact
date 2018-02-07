@@ -5,7 +5,7 @@
 \title{Save a branded plot}
 \usage{
 si_ggsave(filename = "auto", dir = "auto", plot = ggplot2::last_plot(),
-  width = 6, height = 4, dpi = 300, add_logo = FALSE,
+  width = 6, height = 4, dpi = 300, add_logo = TRUE,
   logo_height_ratio = 0.05, band_color = si_design$granite)
 }
 \arguments{
