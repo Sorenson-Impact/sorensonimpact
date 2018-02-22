@@ -27,4 +27,18 @@ col_sum_na <- function(data) {
     purrr::map_dfc(sum)
 }
 
+#' Generate a frequency tibble
+#' @description Generate a frequency table with marginal values
+#' @importFrom magrittr "%>%"
+#' @return A tibble
+#' @export
+freq_tibble <- function(data, var1, var2) {
+  var1 <- rlang::enquo(var1)
+  var2 <- rlang::enquo(var2)
 
+  data %>%
+    dplyr::count(!!var1, !!var2) %>%
+    tidyr::spread(!!var2, n, fill = 0) %>%
+    dplyr::mutate(Total := rowSums(dplyr::select(., -!!var1))) %>%
+    dplyr::bind_rows(dplyr::bind_cols(!!rlang::quo_name(var1) := "Total", dplyr::summarize_if(., is.numeric, sum)))
+}
