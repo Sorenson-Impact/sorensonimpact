@@ -30,15 +30,34 @@ col_sum_na <- function(data) {
 #' Generate a frequency tibble
 #' @description Generate a frequency table with marginal values
 #' @importFrom magrittr "%>%"
+#' @param rows The primary rows of the table (use groups for additional)
+#' @param cols The columns of the table
+#' @param ... Additional grouping variables that will subdivide rows.
 #' @return A tibble
 #' @export
-freq_tibble <- function(data, var1, var2) {
-  var1 <- rlang::enquo(var1)
-  var2 <- rlang::enquo(var2)
+freq_tibble <- function(data, rows, cols, ...) {
+  rows <- enquo(rows)
+  cols <- enquo(cols)
+  groups <- rlang::enquos(...)
 
-  data %>%
-    dplyr::count(!!var1, !!var2) %>%
-    tidyr::spread(!!var2, n, fill = 0) %>%
-    dplyr::mutate(Total := rowSums(dplyr::select(., -!!var1))) %>%
-    dplyr::bind_rows(dplyr::bind_cols(!!rlang::quo_name(var1) := "Total", dplyr::summarize_if(., is.numeric, sum)))
+  if(length(groups) == 0) {
+
+    data %>%
+      count(!!rows, !!cols) %>%
+      spread(!!cols, n, fill = 0) %>%
+      mutate(Total := rowSums(select(., -!!rows))) %>%
+      bind_rows(bind_cols(!!quo_name(rows) := "Total", summarize_if(., is.numeric, sum)))
+
+  }
+  else{
+    groupnum <- data %>% distinct(!!!groups) %>% nrow()
+
+    data %>%
+      count(!!rows, !!cols, !!!groups) %>%
+      spread(!!cols, n, fill = 0) %>%
+      mutate(Total := rowSums(select(., -!!rows, -c(!!!groups)))) %>%
+      group_by(!!!groups) %>%
+      bind_rows(bind_cols(!!quo_name(rows) := rep("Subtotal", groupnum), summarize_if(., is.numeric, sum)),
+                bind_cols(!!quo_name(rows) := "Total", summarize_if(ungroup(.), is.numeric, sum)))
+  }
 }
