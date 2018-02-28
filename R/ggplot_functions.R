@@ -27,19 +27,15 @@ si_ggsave <- function(filename = "auto", dir = "auto", plot = ggplot2::last_plot
 
 
 
-  if(filename == "auto" & !is.null(ggplot2::last_plot()$labels$title)) { #if the default "auto" is left, generate a dynamic file name.
-    # We use the plot title and (if coming from an Rmd) the title parameter to create the file name
+  if(filename == "auto") { #if the default "auto" is left, generate a dynamic file name.
+    if(!is.null(ggplot2::last_plot()$labels$title)) stop("Plot must have a title to use auto filename with SI_ggsave. Add a title or specify the filename.")
+    # We use the plot title to create the file name
     # !Be careful not to use the same plot title more than once!
     # The following default variable is how the file is saved
 
-    if(exists("params$set_title")) {
-      # Abbreviated name of the report:
-      # We did this because it's nice to know which report the saved graphs are coming from
-      ab_report <- abbreviate(params$set_title)
-      filename <- file.path(dir, ggplot2::last_plot()$labels$title, "_", ab_report, ".png")
-    } else filename <- file.path(dir, paste0(ggplot2::last_plot()$labels$title, ".png"))
+    filename <- file.path(dir, paste0(ggplot2::last_plot()$labels$title, ".png"))
 
-  } else stop("Plot must have a title to use auto filename with SI_ggsave. Add a title or specify the filename.") #User must choose one or the other.
+  }
 
 
 
@@ -88,6 +84,8 @@ si_colorplot <- function() {
 #' SI_ggplot_update()
 #' @export
 si_ggplot_theme_update <- function() {
+
+  #New colors to add from Gwen:  c("#741D5A", "#DD9E27", "#33439B", "#ED1C24", "#24420E")
   ggplot2::update_geom_defaults("bar", list(fill = si_design$pacific))
   ggplot2::update_geom_defaults("smooth", list(colour = si_design$pacific, fill = si_design$arctic, alpha = I(2/10)))
   ggplot2::update_geom_defaults("point", list(colour = si_design$pacific, fill = si_design$pacific))
