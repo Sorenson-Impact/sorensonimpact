@@ -17,9 +17,7 @@ Used with scale_*_continuous, returns formatted axis labels
 \description{
 Format a vector of numeric values according to the International System of Units.
 
-(ie: 1,000 becomes "1 k", 2,500 becomes "2.5 k")
-
-http://en.wikipedia.org/wiki/SI_prefix
+(ie: 1,000 becomes "1 k", 2,500 becomes "2.5 k") See: http://en.wikipedia.org/wiki/SI_prefix
 }
 \examples{
 ggplot(diamonds, aes(x = price)) + geom_density() + scale_x_continuous(labels = scale_si_unit())
