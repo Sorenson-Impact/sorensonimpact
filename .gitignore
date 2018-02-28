@@ -22,3 +22,4 @@ vignettes/*.pdf
 /*.DS_Store
 inst/.DS_Store
 .gitignore
+*.Rproj
