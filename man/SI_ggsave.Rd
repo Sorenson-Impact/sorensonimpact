@@ -21,7 +21,7 @@ si_ggsave(filename = "auto", dir = "auto", plot = ggplot2::last_plot(),
 
 \item{dpi}{Dots per inch. Defaults to 300.  The resolution of the file will be width*DPI by height*DPI.}
 
-\item{add_logo}{Logical. Add the sorenson impact branding bar?}
+\item{add_logo}{Logical. Add the sorenson impact branding bar? (defaults: TRUE)}
 
 \item{logo_height_ratio}{Number between 0 and 1, with sensibile values between .01 and .1.  The percent of the image height that the bar should be. Default is 0.05.}
 
