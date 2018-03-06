@@ -28,7 +28,7 @@ si_ggsave <- function(filename = "auto", dir = "auto", plot = ggplot2::last_plot
 
 
   if(filename == "auto") { #if the default "auto" is left, generate a dynamic file name.
-    if(!is.null(ggplot2::last_plot()$labels$title)) stop("Plot must have a title to use auto filename with SI_ggsave. Add a title or specify the filename.")
+    if(is.null(ggplot2::last_plot()$labels$title)) stop("Plot must have a title to use auto filename with SI_ggsave. Add a title or specify the filename.")
     # We use the plot title to create the file name
     # !Be careful not to use the same plot title more than once!
     # The following default variable is how the file is saved
