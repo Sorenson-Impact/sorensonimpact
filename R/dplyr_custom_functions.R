@@ -16,6 +16,26 @@ duplicates <- function(data, ...) {
 }
 
 
+#' Sum selected columns by row
+#' @description Sum selected columns within mutate without \code{rowwise()} (which can be very slow).
+#' @importFrom magrittr "%>%"
+#' @param ... Columns to sum.
+#' @param sum_col Name of sum column. Defaults to "sum".
+#' @param na.rm Remove NAs? Passed to rowSums
+#' @return Vector with rowwise sums.
+#' @examples
+#' cars %>% sum_rowwise(speed, dist, na.rm = T, sum_col = "mysum"))
+#' @export
+sum_rowwise <- function(data, ..., sum_col = "sum", na.rm = FALSE) {
+  columns <- rlang::enquos(...)
+
+  data %>%
+    dplyr::select(!!! columns) %>%
+    dplyr::transmute(!!sum_col := rowSums(., na.rm = na.rm)) %>%
+    dplyr::bind_cols(data, .)
+}
+
+
 #' Count the NAs in each column
 #' @description Count all the NAs in each column of a data frame
 #' @importFrom magrittr "%>%"
@@ -60,4 +80,30 @@ freq_tibble <- function(data, rows, cols, ...) {
       bind_rows(bind_cols(!!quo_name(rows) := rep("Subtotal", groupnum), summarize_if(., is.numeric, sum)),
                 bind_cols(!!quo_name(rows) := "Total", summarize_if(ungroup(.), is.numeric, sum)))
   }
+}
+
+
+# unmix <- function(data, col) {
+#   col <- rlang::enquo(col)
+#
+#   numname <- paste(quo(col), "num", sep = "_")
+#   charname <- paste(quo_name(col), "char", sep = "_")
+#
+#
+#
+#   data %>%
+#     mutate(numname = as.numeric(!!col),
+#            charname = case_when(is.na(!!quo(numname)) ~ !!enquo(numname)))
+# }
+# unmix(x, fu)
+
+
+#' Tibble Preview
+#' @description Show a sample of all tibble data without hiding columns.
+#' @importFrom magrittr "%>%"
+#' @return A preview of a tibble.
+#' @export
+tp <- function(data) {
+  data <- dplyr::sample_n(data, 5)
+  print(data, n = Inf, width = Inf)
 }
