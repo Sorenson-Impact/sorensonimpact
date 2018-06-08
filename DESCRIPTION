@@ -1,7 +1,7 @@
 Package: sorensonimpact
 Type: Package
 Title: Sorenson Impact Internal R Package
-Version: 0.0.1.0004
+Version: 0.0.1.0005
 Authors@R: c(
   person("Jonathan", "Zadra", email = "jon.zadra@sorensonimpact.com", role = c("aut", "cre")),
   person("Daniel", "Hadley", email = "daniel.hadley@sorensonimpact.com", role = "aut"),
@@ -18,10 +18,10 @@ Imports:
     magrittr (>= 1.5),
     ggplot2 (>= 2.2.1),
     rmarkdown (>= 1.8),
-    lubridate (>= 1.7),
+    lubridate,
     knitr (>= 1.18),
-    readxl (>= 1.0.0.9000),
-    fs (>= 1.1.0.9000)
+    readxl,
+    fs
 RoxygenNote: 6.0.1
 Suggests: 
     testthat
