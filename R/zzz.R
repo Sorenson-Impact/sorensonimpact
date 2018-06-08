@@ -1,10 +1,11 @@
-.onAttach <- function(...) {
-  library(tidyverse)
-  library(knitr)
-  library(rmarkdown)
-  library(fs)
-  library(readxl)
-}
+# .onAttach <- function(...) {
+#   library(conflicted)
+#   library(tidyverse)
+#   library(knitr)
+#   library(rmarkdown)
+#   library(fs)
+#   library(readxl)
+# }
 
 # check_si_up_to_date <- function(pkg, repo="github") {
 #   installed_version <- tryCatch(packageVersion(gsub(".*/", "", pkg)), error=function(e) NA)
