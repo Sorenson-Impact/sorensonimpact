@@ -10,8 +10,8 @@ si_knitr_settings <- function(verbose = F) {
   # Caching allows you to re-run the report quickly
   knitr::opts_chunk$set(echo=FALSE)
   knitr::opts_chunk$set(cache=TRUE)
-  knitr::opts_chunk$set(message = T) #Use F to suppress all messages from chunks for finalized report
-  knitr::opts_chunk$set(warning = T) #Use F to suppress all warnings from chunks for finalized report
+  knitr::opts_chunk$set(message = F) #Use F to suppress all messages from chunks for finalized report
+  knitr::opts_chunk$set(warning = F) #Use F to suppress all warnings from chunks for finalized report
 
   # Setting the default resolution of plots
   knitr::opts_chunk$set(dpi = 300)
