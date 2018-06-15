@@ -49,7 +49,7 @@ si_ggsave <- function(filename = "auto", dir = "auto", plot = ggplot2::last_plot
     pwidth <- as.data.frame(magick::image_info(plot))$width
     pheight <- as.data.frame(magick::image_info(plot))$height
     # Load the logo and crop it to the width of the default plot, fig_width: 6
-    logo <- magick::image_read("~/Github/SI_Project_Template/template_files/SI_logo_background.png") %>%
+    logo <- magick::image_read(paste0(.libPaths(), '/sorensonimpact/rmarkdown/templates/si_ioslides/skeleton/template/SI_logo_background.png')) %>%
       magick::image_scale(paste0("x", pheight * logo_height_ratio)) %>% #make the height of the logo equal to a ratio of the height of the plot. Defaults to 5%.
       magick::image_background(band_color, flatten = TRUE) %>%
       magick::image_crop(paste0(pwidth, "x0+0+0")) #make the width of the logo match the width of the plot
