@@ -7,6 +7,7 @@
 #' mtcars %>% duplicates(mpg)
 #' @export
 duplicates <- function(data, ...) {
+  message("This function is deprecated.  Use janitor::get_dupes()")
   columns <- rlang::enquos(...)
   data %>%
     dplyr::group_by(!!!columns) %>%
