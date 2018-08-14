@@ -21,7 +21,7 @@ si_knitr_settings <- function(verbose = F) {
     prettyNum(x, big.mark=",")
   })
 
-  if(verbose) message("knitr opts_chunk set to: echo = F, cache = T, message = T, warning = T, dpi = 300, comma bigmark for inline numbers.")
+  if(verbose) message("knitr opts_chunk set to: echo = F, cache = T, message = F, warning = F, dpi = 300, comma bigmark for inline numbers.")
 
 }
 

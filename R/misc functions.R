@@ -15,3 +15,25 @@ wc <- function(x = .Last.value) {
 #' @rdname ni
 #' @export
 "%ni%" <- Negate("%in%")
+
+#' View selected data frame
+#'
+#' The RStudio Environment pane variable name column is too narrow for long
+#' names, so difficutl to find the right data frame in long list of similar
+#' names. Select the variable and use shortcut to use data viewer on it.
+#'
+#' Stolen from: https://github.com/dracodoc/mischelper/blob/master/R/misc.R
+#' @export
+
+view_df <- function(){
+  context <- rstudioapi::getActiveDocumentContext()
+  selection_start <- context$selection[[1]]$range$start
+  selection_end <- context$selection[[1]]$range$end
+  if (any(selection_start != selection_end)) { # text selected
+    selected <- context$selection[[1]]$text
+    # this will show "View(get(selected))" in viewer, not optimal
+    # View(get(selected))
+    formated <- stringr::str_c("View(", selected, ')')
+    rstudioapi::sendToConsole(formated, execute = TRUE)
+  }
+}
