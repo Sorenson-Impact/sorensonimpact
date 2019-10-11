@@ -104,7 +104,7 @@ freq_tibble <- function(data, rows, cols, ...) {
 #' @importFrom magrittr "%>%"
 #' @return A preview of a tibble.
 #' @export
-tp <- function(data) {
-  data <- dplyr::sample_n(data, 5)
+tp <- function(data, rows = 10) {
+  data <- dplyr::sample_n(data, size = rows)
   print(data, n = Inf, width = Inf)
 }
