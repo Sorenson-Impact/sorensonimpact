@@ -37,3 +37,40 @@ view_df <- function(){
     rstudioapi::sendToConsole(formated, execute = TRUE)
   }
 }
+
+
+#' Install all the packages we've ever found useful.
+#'
+#' This is a convenience function for after R has been updated and all
+#' the packages need to be reinstalled.
+#'
+#' @export
+si_install_packages <- function() {
+  message("work in progress, see siverse code for how to do this elegantly.")
+  #leaflet.extras
+  #DataExplorer
+}
+
+#' Scale large dollar amounts to shortened dollar amounts (k, M, B, T)
+#' @description Format a vector of numeric values according to monetary abbreviations.
+#'
+#' (ie: 1,000 becomes "1 k", 2,500,000 becomes "2.5 B") See: https://www.wallstreetoasis.com/forums/abbreviation-for-thousands-millions-billions-trillion
+#' @param sep Seperator to use between number and unit (defaults to " ").
+#' @param suffix_n Use "Bn" and "Tn" instead of "B" and "T".
+#'
+#' @return Character vector of formatted dollar values.
+#'
+#' @examples
+#' si_scale_big_dollar(1000)
+#' si_scale_big_dollar(1000000000)
+#' si_scale_big_dollar(1000000000, suffix_n = T)
+#' @export
+si_scale_big_dollar <- function(x, sep = " ", suffix_n = F) {
+  x <- as.numeric(x)
+  limits <- c(1, 1000, 1e+06, 1e+09, 1e+12)
+  suffix <- c(" ", "k", "M", "B", "T")
+  if(suffix_n) suffix <- c(" ", "k", "M", "Bn", "Tn")
+  i <- findInterval(abs(x), limits)
+  i <- ifelse(i == 0, which(limits == 1), i)
+  paste0("$", format(round(x/limits[i], 1), trim = TRUE, scientific = FALSE), sep, suffix[i])
+}
