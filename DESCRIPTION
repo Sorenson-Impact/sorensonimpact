@@ -22,6 +22,6 @@ Imports:
     knitr (>= 1.18),
     readxl,
     fs
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
 Suggests: 
     testthat

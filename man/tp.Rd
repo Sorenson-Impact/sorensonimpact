@@ -4,7 +4,7 @@
 \alias{tp}
 \title{Tibble Preview}
 \usage{
-tp(data)
+tp(data, rows = 10)
 }
 \value{
 A preview of a tibble.
