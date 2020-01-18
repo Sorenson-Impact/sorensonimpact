@@ -1,10 +1,11 @@
 ---
-title: "Untitled"
+title: "Title"
+subtitle: "Subtitle"
 author: "Sorenson Impact Center Data Science Team"
 date: "1/1/1901"
 output: 
   ioslides_presentation:
-    logo: template/SI_mobius_logo_large_white.png
+    logo: template/mobius+u black.png
     template: template/SI_ioslides.html
     css: template/SI_styles.css
 ---
@@ -19,25 +20,21 @@ si_ggplot_theme_update()
 
 <!-- The following is script for the footer. It must remain before the first slide: -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-<script>
-    $(document).ready(function() {
-    $('slide:not(.title-slide, .backdrop, .segue)').append('<footer></footer>');    
-    $('footer').attr('label', 'Draft -- Do not circulate');
+
+  <script>
+  $(document).ready(function() {
+    $('slide:not(.title-slide, .backdrop, .segue)').append('<footer label=\"Sorenson Impact Center\"></footer>');
   })
 </script>
-<style>
+
+  <style>
   footer:after {
-    font-size: 12pt;
     content: attr(label);
+    font-size: 12pt;
     position: absolute;
-    margin-left: auto;
-    margin-right: auto;
-    left: 60px;
-    right: 0;
-    text-align:left;
     bottom: 20px;
+    left: 60px;
     line-height: 1.9;
-    display: block;
   }
 </style>
 <!-- End Footer -->
@@ -51,6 +48,8 @@ Text goes here.
 - Bullet 1
 - Bullet 2
 - Bullet 3
+
+# Transititon Slide
 
 ## Slide with R Output
 
