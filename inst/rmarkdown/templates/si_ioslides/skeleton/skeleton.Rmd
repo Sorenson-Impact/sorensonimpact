@@ -49,7 +49,7 @@ Text goes here.
 - Bullet 2
 - Bullet 3
 
-# Transititon Slide
+# Transition Slide
 
 ## Slide with R Output
 

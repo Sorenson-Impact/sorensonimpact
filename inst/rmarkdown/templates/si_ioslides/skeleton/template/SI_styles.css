@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Playfair+Display&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,400,700&display=swap');
 
 /* ####### TITLE SLIDE ####### */ 
 
@@ -29,6 +30,7 @@ aside.gdbar {
   line-height: 1.5em;
   color: #ffc712;
   font-family: 'Roboto', sans-serif;
+  letter-spacing: 0em;
   
 }
 
@@ -40,20 +42,33 @@ aside.gdbar {
   border:0;
   padding: 0;
   color: black;
-  font-family: 'Roboto Condensed', sans-serif;
-  font-weight:300;
+  font-family: roboto-thin,roboto,sans-serif;
+  letter-spacing: 0.1em;
+  text-align: left;
 }
 
 /* Author and date*/
 .title-slide hgroup p {
   font-size: 1em;
-  color: black;
-  font-family: 'Roboto', sans-serif;
 }
 
+/* All fonts for the rest of the slides */
 
+h2 {
+  text-transform: uppercase;
+	color: #000000;
+	font-family: 'Roboto', sans-serif;
+  font-weight:100;
+  letter-spacing: 0.1em;
+}
 
+p {
+  font-family: 'Roboto', sans-serif;
+  color: black;
+}
 
+ 
+/* This is the transition background */ 
 slides > slide.dark {
   background: #F4D164 !important;
   opacity: 1;
@@ -65,7 +80,7 @@ slides > slide {
   }
 
 
-
+/* Transition slide */
 
 .segue hgroup {
   position: absolute;
@@ -74,31 +89,26 @@ slides > slide {
 }
 
 .segue h2 {
-  font-size: 60px;
-  text-transform: uppercase;
+  font-size: 1.5em;
   line-height: 1.4;
   color: white;
-  font-family: 'Roboto Condensed', sans-serif;
-  display: inline-block;
-  border: 3px solid #fff;
-  padding: 5px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  /*display: inline-block;*/
+  text-transform: lowercase;
   text-align: center;
-  background: #F4D164;
+  
 }
 
 .segue h3{
   color: white;
 }
 
-h2 {
-	color: #000000;
-	font-family: 'Roboto Condensed', serif;
-}
 
 
 slides > slide {
   margin-bottom: 0.5em;
-  font-family: 'Roboto Condensed', sans-serif;
+  font-family: 'Roboto', sans-serif;
   color: #666666;
 }
 
