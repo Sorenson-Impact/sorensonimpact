@@ -14,14 +14,17 @@ aside.gdbar {
 
 
 /* logo on the bar */
-.gdbar img {
- width: auto;
- height: 75px;
- position: absolute;
- right: 0;
- margin: 8px 15px;
- vertical-align: center;
+
+aside.gdbar img{
+  width: auto;
+  height:75px;
+  position: absolute;
+  right:0;
+  margin: 8px 15px;
+  vertical-align: center;
+
 }
+
 
 /* Title */
 .title-slide hgroup h1{
@@ -50,6 +53,7 @@ aside.gdbar {
 /* Author and date*/
 .title-slide hgroup p {
   font-size: 1em;
+  color: #000000;
 }
 
 /* All fonts for the rest of the slides */
@@ -82,14 +86,15 @@ slides > slide {
 
 /* Transition slide */
 
-.segue hgroup {
+slides > slide.dark hgroup {
   position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  /*left: 50%;
+  transform: translateX(-50%);*/
+  bottom: 50%;
 }
 
 .segue h2 {
-  font-size: 1.5em;
+  font-size: 3em;
   line-height: 1.4;
   color: white;
   font-family: 'Roboto', sans-serif;
@@ -109,25 +114,19 @@ slides > slide {
 slides > slide {
   margin-bottom: 0.5em;
   font-family: 'Roboto', sans-serif;
-  color: #666666;
+  color: #000000;
 }
 
 img {
   margin-top: -60px;
   }
 
-  div {
+div {
     margin-top: -60px;
   }
 
-aside.gdbar img{
-  width: auto;
-  height:75px;
-  position: absolute;
-  right:0;
-  margin: 8px 15px;
-  vertical-align: center;
-
+footer {
+  color:#797979;
 }
 
 
@@ -149,26 +148,31 @@ slides > slide:not(.nobackground):before {
 /* (content) */
 /* </div> */
   .column-3-left{
+    margin-top: 10px;
     float: left;
     width: 33%;
     text-align: left;
   }
   .column-3-center{
+    margin-top: 10px;
     display: inline-block;
     width: 33%;
     text-align: center;
   }
   .column-3-right{
+    margin-top: 10px;
     float: right;
     width: 33%;
     text-align: right;
   }
     .column-2-left{
+      margin-top: 10px;
     float: left;
     width: 50%;
     text-align: left;
   }
   .column-2-right{
+    margin-top: 10px;
     float: right;
     width: 50%;
     text-align: right;

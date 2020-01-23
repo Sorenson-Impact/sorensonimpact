@@ -8,6 +8,7 @@ output:
     logo: template/mobius+u black.png
     template: template/SI_ioslides.html
     css: template/SI_styles.css
+    incremental: TRUE
 ---
 
 ```{r setup, include=FALSE}
