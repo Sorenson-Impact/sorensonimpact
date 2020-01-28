@@ -1,6 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Playfair+Display&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Roboto:100,400,700&display=swap');
 
 /* ####### TITLE SLIDE ####### */ 
@@ -34,7 +31,6 @@ aside.gdbar img{
   color: #ffc712;
   font-family: 'Roboto', sans-serif;
   letter-spacing: 0em;
-  
 }
 
 /* Subtitle*/
@@ -52,7 +48,7 @@ aside.gdbar img{
 
 /* Author and date*/
 .title-slide hgroup p {
-  font-size: 1em;
+  font-size: 0.7em;
   color: #000000;
 }
 
@@ -102,6 +98,7 @@ slides > slide.dark hgroup {
   /*display: inline-block;*/
   text-transform: lowercase;
   text-align: center;
+  letter-spacing: 0;
   
 }
 
