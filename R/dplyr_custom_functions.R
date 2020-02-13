@@ -9,7 +9,7 @@
 #' }
 #' @export
 duplicates <- function(data, ...) {
-  message("This function is deprecated.  Use janitor::get_dupes()")
+  .Deprecated("janitor::get_dupes()")
   columns <- rlang::enquos(...)
   data %>%
     dplyr::group_by(!!!columns) %>%
@@ -61,7 +61,7 @@ col_sum_na <- function(data) {
 #' @return A tibble
 #' @export
 freq_tibble <- function(data, rows, cols, ...) {
-  message("This function is deprecated.  Use janitor::tabyl()")
+  .Deprecated("janitor::tabyl()")
   rows <- rlang::enquo(rows)
   cols <- rlang::enquo(cols)
   groups <- rlang::enquos(...)
