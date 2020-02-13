@@ -1,12 +1,12 @@
 Package: sorensonimpact
 Type: Package
 Title: Sorenson Impact Internal R Package
-Version: 0.0.1.0008
+Version: 0.0.1.0009
 Authors@R: c(
   person("Jonathan", "Zadra", email = "jon.zadra@sorensonimpact.com", role = c("aut", "cre")),
   person("Daniel", "Hadley", email = "daniel.hadley@sorensonimpact.com", role = "aut"),
   person("Gwendolyn", "Reynolds", email = "gwendolyn.reynolds@sorensonimpact.com", role = "aut"))
-Maintainer: Jon Zadra <jon.zadra@sorensonimpact.com>
+Maintainer: Jonathan Zadra <jon.zadra@sorensonimpact.com>
 Description: Package with custom functions and settings used internally by the Sorenson Impact Data Science Team.
 License: GPL-3
 Encoding: UTF-8
