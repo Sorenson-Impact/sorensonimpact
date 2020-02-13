@@ -1,56 +1,142 @@
-/*
-SI Colors:
-pacific = "#1D4F53"
-atlantic = "#18303C"
-carbon = "#6d6f71"
-granite = "#bcbdbf"
-silver = "#e6e7e7"
-arctic = "#107D7F"
-*/
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,400,700&display=swap');
 
-h2 {
-	color: #e6e7e7;
-	background: red; /* For browsers that do not support gradients */
- 	background: -webkit-linear-gradient(left, #1D4F53 , rgba(29,79,83,.8)); /* For Safari 5.1 to 6.0 */
-	background: -o-linear-gradient(right, #1D4F53, rgba(29,79,83,.8)); /* For Opera 11.1 to 12.0 */
-	background: -moz-linear-gradient(right, #1D4F53, rgba(29,79,83,.8)); /* For Firefox 3.6 to 15 */
-	background: linear-gradient(to right, #1D4F53 , rgba(29,79,83,.8)); /* Standard syntax */
-  -webkit-border-radius: 3px 10px 10px 3px;
-  -moz-border-radius: 3px 10px 10px 3px;
-  -ms-border-radius: 3px 10px 10px 3px;
-  -o-border-radius: 3px 10px 10px 3px;
-  border-radius: 3px 10px 10px 3px;
+/* ####### TITLE SLIDE ####### */ 
 
-}
-
-
-/* This is how you customize the logo bar on the title slide */
-/*
-.gdbar img {
- width: 85px;
- height: 85px;
- position: absolute;
- right: 0;
- margin: 8px 15px;
-}
-*/
+/* This is how you customize the logo bar on the title slide  */
 
 aside.gdbar {
-  /*width: 400px !important;
-  height: 170px !important;*/
-  background:#1D4F53;
-  /*background: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, #1D4F53), color-stop(100%, #e6e6e6)) no-repeat;
-  background: -webkit-linear-gradient(left, #1D4F53, #e6e6e6) no-repeat;
-  background: -moz-linear-gradient(left, #1D4F53, #e6e6e6) no-repeat;
-  background: -o-linear-gradient(left, #1D4F53, #e6e6e6) no-repeat;
-  background: linear-gradient(left, #1D4F53, #e6e6e6) no-repeat; */
+  height: 85px;
+  background: #ffc712;
 }
+
+
+/* logo on the bar */
+
+aside.gdbar img{
+  width: auto;
+  height:75px;
+  position: absolute;
+  right:0;
+  margin: 8px 15px;
+  vertical-align: center;
+
+}
+
+
+/* Title */
+.title-slide hgroup h1{
+  font-size: 3em;
+  font-weight: bold;
+  line-height: 1.5em;
+  color: #ffc712;
+  font-family: 'Roboto', sans-serif;
+  letter-spacing: 0em;
+}
+
+/* Subtitle*/
+.title-slide hgroup h2 {
+  background: white;
+  font-size: 1.5em;
+  text-transform: uppercase;
+  border:0;
+  padding: 0;
+  color: black;
+  font-family: roboto-thin,roboto,sans-serif;
+  letter-spacing: 0.1em;
+  text-align: left;
+}
+
+/* Author and date*/
+.title-slide hgroup p {
+  font-size: 0.7em;
+  color: #000000;
+}
+
+/* All fonts for the rest of the slides */
+
+h2 {
+  text-transform: uppercase;
+	color: #000000;
+	font-family: 'Roboto', sans-serif;
+  font-weight:100;
+  letter-spacing: 0.1em;
+}
+
+p {
+  font-family: 'Roboto', sans-serif;
+  color: black;
+}
+
+ 
+/* This is the transition background */ 
+slides > slide.dark {
+  background: #F4D164 !important;
+  opacity: 1;
+}
+
+slides > slide {
+  background: linear-gradient(#ffffff, #ffffff 85%, #ffffff);
+  background-color: white;
+  }
+
+
+/* Transition slide */
+
+slides > slide.dark hgroup {
+  position: absolute;
+  /*left: 50%;
+  transform: translateX(-50%);*/
+  bottom: 50%;
+}
+
+.segue h2 {
+  font-size: 3em;
+  line-height: 1.4;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  /*display: inline-block;*/
+  text-transform: lowercase;
+  text-align: center;
+  letter-spacing: 0;
+  
+}
+
+.segue h3{
+  color: white;
+}
+
+
+
+slides > slide {
+  margin-bottom: 0.5em;
+  font-family: 'Roboto', sans-serif;
+  color: #000000;
+}
+
+img {
+  margin-top: -60px;
+  }
+
+div {
+    margin-top: -60px;
+  }
+
+footer {
+  color:#797979;
+}
+
+
+
+
+
+
 
 /* This is for the content slides */
 slides > slide:not(.nobackground):before {
-  width: 60px;
-  height: 60px;
-  background-size: 60px 60px;
+  width: 0;
+  height: 0;
+
 }
 
 /* These are div styles for multi-column layouts */
@@ -59,26 +145,31 @@ slides > slide:not(.nobackground):before {
 /* (content) */
 /* </div> */
   .column-3-left{
+    margin-top: 10px;
     float: left;
     width: 33%;
     text-align: left;
   }
   .column-3-center{
+    margin-top: 10px;
     display: inline-block;
     width: 33%;
     text-align: center;
   }
   .column-3-right{
+    margin-top: 10px;
     float: right;
     width: 33%;
     text-align: right;
   }
     .column-2-left{
+      margin-top: 10px;
     float: left;
     width: 50%;
     text-align: left;
   }
   .column-2-right{
+    margin-top: 10px;
     float: right;
     width: 50%;
     text-align: right;
