@@ -60,29 +60,29 @@ scale_fill_si <- function(
     ...
   )
 }
-
-
-cars %>%
-  mutate(sicol = factor(rep(1:9, length.out = n()))) %>%
-  ggplot(aes(x = speed, y = dist, color = sicol)) + geom_smooth() + scale_color_si()
-ggsave(filename = "~/temp/line gray.svg")
-
-cars %>%
-  mutate(sicol = factor(rep(1:9, length.out = n()))) %>%
-  ggplot(aes(x = speed, y = dist, color = sicol)) + geom_smooth() + scale_color_si() +theme_minimal()
-ggsave(filename = "~/temp/line white.svg")
-
-
-cars %>%
-  mutate(sicol = factor(rep(1:9, length.out = n()))) %>%
-  count(sicol) %>%
-  mutate(n = n + sample(c(-2, -1, 0, 1, 2), 9, replace = T)) %>%
-  ggplot(aes(x = sicol, y = n, fill = sicol)) + geom_col() + scale_fill_si()
-ggsave(filename = "~/temp/bar grey.svg")
-
-cars %>%
-  mutate(sicol = factor(rep(1:9, length.out = n()))) %>%
-  count(sicol) %>%
-  mutate(n = n + sample(c(-2, -1, 0, 1, 2), 9, replace = T)) %>%
-  ggplot(aes(x = sicol, y = n, fill = sicol)) + geom_col() + scale_fill_si() + theme_minimal()
-ggsave(filename = "~/temp/bar white.svg")
+#
+#
+# cars %>%
+#   mutate(sicol = factor(rep(1:9, length.out = n()))) %>%
+#   ggplot(aes(x = speed, y = dist, color = sicol)) + geom_smooth() + scale_color_si()
+# ggsave(filename = "~/temp/line gray.svg")
+#
+# cars %>%
+#   mutate(sicol = factor(rep(1:9, length.out = n()))) %>%
+#   ggplot(aes(x = speed, y = dist, color = sicol)) + geom_smooth() + scale_color_si() +theme_minimal()
+# ggsave(filename = "~/temp/line white.svg")
+#
+#
+# cars %>%
+#   mutate(sicol = factor(rep(1:9, length.out = n()))) %>%
+#   count(sicol) %>%
+#   mutate(n = n + sample(c(-2, -1, 0, 1, 2), 9, replace = T)) %>%
+#   ggplot(aes(x = sicol, y = n, fill = sicol)) + geom_col() + scale_fill_si()
+# ggsave(filename = "~/temp/bar grey.svg")
+#
+# cars %>%
+#   mutate(sicol = factor(rep(1:9, length.out = n()))) %>%
+#   count(sicol) %>%
+#   mutate(n = n + sample(c(-2, -1, 0, 1, 2), 9, replace = T)) %>%
+#   ggplot(aes(x = sicol, y = n, fill = sicol)) + geom_col() + scale_fill_si() + theme_minimal()
+# ggsave(filename = "~/temp/bar white.svg")
