@@ -13,5 +13,7 @@ Invisibly sets knitr options
 Applies all Sorenson Impact custom knitr options.
 }
 \examples{
+\dontrun{
 SI_knitr_update()
+}
 }

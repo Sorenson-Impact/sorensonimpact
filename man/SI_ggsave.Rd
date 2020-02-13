@@ -4,9 +4,10 @@
 \alias{si_ggsave}
 \title{Save a branded plot}
 \usage{
-si_ggsave(filename = "auto", dir = "auto", plot = ggplot2::last_plot(),
-  width = 6, height = 4, dpi = 300, add_logo = TRUE,
-  logo_height_ratio = 0.05, band_color = si_design$granite)
+si_ggsave(filename = "auto", dir = "auto",
+  plot = ggplot2::last_plot(), width = 6, height = 4, dpi = 300,
+  add_logo = TRUE, logo_height_ratio = 0.05,
+  band_color = si_design$granite)
 }
 \arguments{
 \item{filename}{Filename to create on disk. If "auto", defaults to the title of the \code{last_plot} within the \code{plot_directory}.}
@@ -34,6 +35,8 @@ A png of the last plot with optional SI logo band.
 Save a \code{ggplot2} plot as png with an optional Sorenson Impact branding bar.
 }
 \examples{
+\dontrun{
 SI_colorplot() + ggplot2::ggtitle("My Title")
 SI_ggsave(add_logo = TRUE)
+}
 }

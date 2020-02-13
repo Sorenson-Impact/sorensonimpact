@@ -16,5 +16,7 @@ Filtered dataframe with duplicates in given columns
 Extract all rows with duplicated values in the given columns
 }
 \examples{
+\dontrun{
 mtcars \%>\% duplicates(mpg)
+}
 }

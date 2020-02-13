@@ -13,5 +13,7 @@ A plot of SI colors
 Shows the Sorenson Impact theme colors for reference.
 }
 \examples{
+\dontrun{
 SI_colorplot()
+}
 }

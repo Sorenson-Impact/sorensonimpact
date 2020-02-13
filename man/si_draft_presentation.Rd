@@ -13,5 +13,7 @@ si_draft_presentation(file)
 Drafts a new Sorenson Impact ioslides presentation.
 }
 \examples{
+\dontrun{
 si_draft_presentation("My presentation.Rmd")
+}
 }

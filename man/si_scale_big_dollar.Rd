@@ -20,7 +20,9 @@ Format a vector of numeric values according to monetary abbreviations.
 (ie: 1,000 becomes "1 k", 2,500,000 becomes "2.5 B") See: https://www.wallstreetoasis.com/forums/abbreviation-for-thousands-millions-billions-trillion
 }
 \examples{
+\dontrun{
 si_scale_big_dollar(1000)
 si_scale_big_dollar(1000000000)
 si_scale_big_dollar(1000000000, suffix_n = T)
+}
 }

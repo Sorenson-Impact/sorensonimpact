@@ -13,5 +13,7 @@ si_draft_full_report(file)
 Drafts a new Sorenson Impact fulll rmarkdown report
 }
 \examples{
+\dontrun{
 draft_full_report("My presentation.Rmd")
+}
 }

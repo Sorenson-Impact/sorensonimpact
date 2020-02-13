@@ -13,5 +13,7 @@ Invisibly sets SI ggplot theme values.
 Applies all Sorenson Impact custom colors and settings for ggplot
 }
 \examples{
+\dontrun{
 SI_ggplot_update()
+}
 }
