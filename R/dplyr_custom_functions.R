@@ -108,3 +108,16 @@ tp <- function(data, rows = 10) {
   data <- dplyr::sample_n(data, size = rows)
   print(data, n = Inf, width = Inf)
 }
+
+#' Ordered Factor case_when()
+#' @description Can replace `case_when()` syntax and outputs an ordered factor in the same order as the cases, useful for meaningful ordering in plots and tables.  This is because for `case_when()` the arguments are evaluated in order, so you must proceed from the most specific to the most general. Tables and plots will therefor be ordered by the evaluation order.
+#' @param ... A sequence of two-sided formulas. See ?dplyr::case_when for details
+#' @return An ordered factor vector of length 1 or n, matching the length of the logical input or output vectors, with the type (and attributes) of the first RHS. Inconsistent lengths or types will generate an error.
+#' @importFrom magrittr "%>%"
+#' @export
+fct_case_when <- function(...) {
+  args <- as.list(match.call())
+  levels <- sapply(args[-1], function(f) f[[3]])  # extract RHS of formula
+  levels <- levels[!is.na(levels)]
+  factor(dplyr::case_when(...), levels=levels)
+}
