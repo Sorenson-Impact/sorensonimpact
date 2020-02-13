@@ -61,9 +61,11 @@ si_install_packages <- function() {
 #' @return Character vector of formatted dollar values.
 #'
 #' @examples
+#' \dontrun{
 #' si_scale_big_dollar(1000)
 #' si_scale_big_dollar(1000000000)
 #' si_scale_big_dollar(1000000000, suffix_n = T)
+#' }
 #' @export
 si_scale_big_dollar <- function(x, sep = " ", suffix_n = F) {
   x <- as.numeric(x)

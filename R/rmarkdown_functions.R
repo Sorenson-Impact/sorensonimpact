@@ -2,7 +2,9 @@
 #' @description Applies all Sorenson Impact custom knitr options.
 #' @return Invisibly sets knitr options
 #' @examples
+#' \dontrun{
 #' SI_knitr_update()
+#' }
 #' @export
 
 si_knitr_settings <- function(verbose = F) {
@@ -30,7 +32,9 @@ si_knitr_settings <- function(verbose = F) {
 #' @description Drafts a new Sorenson Impact fulll rmarkdown report
 #' @param file File name for the draft
 #' @examples
+#' \dontrun{
 #' draft_full_report("My presentation.Rmd")
+#' }
 #' @export
 si_draft_full_report <- function(file) {
   if(dirname(file) == ".") { #If path wasn't provided, place assume the working directory is the base dir and create subdir for markdown file.
@@ -56,7 +60,9 @@ si_draft_full_report <- function(file) {
 #' @description Drafts a new Sorenson Impact ioslides presentation.
 #' @param file File name for the draft
 #' @examples
+#' \dontrun{
 #' si_draft_presentation("My presentation.Rmd")
+#' }
 #' @export
 si_draft_presentation <- function(file) {
 

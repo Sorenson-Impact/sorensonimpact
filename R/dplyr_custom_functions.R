@@ -4,14 +4,16 @@
 #' @param ... Columns to evaluate for duplication. Works via \code{group_by()}.
 #' @return Filtered dataframe with duplicates in given columns
 #' @examples
+#' \dontrun{
 #' mtcars %>% duplicates(mpg)
+#' }
 #' @export
 duplicates <- function(data, ...) {
   message("This function is deprecated.  Use janitor::get_dupes()")
   columns <- rlang::enquos(...)
   data %>%
     dplyr::group_by(!!!columns) %>%
-    dplyr::filter(n() > 1) %>%
+    dplyr::filter(dplyr::n() > 1) %>%
     dplyr::ungroup() %>%
     dplyr::arrange(!!!columns)
 }
@@ -25,7 +27,9 @@ duplicates <- function(data, ...) {
 #' @param na.rm Remove NAs? Passed to rowSums
 #' @return Vector with rowwise sums.
 #' @examples
+#' \dontrun{
 #' cars %>% sum_rowwise(speed, dist, na.rm = T, sum_col = "mysum"))
+#' }
 #' @export
 sum_rowwise <- function(data, ..., sum_col = "sum", na.rm = FALSE) {
   columns <- rlang::enquos(...)
@@ -57,29 +61,30 @@ col_sum_na <- function(data) {
 #' @return A tibble
 #' @export
 freq_tibble <- function(data, rows, cols, ...) {
-  rows <- enquo(rows)
-  cols <- enquo(cols)
+  message("This function is deprecated.  Use janitor::tabyl()")
+  rows <- rlang::enquo(rows)
+  cols <- rlang::enquo(cols)
   groups <- rlang::enquos(...)
 
   if(length(groups) == 0) {
 
     data %>%
-      count(!!rows, !!cols) %>%
-      spread(!!cols, n, fill = 0) %>%
-      mutate(Total := rowSums(select(., -!!rows))) %>%
-      bind_rows(bind_cols(!!quo_name(rows) := "Total", summarize_if(., is.numeric, sum)))
+      dplyr::count(!!rows, !!cols) %>%
+      tidyr::spread(!!cols, n, fill = 0) %>%
+      dplyr::mutate(Total := rowSums(dplyr::select(., -!!rows))) %>%
+      dplyr::bind_rows(dplyr::bind_cols(!!rlang::quo_name(rows) := "Total", dplyr::summarize_if(., is.numeric, sum)))
 
   }
   else{
-    groupnum <- data %>% distinct(!!!groups) %>% nrow()
+    groupnum <- data %>% dplyr::distinct(!!!groups) %>% nrow()
 
     data %>%
-      count(!!rows, !!cols, !!!groups) %>%
-      spread(!!cols, n, fill = 0) %>%
-      mutate(Total := rowSums(select(., -!!rows, -c(!!!groups)))) %>%
-      group_by(!!!groups) %>%
-      bind_rows(bind_cols(!!quo_name(rows) := rep("Subtotal", groupnum), summarize_if(., is.numeric, sum)),
-                bind_cols(!!quo_name(rows) := "Total", summarize_if(ungroup(.), is.numeric, sum)))
+      dplyr::count(!!rows, !!cols, !!!groups) %>%
+      tidyr::spread(!!cols, n, fill = 0) %>%
+      dplyr::mutate(Total := rowSums(dplyr::select(., -!!rows, -c(!!!groups)))) %>%
+      dplyr::group_by(!!!groups) %>%
+      dplyr::bind_rows(dplyr::bind_cols(!!rlang::quo_name(rows) := rep("Subtotal", groupnum), dplyr::summarize_if(., is.numeric, sum)),
+                dplyr::bind_cols(!!rlang::quo_name(rows) := "Total", dplyr::summarize_if(dplyr::ungroup(.), is.numeric, sum)))
   }
 }
 

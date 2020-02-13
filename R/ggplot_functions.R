@@ -13,8 +13,10 @@
 #' @param band_color The color of the SI Logo band.  Defaults to \code{si_design$granite}.
 #' @return A png of the last plot with optional SI logo band.
 #' @examples
+#' \dontrun{
 #' SI_colorplot() + ggplot2::ggtitle("My Title")
 #' SI_ggsave(add_logo = TRUE)
+#' }
 #' @export
 si_ggsave <- function(filename = "auto", dir = "auto", plot = ggplot2::last_plot(), width = 6, height = 4, dpi = 300, add_logo = TRUE, logo_height_ratio = .05, band_color = si_design$granite) {
 
@@ -66,7 +68,9 @@ si_ggsave <- function(filename = "auto", dir = "auto", plot = ggplot2::last_plot
 #' @importFrom magrittr "%>%"
 #' @return A plot of SI colors
 #' @examples
+#' \dontrun{
 #' SI_colorplot()
+#' }
 #' @export
 si_colorplot <- function() {
   data.frame("color" = names(unlist(si_design)),
@@ -81,7 +85,9 @@ si_colorplot <- function() {
 #' @description Applies all Sorenson Impact custom colors and settings for ggplot
 #' @return Invisibly sets SI ggplot theme values.
 #' @examples
+#' \dontrun{
 #' SI_ggplot_update()
+#' }
 #' @export
 si_ggplot_theme_update <- function() {
 
@@ -118,7 +124,9 @@ si_ggplot_theme_update <- function() {
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' ggplot(diamonds, aes(x = price)) + geom_density() + scale_x_continuous(labels = scale_si_unit())
+#' }
 
 scale_si_unit <- function(sep = " ", ...) {
   # Based on code by Ben Tupper
