@@ -1,0 +1,36 @@
+---
+title: ""
+author: ""
+date: "01/01/1901"
+output:
+  html_document:
+    styles: styles.css
+    toc: true
+    toc_float: true
+    fig_caption: true
+    df_print: paged
+    
+    
+  
+---
+
+```{r echo=FALSE, out.width="50%", include=TRUE}
+knitr::include_graphics('./logo.png')
+```
+
+
+
+TODO: table of contents: scroll and other options
+
+# Introduction
+
+
+## Quarterly Results {.tabset}
+
+### By Product
+
+(tab content)
+
+### By Region
+
+(tab content)
