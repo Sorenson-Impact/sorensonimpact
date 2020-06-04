@@ -4,7 +4,9 @@
 \name{si_design}
 \alias{si_design}
 \title{Sorenson Impact Custom Color Schemes}
-\format{A named list of color hex values.}
+\format{
+A named list of color hex values.
+}
 \usage{
 si_design
 }
