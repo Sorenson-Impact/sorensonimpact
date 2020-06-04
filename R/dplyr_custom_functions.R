@@ -124,5 +124,16 @@ fct_case_when <- function(...) {
   args <- as.list(match.call())
   levels <- sapply(args[-1], function(f) f[[3]])  # extract RHS of formula
   levels <- levels[!is.na(levels)]
-  factor(dplyr::case_when(...), levels=levels)
+  ordered(dplyr::case_when(...), levels=levels)
+}
+
+#' Remove variables from tibble
+#' @description This is a simple negation of `dplyr::select`.
+#' @param .data A data frame, data frame extension (e.g. a tibble), or a lazy data frame (e.g. from dbplyr or dtplyr). See Methods, below, for more details.
+#' @param ... <tidy-select> One or more unquoted expressions separated by commas. Variable names can be used as if they were positions in the data frame, so expressions like x:y can be used to select a range of variables.
+#' @return An object of the same type as .data, with the specified columns removed.
+#' @importFrom magrittr "%>%"
+#' @export
+deselect <- function(.data, ...) {
+  dplyr::select(.data, -c(...))
 }
