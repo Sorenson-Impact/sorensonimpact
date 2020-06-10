@@ -38,6 +38,6 @@ ipeds_info <- function(survey_group) {
     dplyr::mutate(notes = stringr::str_wrap(notes, 80, indent = 5)) %>%
     dplyr::pull(notes)
 
-  if(!is_empty(notes)) cat(crayon::red("\n\nNotes:"), notes, sep = "\n", fill = 80) else
-    cat(crayon::red("\n\nNotes:\n"), crayon::italic("(No notes for this survey group)"))
+  if(!purrr::is_empty(notes)) cat(crayon::red("\n\nNotes:"), notes, sep = "\n", fill = 80) else
+    cat(crayon::red("\n\nNotes:\n\n"), crayon::italic("     (No notes for this survey group)\n"))
 }
