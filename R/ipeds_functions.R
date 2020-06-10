@@ -36,8 +36,8 @@ ipeds_info <- function(survey_group) {
     dplyr::mutate(sdist = stringdist::stringdist(notes, dplyr::lag(notes), method = "jw")) %>%
     dplyr::filter(sdist > .8 | is.na(sdist)) %>%
     dplyr::mutate(notes = stringr::str_wrap(notes, 80, indent = 5)) %>%
-    dplyr::pull(notes) %>%
-    cat(crayon::red("\n\nNotes:"), ., sep = "\n", fill = 80)
+    dplyr::pull(notes)
 
-  if(is.null(notes)) cat(crayon::italic("(No notes for this survey group)"))
+  if(!is_empty(notes)) cat(crayon::red("\n\nNotes:"), notes, sep = "\n", fill = 80) else
+    cat(crayon::red("\n\nNotes:\n"), crayon::italic("(No notes for this survey group)"))
 }
