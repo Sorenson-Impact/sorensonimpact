@@ -22,16 +22,22 @@ ipeds_info <- function(survey_group) {
     dplyr::filter(survey_group == !!survey_group) %>%
     dplyr::distinct(overview) %>%
     dplyr::filter(!stringr::str_detect(overview, "^Preliminary")) %>%
+    dplyr::mutate(sdist = stringdist::stringdist(overview, dplyr::lag(overview), method = "jw")) %>%
+    dplyr::filter(sdist > .8 | is.na(sdist)) %>%
     dplyr::mutate(overview = stringr::str_wrap(overview, 80, indent = 5)) %>%
     dplyr::pull(overview) %>%
     cat(crayon::blue("\n\nOverview:\n"), ., sep = "\n")
 
-  ipeds_dictionary %>%
+  notes <- ipeds_dictionary %>%
+    dplyr::arrange(desc(year)) %>%
     dplyr::filter(survey_group == !!survey_group) %>%
     dplyr::distinct(notes) %>%
     dplyr::filter(!stringr::str_detect(notes, "^Preliminary")) %>%
+    dplyr::mutate(sdist = stringdist::stringdist(notes, dplyr::lag(notes), method = "jw")) %>%
+    dplyr::filter(sdist > .8 | is.na(sdist)) %>%
     dplyr::mutate(notes = stringr::str_wrap(notes, 80, indent = 5)) %>%
     dplyr::pull(notes) %>%
     cat(crayon::red("\n\nNotes:"), ., sep = "\n", fill = 80)
 
+  if(is.null(notes)) cat(crayon::italic("(No notes for this survey group)"))
 }
