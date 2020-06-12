@@ -46,17 +46,20 @@ ipeds_info <- function(survey_group) {
 #' @description Shows quick info on an institution.
 #' @importFrom magrittr "%>%"
 #' @param unitid Numeric `unitid value.
+#' @param return_tibble Logical indicating whether to return the data as a tibble rather than formatted output. Defaults to formatted output.
 #' @return Printed info about the institution.
 #' @examples
 #' \dontrun{
 #' ipeds_inst_lookup(230764)
 #' }
 #' @export
-ipeds_inst_lookup <- function(unitid) {
+ipeds_inst_lookup <- function(unitid, return_tibble = FALSE) {
 
   hd_lookup <- readr::read_rds(fs::path_expand("~/Google Drive/SI/DataScience/data/maps_project/modified_data/hd lookup table.rds"))
 
-  if(unitid %in% hd_lookup$unitid) inst <- hd_lookup %>% dplyr::filter(unitid == !!unitid) else warning("Unitid not found")
+  if(unitid %in% hd_lookup$unitid) inst <- hd_lookup %>% dplyr::filter(unitid == !!unitid) else return(cli::cli_alert_danger("unitid \`{unitid}\` not found`."))
+
+  if(return_tibble) return(inst) #If user wants a tibble, return and exit
 
   # inst_env <- new_environment()
   # inst %>%
@@ -76,10 +79,43 @@ ipeds_inst_lookup <- function(unitid) {
     cli::cli_text(glue::glue_data(inst, "HBCU: {historically_black_college_or_university}"))
     cli::cli_text("")
     cli::cli_text(glue::glue_data(inst, "{city_location_of_institution}, {state_abbreviation}"))
-    cli::cli_text(inst$county_name)
+    cli::cli_text(glue::glue_data(inst, "County: {county_name}"))
     cli::cli_text(glue::glue_data(inst, "FIPS: {fips_county_code}"))
     cli::cli_text("")
+    if(inst$unitid_for_merged_schools != -2) {
+      cli::cli_text(glue::glue_data(inst, "Merged unitid: {unitid_for_merged_schools}"))
+      cli::cli_text("")
+    }
+    if(inst$date_institution_closed != -2) {
+      cli::cli_text(cli::col_white(cli::bg_red(glue::glue_data(inst, "Institution closed: {date_institution_closed}"))))
+      cli::cli_text("")
+    }
   }
 
   print_info(inst)
+}
+
+#' Find unitids that match a string in the institution name
+#' @description Show's unitid's for institution names that match the string provided
+#' @importFrom magrittr "%>%"
+#' @param instname Full or partial string to detect in instution name.
+#' @return Printed info about the institution.
+#' @examples
+#' \dontrun{
+#' ipeds_unitid_lookup("Utah")
+#' }
+#' @export
+ipeds_unitid_lookup <- function(instname) {
+
+  hd_lookup <- readr::read_rds(fs::path_expand("~/Google Drive/SI/DataScience/data/maps_project/modified_data/hd lookup table.rds")) #This is generated in the HD cleaning file.
+
+  hd_matches <- hd_lookup %>% dplyr::filter(stringr::str_detect(institution_entity_name, !!instname))
+
+  if(nrow(hd_matches))
+
+  cli::cli_h1(glue::glue("Found {nrow(hd_matches)} institutions matching \"{instname}\""))
+
+  hd_matches %>%
+    dplyr::select(unitid, institution_entity_name, city_location_of_institution, state_abbreviation)
+
 }
