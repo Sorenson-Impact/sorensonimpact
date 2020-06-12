@@ -1,7 +1,7 @@
 Package: sorensonimpact
 Type: Package
 Title: Sorenson Impact Internal R Package
-Version: 0.0.1.9024
+Version: 0.0.1.9025
 Authors@R: c(
   person("Jonathan", "Zadra", email = "jonathan.zadra@sorensonimpact.com", role = c("aut", "cre")),
   person("Daniel", "Hadley", email = "daniel.hadley@sorensonimpact.com", role = "ctb"),

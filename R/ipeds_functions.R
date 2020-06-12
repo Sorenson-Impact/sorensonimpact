@@ -41,3 +41,45 @@ ipeds_info <- function(survey_group) {
   if(!purrr::is_empty(notes)) cat(crayon::red("\n\nNotes:"), notes, sep = "\n", fill = 80) else
     cat(crayon::red("\n\nNotes:\n\n"), crayon::italic("     (No notes for this survey group)\n"))
 }
+
+#' Show quick summary info on institution given a unitid
+#' @description Shows quick info on an institution.
+#' @importFrom magrittr "%>%"
+#' @param unitid Numeric `unitid value.
+#' @return Printed info about the institution.
+#' @examples
+#' \dontrun{
+#' ipeds_inst_lookup(230764)
+#' }
+#' @export
+ipeds_inst_lookup <- function(unitid) {
+
+  hd_lookup <- readr::read_rds(fs::path_expand("~/Google Drive/SI/DataScience/data/maps_project/modified_data/hd lookup table.rds"))
+
+  if(unitid %in% hd_lookup$unitid) inst <- hd_lookup %>% dplyr::filter(unitid == !!unitid) else warning("Unitid not found")
+
+  # inst_env <- new_environment()
+  # inst %>%
+  #   select(-unitid) %>%
+  #   mutate_all(as.character) %>%
+  #   pivot_longer(everything()) %>%
+  #   mutate(assignexp = glue("{name} <- '{value}'")) %>%
+  #   select(assignexp) %>%
+  #   rowwise() %>%
+  #   pwalk( ~eval(parse_expr(.x), envir = .GlobalEnv))
+  #
+  print_info <- function(inst) {
+    cli::cli_h1(glue::glue_data(inst, "{institution_entity_name} ({year})"))
+    cli::cli_text("")
+    cli::cli_text(glue::glue_data(inst, "Sector: {sector_of_institution}"))
+    cli::cli_text(glue::glue_data(inst, "Size Category: {institution_size_category}"))
+    cli::cli_text(glue::glue_data(inst, "HBCU: {historically_black_college_or_university}"))
+    cli::cli_text("")
+    cli::cli_text(glue::glue_data(inst, "{city_location_of_institution}, {state_abbreviation}"))
+    cli::cli_text(inst$county_name)
+    cli::cli_text(glue::glue_data(inst, "FIPS: {fips_county_code}"))
+    cli::cli_text("")
+  }
+
+  print_info(inst)
+}
