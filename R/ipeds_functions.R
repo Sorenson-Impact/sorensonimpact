@@ -111,6 +111,7 @@ ipeds_unitid_lookup <- function(instname) {
 
   hd_matches <- hd_lookup %>% dplyr::filter(stringr::str_detect(institution_entity_name, !!instname))
 
+  #If no matches found:
   if(nrow(hd_matches) == 0) return(cli::cli_alert_info("No institution names matching \"{instname}\"."))
 
   cli::cli_h1(glue::glue("Found {nrow(hd_matches)} institutions matching \"{instname}\""))
