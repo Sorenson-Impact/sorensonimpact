@@ -4,10 +4,12 @@
 \alias{ipeds_inst_lookup}
 \title{Show quick summary info on institution given a unitid}
 \usage{
-ipeds_inst_lookup(unitid)
+ipeds_inst_lookup(unitid, return_tibble = FALSE)
 }
 \arguments{
 \item{unitid}{Numeric `unitid value.}
+
+\item{return_tibble}{Logical indicating whether to return the data as a tibble rather than formatted output. Defaults to formatted output.}
 }
 \value{
 Printed info about the institution.
