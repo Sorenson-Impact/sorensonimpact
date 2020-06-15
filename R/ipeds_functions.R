@@ -120,3 +120,60 @@ ipeds_unitid_lookup <- function(instname) {
     dplyr::select(unitid, institution_entity_name, city_location_of_institution, state_abbreviation)
 
 }
+
+
+
+#' vis_dat for ipeds
+#' @description Produce a vis_dat plot for ipeds data split by year with optional sampling.
+#' @importFrom magrittr "%>%"
+#' @param years Single year or vector of years to plot.  Defaults to all years in data.
+#' @param .sample_frac Percent of observations to sample from each year.  Defaults to .10.
+#' @return Plot of ipeds survey by year.
+#' @examples
+#' \dontrun{
+#' hd %>% ipeds_visdat(years = 2008:2011)
+#' }
+#' @export
+
+ipeds_visdat <- function(.data, years = "all", .sample_frac = .10) {
+
+  #Check that data is ipeds survey
+  if(!all(c("unitid", "year") %in% names(.data))) warning(".data does not contain a unitid or year column.  Are you sure you passed an ipeds survey?")
+
+  #Make sure years is set
+  if(!all(years == "all" | is.numeric(years))) stop("\`years\` must be \"all\" or a numeric vector of 4-digit years.")
+
+  if(all(years == "all")) years <- min(.data$year):max(.data$year)
+
+
+  if(.sample_frac < 1) {
+    cli::cli_alert_info("Sampling data at {.sample_frac * 100}% per year.")
+
+    .data <- .data %>%
+      dplyr::group_by(year) %>%
+      dplyr::sample_frac(.sample_frac) %>%
+      dplyr::ungroup()
+  } else cli::cli_alert_info("Using 100% of data, this may be slow.")
+
+  p1 <- .data %>%
+    dplyr::filter(year == years[1]) %>% visdat::vis_dat(warn_large_data = F, sort_type = F, palette = "qual") +
+      ggplot2::labs(y = years[1]) + ggplot2::theme(plot.margin = ggplot2::margin(0, 5.5, 0, 5.5, "pt"))
+
+  plist <- tibble::lst()
+  plist[[1]] <- p1
+
+  if(length(years > 1)) {
+    for(i in 2:length(years)) {
+      plist[[i]] <- .data %>%
+        dplyr::filter(year == years[{i}]) %>%
+        visdat::vis_dat(warn_large_data = F, sort_type = F, palette = "qual") +
+        ggplot2::labs(y = years[{i}]) +
+        ggplot2::theme(axis.text.x = ggplot2::element_blank(), plot.margin = ggplot2::margin(0, 5.5, 0, 5.5, "pt"))
+    }
+
+  }
+
+  patchwork::wrap_plots(plist, ncol = 1, guides = "collect")
+
+}
+
