@@ -1,13 +1,17 @@
-# .onAttach <- function(...) {
-#   library(conflicted)
-#   library(tidyverse)
-#   library(knitr)
-#   library(rmarkdown)
-#   library(fs)
-#   library(readxl)
-# }
+.onAttach <- function(...) {
+  check_si_up_to_date()
+}
 
-# check_si_up_to_date <- function(pkg, repo="github") {
+check_si_up_to_date <- function() {
+  x <- remotes::package_deps("sorensonimpact")
+
+  if(x$installed != x$available) {
+    cli::cli_alert_info("A newer version of \`sorensonimpact\` is available.  Run \`update_packages(\"sorensonimpact\")\` to update.")
+  }
+
+}
+
+# check_si_up_to_date <- function(pkg, repo = "github") {
 #   installed_version <- tryCatch(packageVersion(gsub(".*/", "", pkg)), error=function(e) NA)
 #
 #   if(repo == "github") {
