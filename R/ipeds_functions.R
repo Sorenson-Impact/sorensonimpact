@@ -11,11 +11,13 @@
 
 ipeds_info <- function(survey_group) {
 
+  if(!is.character(survey_group)) return(cli::cli_alert_danger("\`survey_group\` argument must be a string. Did you attempt to pass a bare variable name?"))
+
   if(!exists("ipeds_dictionary")) ipeds_dictionary <<- readr::read_rds("~/Google Drive/SI/DataScience/data/maps_project/cleaned_data/ipeds/ipeds_dictionary.rds")
 
-  avail_sgs <- ipeds_dictionary %>% distinct(survey_group) %>% pull(survey_group)
-  if(survey_group %ni% avail_sgs) {
-    warning(paste0("Provided survey group \"", survey_group, "\" does not exist in IPEDS dictionary.  Available groups are: ", paste(avail_sgs, collapse = ",\n")))
+  avail_sgs <- ipeds_dictionary %>% dplyr::distinct(survey_group) %>% dplyr::pull(survey_group)
+  if(!(survey_group %in% avail_sgs)) {
+    stop(paste0("Provided survey group \"", survey_group, "\" does not exist in IPEDS dictionary.  Available groups are:\n", paste(avail_sgs, collapse = ",\n")))
   }
 
   ipeds_dictionary %>%
