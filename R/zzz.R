@@ -1,5 +1,6 @@
 .onAttach <- function(...) {
   check_si_up_to_date()
+  remotes::package_deps("sorensonimpact")
 }
 
 check_si_up_to_date <- function() {
