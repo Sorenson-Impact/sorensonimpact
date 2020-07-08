@@ -150,7 +150,7 @@ ipeds_visdat <- function(.data, years = "all", .sample_frac = .10) {
 
   if(.sample_frac < 1) {
     cli::cli_alert_info("Sampling data at {.sample_frac * 100}% per year.")
-    if(nrow(.data < 9e+05)) cli::cli_alert_warning("Data is smallish, are you sure you want to sample? Set .sample_frac to 1 to show all data.")
+    if(nrow(.data < 9e+04)) cli::cli_alert_warning("Data is smallish, are you sure you want to sample? Set .sample_frac to 1 to show all data.")
 
     .data <- .data %>%
       dplyr::group_by(year) %>%
