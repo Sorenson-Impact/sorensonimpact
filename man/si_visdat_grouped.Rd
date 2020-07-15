@@ -7,7 +7,7 @@
 si_visdat_grouped(.data, ..., method = "vis_dat", .sample_frac = "auto")
 }
 \arguments{
-\item{...}{bare, unquoted column(s) to use as the index to group by.}
+\item{...}{bare, unquoted column(s) to use as the index to group by. Alternatively will accept a grouped df.}
 
 \item{method}{Which visdat function to use. One of "vis_dat", "vis_miss", or "vis_value".  Accepts shorthand "dat", "val", and "miss".}
 

@@ -1,7 +1,7 @@
 #' vis_dat for grouped data
 #' @description Produce a vis_dat plot for ipeds data split by year with optional sampling.
 #' @importFrom magrittr "%>%"
-#' @param ... bare, unquoted column(s) to use as the index to group by.
+#' @param ... bare, unquoted column(s) to use as the index to group by. Alternatively will accept a grouped df.
 #' @param .sample_frac Percent of observations to sample from each year.  Default "auto" samples down to 100,000 rows, split evenly between groups for vis_dat. For vis_miss and vis_value, "auto" uses all data.
 #' @param method Which visdat function to use. One of "vis_dat", "vis_miss", or "vis_value".  Accepts shorthand "dat", "val", and "miss".
 #' @return visdat plot separated by grouping variable.
@@ -11,12 +11,9 @@
 #' }
 #' @export
 
-
-
-
 si_visdat_grouped <- function(.data, ..., method = "vis_dat", .sample_frac = "auto") {
 
-
+  is_pregrouped <- dplyr::is_grouped_df(.data)
 
   if(stringr::str_detect(method, "dat")) method <- "dat"
   if(stringr::str_detect(method, "val")) method <- "val"
@@ -32,11 +29,18 @@ si_visdat_grouped <- function(.data, ..., method = "vis_dat", .sample_frac = "au
   }
 
   #Group the data
-  .data <- .data %>% dplyr::group_by(...) %>%
-    add_column(group_index = group_indices(.)) %>%
-    unite(group_name, ..., sep = "\n", remove = F) %>%
-    arrange(group_index)
-
+  if(is_pregrouped) {
+    .data <- .data %>%
+      tibble::add_column(group_index = dplyr::group_indices(.)) %>%
+      tidyr::unite(group_name, dplyr::group_vars(.), sep = "\n", remove = F) %>%
+      dplyr::arrange(group_index)
+  } else {
+    .data <- .data %>%
+      dplyr::group_by(...) %>%
+      tibble::add_column(group_index = dplyr::group_indices(.)) %>%
+      tidyr::unite(group_name, ..., sep = "\n", remove = F) %>%
+      dplyr::arrange(group_index)
+  }
 
   if(.sample_frac < 1) {
     #cli::cli_alert_info("Sampling data at {.sample_frac * 100}% per year.")
