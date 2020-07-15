@@ -13,14 +13,17 @@
 
 si_visdat_grouped <- function(.data, ..., method = "vis_dat", .sample_frac = "auto") {
 
-  is_pregrouped <- dplyr::is_grouped_df(.data)
+  is_pregrouped <- dplyr::is_grouped_df(.data) #Does the data already have grouping structure?
 
+  #Set the visdat function to use
   if(stringr::str_detect(method, "dat")) method <- "dat"
   if(stringr::str_detect(method, "val")) method <- "val"
   if(stringr::str_detect(method, "miss")) method <- "miss"
 
+  # for val and miss we want to see all the data, hence auto = 1
   if((method == "val" | method == "miss") & .sample_frac == "auto") .sample_frac = 1
 
+  # Otherwise downsmample
   if(.sample_frac == "auto") {
     if(nrow(.data) > 100000) {
       .sample_frac <- 100000 / nrow(.data)
@@ -42,6 +45,7 @@ si_visdat_grouped <- function(.data, ..., method = "vis_dat", .sample_frac = "au
       dplyr::arrange(group_index)
   }
 
+  # Do any sampling
   if(.sample_frac < 1) {
     #cli::cli_alert_info("Sampling data at {.sample_frac * 100}% per year.")
 
@@ -53,6 +57,7 @@ si_visdat_grouped <- function(.data, ..., method = "vis_dat", .sample_frac = "au
   #Split the data
   .data <- .data %>% dplyr::group_split(.keep = F)
 
+  #Methods for each visdat graph
   if(method == "dat") {
     plist <- .data %>%
       purrr::map(function(...) {
