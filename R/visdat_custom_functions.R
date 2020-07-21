@@ -27,7 +27,7 @@ si_visdat_grouped <- function(.data, ..., method = "vis_dat", .sample_frac = "au
   if(.sample_frac == "auto") {
     if(nrow(.data) > 100000) {
       .sample_frac <- 100000 / nrow(.data)
-      cli::cli_alert_info("Large data, automatically down-sampling data at {.sample_frac * 100}%. To disable or change, set .sample_frac to a value between 0 and 1.")
+      cli::cli_alert_info("Large data, automatically down-sampling data at {round(.sample_frac * 100)}%. To disable or change, set .sample_frac to a value between 0 and 1.")
     } else .sample_frac <- 1
   }
 
