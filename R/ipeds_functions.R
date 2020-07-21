@@ -15,6 +15,8 @@ ipeds_info <- function(survey_group) {
 
   if(!exists("ipeds_dictionary")) ipeds_dictionary <<- readr::read_rds("~/Google Drive/SI/DataScience/data/maps_project/cleaned_data/ipeds/ipeds_dictionary.rds")
 
+  survey_group <- str_to_lower(survey_group)
+
   avail_sgs <- ipeds_dictionary %>% dplyr::distinct(survey_group) %>% dplyr::pull(survey_group)
   if(!(survey_group %in% avail_sgs)) {
     stop(paste0("Provided survey group \"", survey_group, "\" does not exist in IPEDS dictionary.  Available groups are:\n", paste(avail_sgs, collapse = ",\n")))
@@ -109,9 +111,11 @@ ipeds_inst_lookup <- function(unitid, return_tibble = FALSE) {
 #' @export
 ipeds_unitid_lookup <- function(instname) {
 
+  instname <- str_to_lower(instname)
+
   hd_lookup <- readr::read_rds(fs::path_expand("~/Google Drive/SI/DataScience/data/maps_project/modified_data/hd lookup table.rds")) #This is generated in the HD cleaning file.
 
-  hd_matches <- hd_lookup %>% dplyr::filter(stringr::str_detect(institution_entity_name, !!instname))
+  hd_matches <- hd_lookup %>% dplyr::filter(stringr::str_detect(str_to_lower(institution_entity_name), !!instname))
 
   #If no matches found:
   if(nrow(hd_matches) == 0) return(cli::cli_alert_info("No institution names matching \"{instname}\"."))
