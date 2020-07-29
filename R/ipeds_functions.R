@@ -142,7 +142,7 @@ ipeds_unitid_lookup <- function(instname) {
 #' @export
 
 ipeds_visdat <- function(.data, years = "all", .sample_frac = .10) {
-
+  .Deprecated("sorensonimpact::si_visdat_grouped()")
   #Check that data is ipeds survey
   if(!all(c("unitid", "year") %in% names(.data))) warning(".data does not contain a unitid or year column.  Are you sure you passed an ipeds survey?")
 
@@ -184,3 +184,78 @@ ipeds_visdat <- function(.data, years = "all", .sample_frac = .10) {
 
 }
 
+#' Table of cleaned IPEDs data
+#' @description Shows a table of the cleaned IPEDs data.
+#' @importFrom magrittr "%>%"
+#' @param .show_details Include the path and the survey description? Defaults to FALSE for easier reading
+#' @return IPEDS data table
+#' @examples
+#' \dontrun{
+#' ipeds_data()
+#' }
+#' @export
+ipeds_data <- function(.show_details = F) {
+
+  if(!exists("ipeds_dictionary")) ipeds_dictionary <<- readr::read_rds("~/Google Drive/SI/DataScience/data/maps_project/cleaned_data/ipeds/ipeds_dictionary.rds")
+
+  ipeds_table <- tibble::enframe(fs::dir_ls("~/Google Drive/SI/DataScience/data/maps_project/cleaned_data/ipeds/", glob = "*.rds"), name = NULL, value = "file") %>%
+    dplyr::mutate(survey_group = basename(file) %>%
+             stringr::str_extract("^\\S*") %>% stringr::str_remove(stringr::fixed(".rds"))) %>%
+    dplyr::left_join(ipeds_dictionary %>%
+                dplyr::distinct(year, survey, survey_group, overview) %>%
+                dplyr::group_by(survey_group) %>%
+                dplyr::filter(year == max(year)) %>%
+                dplyr::ungroup() %>%
+                dplyr::mutate(overview = stringr::str_remove(overview, "This file contains the |This file contains data on the |This file contains ") %>% stringr::str_to_sentence()) %>%
+                dplyr::filter(year > 2012), by = "survey_group") %>%
+    dplyr::filter(!is.na(survey)) %>%
+    dplyr::select(-year) %>%
+    dplyr::mutate(filename = basename(file)) %>%
+    dplyr::relocate(file, .after = dplyr::last_col()) %>%
+    dplyr::relocate(filename, .after = survey_group) %>%
+    dplyr::rename(path = file)
+
+  if(!.show_details) ipeds_table <- ipeds_table %>% dplyr::select(-path, -overview)
+
+  return(ipeds_table)
+}
+
+#' Quick load cleaned ipeds data
+#' @description Convenience function to quick load a cleaned IPEDs rds.
+#' @importFrom magrittr "%>%"
+#' @param survey_file string containing all or part of the filename. The extension is not required. If the string matches more than one file, the list of matching files will be returned instead of the data.
+#' @return Cleaned IPEDS survey data from rds file.  Or, if multiple matches are found, a table of matches.
+#' @examples
+#' \dontrun{
+#' hd %>% ipeds_visdat(years = 2008:2011)
+#' }
+#' @export
+ipeds_load <- function(survey_file) {
+
+  survey_file <- stringr::str_remove(survey_file, stringr::fixed(".rds"))
+
+  files <- tibble::enframe(fs::dir_ls("~/Google Drive/SI/DataScience/data/maps_project/cleaned_data/ipeds/", glob = "*.rds"), name = NULL, value = "file")
+
+  file_match <- files %>% dplyr::mutate(name = basename(file)) %>% dplyr::filter(stringr::str_detect(name, stringr::fixed(!!survey_file)))
+
+  if(nrow(file_match) == 1) {
+    readr::read_rds(file_match$file)
+  } else
+    if(nrow(file_match) == 0) {
+      cli::cli_alert_info("No matching files found. The available files are:")
+      sorensonimpact::ipeds_data()
+  } else
+    if(nrow(file_match) > 1) {
+      if(nrow(file_match %>% dplyr::filter(!stringr::str_detect(name, stringr::fixed("(long)")))) == 1) {
+        longname <- file_match %>% dplyr::filter(stringr::str_detect(name, stringr::fixed("(long)"))) %>% dplyr::pull(name)
+        cli::cli_alert_warning("Loading the wide version of this survey filename. However, a (long) version of this survey filename exists:\n \t\"{longname}\". \nTo load the long version, further specify the survey_file string to match the long version.")
+        file_match <- file_match %>% dplyr::filter(!stringr::str_detect(name, stringr::fixed("(long)")))
+        return(readr::read_rds(file_match$file))
+      }
+
+      cli::cli_alert_info("Multiple matching files found. Please specify a unique survey filename from the list below:")
+      sorensonimpact::ipeds_data() %>%
+        dplyr::filter(stringr::str_detect(filename, !!survey_file))
+    }
+
+}
