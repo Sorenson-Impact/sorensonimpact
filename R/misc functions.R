@@ -82,7 +82,9 @@ si_scale_big_dollar <- function(x, sep = " ", suffix_n = F) {
 #' @description Automatically unloads, updates, and reloads the sorensonimpact package.
 #' @export
 update_si <- function() {
+  cli::cli_alert_info("Unloading and updating \`sorensonimpact\`...")
   remotes::unload("sorensonimpact")
   remotes::update_packages("sorensonimpact", upgrade = "always")
   library(sorensonimpact)
+  cli::cli_alert_success("Successfully updated \`sorensonimpact\`")
 }
