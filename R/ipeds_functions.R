@@ -237,7 +237,7 @@ ipeds_load <- function(survey_file) {
   file_match <- files %>% dplyr::mutate(name = basename(file)) %>% dplyr::filter(stringr::str_detect(name, stringr::fixed(!!survey_file)))
 
    if(nrow(file_match) == 1) {
-    cli::cli_alert_info("Loading \"{file_match$file}\"...")
+    cli::cli_alert_info("Loading {file_match$file} ...")
     readr::read_rds(file_match$file)
   } else
     if(nrow(file_match) == 0) {
