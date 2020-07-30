@@ -244,10 +244,14 @@ ipeds_load <- function(survey_file) {
       sorensonimpact::ipeds_data()
   } else
     if(nrow(file_match) > 1) {
+
       #Perfect match ignores longer version of same file name:
-      if(length(mrow <- which(stringr::str_remove(survey_file, "\\..*$") %in% stringr::str_remove(file_match$name, stringr::fixed(".rds")))) == 1) {
+      if(length(mrow <- which(stringr::str_remove(survey_file, "\\..*$") == stringr::str_remove(file_match$name, stringr::fixed(".rds")))) == 1) {
+
         cli::cli_alert_info("Files exist that match the string plus additional characters. Because the string provided is an exact match for \"{file_match %>% dplyr::slice(mrow) %>% dplyr::pull(file) %>% basename()}\", it is being loaded rather than the list of additional matches.")
+
         file_match <- file_match[mrow, ]
+
         return(readr::read_rds(file_match$file))
       }
 
