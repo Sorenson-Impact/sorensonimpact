@@ -86,5 +86,6 @@ update_si <- function() {
   devtools::unload("sorensonimpact")
   devtools::update_packages("sorensonimpact", upgrade = "always")
   library(sorensonimpact)
+  if(is.null(.Last.value)) return(cli::cli_alert_success("Package is already up to date."))
   cli::cli_alert_success("Successfully updated \`sorensonimpact\`")
 }
