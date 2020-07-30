@@ -76,3 +76,13 @@ si_scale_big_dollar <- function(x, sep = " ", suffix_n = F) {
   i <- ifelse(i == 0, which(limits == 1), i)
   paste0("$", format(round(x/limits[i], 1), trim = TRUE, scientific = FALSE), sep, suffix[i])
 }
+
+
+#' Update the sorensonimpact package
+#' @description Automatically unloads, updates, and reloads the sorensonimpact package.
+#' @export
+update_si <- function() {
+  remotes::unload("sorensonimpact")
+  remotes::update_packages("sorensonimpact", upgrade = "always")
+  library(sorensonimpact)
+}
