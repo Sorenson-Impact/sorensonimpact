@@ -245,6 +245,15 @@ ipeds_load <- function(survey_file) {
   } else
     if(nrow(file_match) > 1) {
 
+      #If the others are the long versions, ignore.
+      if(nrow(file_match %>% dplyr::filter(!stringr::str_detect(name, stringr::fixed("long")))) == 1) {
+        longname <- file_match %>% dplyr::filter(stringr::str_detect(name, stringr::fixed("long"))) %>% dplyr::pull(name)
+        cli::cli_alert_warning("Loading the wide version of this survey filename. However, a (long) version of this survey filename exists:\n \t\"{longname}\". \nTo load the long version, further specify the survey_file string to match the long version.")
+        file_match <- file_match %>% dplyr::filter(!stringr::str_detect(name, stringr::fixed("(long)")))
+        return(readr::read_rds(file_match$file))
+      }
+
+
       #Perfect match ignores longer version of same file name:
       if(length(mrow <- which(stringr::str_remove(survey_file, "\\..*$") == stringr::str_remove(file_match$name, stringr::fixed(".rds")))) == 1) {
 
@@ -255,13 +264,6 @@ ipeds_load <- function(survey_file) {
         return(readr::read_rds(file_match$file))
       }
 
-        #If the others are the long versions, ignore.
-      if(nrow(file_match %>% dplyr::filter(!stringr::str_detect(name, stringr::fixed("long")))) == 1) {
-        longname <- file_match %>% dplyr::filter(stringr::str_detect(name, stringr::fixed("long"))) %>% dplyr::pull(name)
-        cli::cli_alert_warning("Loading the wide version of this survey filename. However, a (long) version of this survey filename exists:\n \t\"{longname}\". \nTo load the long version, further specify the survey_file string to match the long version.")
-        file_match <- file_match %>% dplyr::filter(!stringr::str_detect(name, stringr::fixed("(long)")))
-        return(readr::read_rds(file_match$file))
-      }
 
       cli::cli_alert_info("Multiple matching files found. Please specify a unique survey filename from the list below:")
       sorensonimpact::ipeds_data() %>%
