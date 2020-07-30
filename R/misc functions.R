@@ -83,8 +83,8 @@ si_scale_big_dollar <- function(x, sep = " ", suffix_n = F) {
 #' @export
 update_si <- function() {
   cli::cli_alert_info("Unloading and updating \`sorensonimpact\`...")
-  remotes::unload("sorensonimpact")
-  remotes::update_packages("sorensonimpact", upgrade = "always")
+  devtools::unload("sorensonimpact")
+  devtools::update_packages("sorensonimpact", upgrade = "always")
   library(sorensonimpact)
   cli::cli_alert_success("Successfully updated \`sorensonimpact\`")
 }
