@@ -223,7 +223,7 @@ ipeds_data <- function(.show_details = F) {
 #' Quick load cleaned ipeds data
 #' @description Convenience function to quick load a cleaned IPEDs rds.
 #' @importFrom magrittr "%>%"
-#' @param survey_file string containing all or part of the filename. The extension is not required. If the string matches more than one file, the list of matching files will be returned instead of the data.
+#' @param survey_file string containing all or part of the filename. The extension is not required. If the string matches more than one file, the list of matching files will be returned instead of the data. If the string exactly matches a file despite their being other partial matches, that file is returned.
 #' @return Cleaned IPEDS survey data from rds file.  Or, if multiple matches are found, a table of matches.
 #' @examples
 #' \dontrun{
@@ -232,13 +232,11 @@ ipeds_data <- function(.show_details = F) {
 #' @export
 ipeds_load <- function(survey_file) {
 
-  survey_file <- stringr::str_remove(survey_file, stringr::fixed(".rds"))
-
   files <- tibble::enframe(fs::dir_ls("~/Google Drive/SI/DataScience/data/maps_project/cleaned_data/ipeds/", glob = "*.rds"), name = NULL, value = "file")
 
   file_match <- files %>% dplyr::mutate(name = basename(file)) %>% dplyr::filter(stringr::str_detect(name, stringr::fixed(!!survey_file)))
 
-  if(nrow(file_match) == 1) {
+   if(nrow(file_match) == 1) {
     readr::read_rds(file_match$file)
   } else
     if(nrow(file_match) == 0) {
@@ -246,6 +244,14 @@ ipeds_load <- function(survey_file) {
       sorensonimpact::ipeds_data()
   } else
     if(nrow(file_match) > 1) {
+      #Perfect match ignores longer version of same file name:
+      if(length(mrow <- which(stringr::str_remove(survey_file, "\\..*$") %in% stringr::str_remove(file_match$name, stringr::fixed(".rds")))) == 1) {
+        cli::cli_alert_info("Files exist that match the string plus additional characters. Because the string provided is an exact match for \"{file_match %>% dplyr::slice(mrow) %>% dplyr::pull(file) %>% basename()}\", it is being loaded rather than the list of additional matches.")
+        file_match <- file_match[mrow, ]
+        return(readr::read_rds(file_match$file))
+      }
+
+        #If the others are the long versions, ignore.
       if(nrow(file_match %>% dplyr::filter(!stringr::str_detect(name, stringr::fixed("(long)")))) == 1) {
         longname <- file_match %>% dplyr::filter(stringr::str_detect(name, stringr::fixed("(long)"))) %>% dplyr::pull(name)
         cli::cli_alert_warning("Loading the wide version of this survey filename. However, a (long) version of this survey filename exists:\n \t\"{longname}\". \nTo load the long version, further specify the survey_file string to match the long version.")

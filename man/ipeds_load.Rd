@@ -7,7 +7,7 @@
 ipeds_load(survey_file)
 }
 \arguments{
-\item{survey_file}{string containing all or part of the filename. The extension is not required. If the string matches more than one file, the list of matching files will be returned instead of the data.}
+\item{survey_file}{string containing all or part of the filename. The extension is not required. If the string matches more than one file, the list of matching files will be returned instead of the data. If the string exactly matches a file despite their being other partial matches, that file is returned.}
 }
 \value{
 Cleaned IPEDS survey data from rds file.  Or, if multiple matches are found, a table of matches.
