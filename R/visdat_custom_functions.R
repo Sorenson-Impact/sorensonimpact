@@ -1,6 +1,7 @@
 #' vis_dat for grouped data
-#' @description Produce a vis_dat plot for ipeds data split by year with optional sampling.
+#' @description
 #' \lifecycle{experimental}
+#' Produce a vis_dat plot for ipeds data split by year with optional sampling.
 #' @importFrom magrittr "%>%"
 #' @param ... bare, unquoted column(s) to use as the index to group by. Alternatively will accept a grouped df.
 #' @param .sample_frac Percent of observations to sample from each year.  Default "auto" samples down to 100,000 rows, split evenly between groups for vis_dat. For vis_miss and vis_value, "auto" uses all data.
