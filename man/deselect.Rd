@@ -13,8 +13,8 @@ deselect(.data, ...)
 }
 \value{
 An object of the same type as .data, with the specified columns removed.
-\lifecycle{maturing}
 }
 \description{
+\lifecycle{maturing}
 This is a simple negation of `dplyr::select`.
 }

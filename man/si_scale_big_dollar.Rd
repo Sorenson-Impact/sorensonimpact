@@ -13,9 +13,9 @@ si_scale_big_dollar(x, sep = " ", suffix_n = F)
 }
 \value{
 Character vector of formatted dollar values.
-\lifecycle{maturing}
 }
 \description{
+\lifecycle{maturing}
 Format a vector of numeric values according to monetary abbreviations.
 
 (ie: 1,000 becomes "1 k", 2,500,000 becomes "2.5 B") See: https://www.wallstreetoasis.com/forums/abbreviation-for-thousands-millions-billions-trillion

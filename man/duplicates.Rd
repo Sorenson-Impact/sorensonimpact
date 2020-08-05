@@ -11,9 +11,9 @@ duplicates(data, ...)
 }
 \value{
 Filtered dataframe with duplicates in given columns
-\lifecycle{defunct}
 }
 \description{
+\lifecycle{defunct}
 Extract all rows with duplicated values in the given columns
 }
 \examples{

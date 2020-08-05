@@ -8,8 +8,8 @@ col_sum_na(data)
 }
 \value{
 NA count for each
-\lifecycle{maturing}
 }
 \description{
+\lifecycle{maturing}
 Count all the NAs in each column of a data frame
 }

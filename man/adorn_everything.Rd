@@ -2,7 +2,7 @@
 % Please edit documentation in R/janitor_custom_functions.R
 \name{adorn_everything}
 \alias{adorn_everything}
-\title{Adorn percentages, percent formatting, and ns to a janitor::tabyl with better percents}
+\title{Adorn Everything}
 \usage{
 adorn_everything(dat, pct_direction = "col")
 }
@@ -11,9 +11,9 @@ adorn_everything(dat, pct_direction = "col")
 }
 \value{
 tabyl with percents, percent formatting, ns, and better total percents.
-\lifecycle{experimental}
 }
 \description{
+\lifecycle{experimental}
 Adorn percentages, percent formatting, and ns to a \code{janitor::tabyl()} with better percents
 }
 \examples{

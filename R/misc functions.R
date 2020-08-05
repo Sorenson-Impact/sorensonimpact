@@ -1,6 +1,7 @@
 #' Write Clip shortcut
-#' @description Copies an object to the clipboard. Defaults to .Last.value
+#' @description
 #' \lifecycle{stable}
+#' Copies an object to the clipboard. Defaults to .Last.value
 #' @export
 wc <- function(x = .Last.value) {
   clipr::write_clip(x)
@@ -8,12 +9,13 @@ wc <- function(x = .Last.value) {
 }
 
 #' Not In: Inverse Value Matching
-#' @description Returns a logical vector indicating if there is NOT a match for the LHS vector anywhere in the RHS vector. Opposide of \code{\%in\%}.
+#' @description
+#' \lifecycle{stable}
+#' Returns a logical vector indicating if there is NOT a match for the LHS vector anywhere in the RHS vector. Opposide of \code{\%in\%}.
 #' @usage x %ni% y
 #' @param x vector or NULL: the values to check for non-match
 #' @param y vector or NULL: the values to be matched against
 #' @return A logical vector, indicating if there was no match for each element of x. Values are TRUE or FALSE and never NA
-#' \lifecycle{stable}
 #' @rdname ni
 #' @export
 "%ni%" <- Negate("%in%")
@@ -42,11 +44,11 @@ view_df <- function(){
 
 
 #' Install all the packages we've ever found useful.
-#'
+#' @description
+#' \lifecycle{experimental}
 #' This is a convenience function for after R has been updated and all
 #' the packages need to be reinstalled.
 #'
-#' \lifecycle{experimental}
 #' @export
 si_install_packages <- function() {
   message("work in progress, see siverse code for how to do this elegantly.")
@@ -55,14 +57,15 @@ si_install_packages <- function() {
 }
 
 #' Scale large dollar amounts to shortened dollar amounts (k, M, B, T)
-#' @description Format a vector of numeric values according to monetary abbreviations.
+#' @description
+#' \lifecycle{maturing}
+#' Format a vector of numeric values according to monetary abbreviations.
 #'
 #' (ie: 1,000 becomes "1 k", 2,500,000 becomes "2.5 B") See: https://www.wallstreetoasis.com/forums/abbreviation-for-thousands-millions-billions-trillion
 #' @param sep Seperator to use between number and unit (defaults to " ").
 #' @param suffix_n Use "Bn" and "Tn" instead of "B" and "T".
 #'
 #' @return Character vector of formatted dollar values.
-#' \lifecycle{maturing}
 #' @examples
 #' \dontrun{
 #' si_scale_big_dollar(1000)

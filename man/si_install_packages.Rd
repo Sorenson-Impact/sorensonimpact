@@ -7,9 +7,7 @@
 si_install_packages()
 }
 \description{
+\lifecycle{experimental}
 This is a convenience function for after R has been updated and all
 the packages need to be reinstalled.
-}
-\details{
-\lifecycle{experimental}
 }

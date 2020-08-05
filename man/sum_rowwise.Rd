@@ -17,10 +17,10 @@ sum_rowwise(data, ..., sum_col = "sum", na.rm = FALSE)
 Vector with rowwise sums.
 }
 \description{
+\lifecycle{experimental}
 Sum selected columns within mutate without \code{rowwise()} (which can be very slow).
 }
 \examples{
-\lifecycle{experimental}
 \dontrun{
 cars \%>\% sum_rowwise(speed, dist, na.rm = T, sum_col = "mysum"))
 }
