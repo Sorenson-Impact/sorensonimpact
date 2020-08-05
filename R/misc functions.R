@@ -1,9 +1,10 @@
 #' Write Clip shortcut
 #' @description Copies an object to the clipboard. Defaults to .Last.value
+#' \lifecycle{stable}
 #' @export
 wc <- function(x = .Last.value) {
   clipr::write_clip(x)
-  message("Value copied to clipboard")
+  cli::cli_alert_success("Value copied to clipboard")
 }
 
 #' Not In: Inverse Value Matching
@@ -12,6 +13,7 @@ wc <- function(x = .Last.value) {
 #' @param x vector or NULL: the values to check for non-match
 #' @param y vector or NULL: the values to be matched against
 #' @return A logical vector, indicating if there was no match for each element of x. Values are TRUE or FALSE and never NA
+#' \lifecycle{stable}
 #' @rdname ni
 #' @export
 "%ni%" <- Negate("%in%")
@@ -44,6 +46,7 @@ view_df <- function(){
 #' This is a convenience function for after R has been updated and all
 #' the packages need to be reinstalled.
 #'
+#' \lifecycle{experimental}
 #' @export
 si_install_packages <- function() {
   message("work in progress, see siverse code for how to do this elegantly.")
@@ -59,7 +62,7 @@ si_install_packages <- function() {
 #' @param suffix_n Use "Bn" and "Tn" instead of "B" and "T".
 #'
 #' @return Character vector of formatted dollar values.
-#'
+#' \lifecycle{maturing}
 #' @examples
 #' \dontrun{
 #' si_scale_big_dollar(1000)
@@ -80,6 +83,7 @@ si_scale_big_dollar <- function(x, sep = " ", suffix_n = F) {
 
 #' Update the sorensonimpact package
 #' @description Automatically unloads, updates, and reloads the sorensonimpact package.
+#' \lifecycle{experimental}
 #' @export
 update_si <- function() {
   if(remotes::package_deps("sorensonimpact")$diff == 0) return(cli::cli_alert_success("Package is already up to date."))

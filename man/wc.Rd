@@ -8,4 +8,5 @@ wc(x = .Last.value)
 }
 \description{
 Copies an object to the clipboard. Defaults to .Last.value
+\lifecycle{stable}
 }

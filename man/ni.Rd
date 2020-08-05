@@ -13,6 +13,7 @@ x %ni% y
 }
 \value{
 A logical vector, indicating if there was no match for each element of x. Values are TRUE or FALSE and never NA
+\lifecycle{stable}
 }
 \description{
 Returns a logical vector indicating if there is NOT a match for the LHS vector anywhere in the RHS vector. Opposide of \code{\%in\%}.

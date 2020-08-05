@@ -8,4 +8,5 @@ update_si()
 }
 \description{
 Automatically unloads, updates, and reloads the sorensonimpact package.
+\lifecycle{experimental}
 }

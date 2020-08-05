@@ -15,6 +15,7 @@ freq_tibble(data, rows, cols, ...)
 }
 \value{
 A tibble
+\lifecycle{defunct}
 }
 \description{
 Generate a frequency table with marginal values

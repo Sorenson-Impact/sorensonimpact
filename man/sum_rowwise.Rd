@@ -20,6 +20,7 @@ Vector with rowwise sums.
 Sum selected columns within mutate without \code{rowwise()} (which can be very slow).
 }
 \examples{
+\lifecycle{experimental}
 \dontrun{
 cars \%>\% sum_rowwise(speed, dist, na.rm = T, sum_col = "mysum"))
 }

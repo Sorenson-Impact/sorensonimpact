@@ -3,6 +3,7 @@
 #' @importFrom magrittr "%>%"
 #' @param pct_direction Should the cell percentages use the "col" or "row" totals as denominator. Defaults to "col".
 #' @return tabyl with percents, percent formatting, ns, and better total percents.
+#' \lifecycle{experimental}
 #' @examples
 #' \dontrun{
 #' mtcars %>% tabyl(cyl, gear) %>% adorn_everything(pct_direction = "col")

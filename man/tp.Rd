@@ -8,6 +8,7 @@ tp(data, rows = 10)
 }
 \value{
 A preview of a tibble.
+\lifecycle{experimental}
 }
 \description{
 Show a sample of all tibble data without hiding columns.

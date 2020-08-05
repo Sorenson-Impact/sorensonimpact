@@ -5,6 +5,7 @@
 #' @param .sample_frac Percent of observations to sample from each year.  Default "auto" samples down to 100,000 rows, split evenly between groups for vis_dat. For vis_miss and vis_value, "auto" uses all data.
 #' @param method Which visdat function to use. One of "vis_dat", "vis_miss", or "vis_value".  Accepts shorthand "dat", "val", and "miss".
 #' @return visdat plot separated by grouping variable.
+#' \lifecycle{experimental}
 #' @examples
 #' \dontrun{
 #' diamonds %>% si_visdat_group(facet_group = cut)

@@ -3,13 +3,14 @@
 #' @importFrom magrittr "%>%"
 #' @param ... Columns to evaluate for duplication. Works via \code{group_by()}.
 #' @return Filtered dataframe with duplicates in given columns
+#' \lifecycle{defunct}
 #' @examples
 #' \dontrun{
 #' mtcars %>% duplicates(mpg)
 #' }
 #' @export
 duplicates <- function(data, ...) {
-  .Deprecated("janitor::get_dupes()")
+  lifecycle::deprecate_stop(when = "0.0.1.9034", what = "duplicates()", with = "janitor::get_dupes()")
   columns <- rlang::enquos(...)
   data %>%
     dplyr::group_by(!!!columns) %>%
@@ -27,6 +28,7 @@ duplicates <- function(data, ...) {
 #' @param na.rm Remove NAs? Passed to rowSums
 #' @return Vector with rowwise sums.
 #' @examples
+#' \lifecycle{experimental}
 #' \dontrun{
 #' cars %>% sum_rowwise(speed, dist, na.rm = T, sum_col = "mysum"))
 #' }
@@ -45,6 +47,7 @@ sum_rowwise <- function(data, ..., sum_col = "sum", na.rm = FALSE) {
 #' @description Count all the NAs in each column of a data frame
 #' @importFrom magrittr "%>%"
 #' @return NA count for each
+#' \lifecycle{maturing}
 #' @export
 col_sum_na <- function(data) {
   data %>%
@@ -59,9 +62,10 @@ col_sum_na <- function(data) {
 #' @param cols The columns of the table
 #' @param ... Additional grouping variables that will subdivide rows.
 #' @return A tibble
+#' \lifecycle{defunct}
 #' @export
 freq_tibble <- function(data, rows, cols, ...) {
-  .Deprecated("janitor::tabyl()")
+  lifecycle::deprecate_stop(when = "0.0.1.9034", what = "freq_tibble()", with = "janitor::tabyl()")
   rows <- rlang::enquo(rows)
   cols <- rlang::enquo(cols)
   groups <- rlang::enquos(...)
@@ -108,6 +112,7 @@ freq_tibble <- function(data, rows, cols, ...) {
 #' @description Show a sample of all tibble data without hiding columns.
 #' @importFrom magrittr "%>%"
 #' @return A preview of a tibble.
+#' \lifecycle{experimental}
 #' @export
 tp <- function(data, rows = 10) {
   data <- dplyr::sample_n(data, size = rows)
@@ -118,6 +123,7 @@ tp <- function(data, rows = 10) {
 #' @description Can replace `case_when()` syntax and outputs an ordered factor in the same order as the cases, useful for meaningful ordering in plots and tables.  This is because for `case_when()` the arguments are evaluated in order, so you must proceed from the most specific to the most general. Tables and plots will therefor be ordered by the evaluation order.
 #' @param ... A sequence of two-sided formulas. See ?dplyr::case_when for details
 #' @return An ordered factor vector of length 1 or n, matching the length of the logical input or output vectors, with the type (and attributes) of the first RHS. Inconsistent lengths or types will generate an error.
+#' \lifecycle{experimental}
 #' @importFrom magrittr "%>%"
 #' @export
 fct_case_when <- function(...) {
@@ -132,6 +138,7 @@ fct_case_when <- function(...) {
 #' @param .data A data frame, data frame extension (e.g. a tibble), or a lazy data frame (e.g. from dbplyr or dtplyr). See Methods, below, for more details.
 #' @param ... <tidy-select> One or more unquoted expressions separated by commas. Variable names can be used as if they were positions in the data frame, so expressions like x:y can be used to select a range of variables.
 #' @return An object of the same type as .data, with the specified columns removed.
+#' \lifecycle{maturing}
 #' @importFrom magrittr "%>%"
 #' @export
 deselect <- function(.data, ...) {

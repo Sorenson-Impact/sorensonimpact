@@ -13,6 +13,7 @@ si_scale_big_dollar(x, sep = " ", suffix_n = F)
 }
 \value{
 Character vector of formatted dollar values.
+\lifecycle{maturing}
 }
 \description{
 Format a vector of numeric values according to monetary abbreviations.

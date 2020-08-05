@@ -15,6 +15,7 @@ si_visdat_grouped(.data, ..., method = "vis_dat", .sample_frac = "auto")
 }
 \value{
 visdat plot separated by grouping variable.
+\lifecycle{experimental}
 }
 \description{
 Produce a vis_dat plot for ipeds data split by year with optional sampling.

@@ -11,6 +11,7 @@ adorn_everything(dat, pct_direction = "col")
 }
 \value{
 tabyl with percents, percent formatting, ns, and better total percents.
+\lifecycle{experimental}
 }
 \description{
 Adorn percentages, percent formatting, and ns to a \code{janitor::tabyl()} with better percents
