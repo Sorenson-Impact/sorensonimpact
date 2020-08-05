@@ -15,6 +15,7 @@ ipeds_inst_lookup(unitid, return_tibble = FALSE)
 Printed info about the institution.
 }
 \description{
+\lifecycle{experimental}
 Shows quick info on an institution.
 }
 \examples{

@@ -13,6 +13,7 @@ ipeds_info(survey_group)
 Printed info about the survey
 }
 \description{
+\lifecycle{experimental}
 Shows the distinct overview and notes fields from the SI ipeds dictionary
 }
 \examples{

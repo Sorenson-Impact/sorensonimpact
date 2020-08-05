@@ -85,8 +85,9 @@ si_scale_big_dollar <- function(x, sep = " ", suffix_n = F) {
 
 
 #' Update the sorensonimpact package
-#' @description Automatically unloads, updates, and reloads the sorensonimpact package.
+#' @description
 #' \lifecycle{experimental}
+#' Automatically unloads, updates, and reloads the sorensonimpact package.
 #' @export
 update_si <- function() {
   if(remotes::package_deps("sorensonimpact")$diff == 0) return(cli::cli_alert_success("Package is already up to date."))

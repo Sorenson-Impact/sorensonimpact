@@ -1,5 +1,7 @@
 #' Show IPEDS survey info
-#' @description Shows the distinct overview and notes fields from the SI ipeds dictionary
+#' @description
+#' \lifecycle{experimental}
+#' Shows the distinct overview and notes fields from the SI ipeds dictionary
 #' @importFrom magrittr "%>%"
 #' @param survey_group String value matching the abbreviated survey group
 #' @return Printed info about the survey
@@ -47,7 +49,9 @@ ipeds_info <- function(survey_group) {
 }
 
 #' Show quick summary info on institution given a unitid
-#' @description Shows quick info on an institution.
+#' @description
+#' \lifecycle{experimental}
+#' Shows quick info on an institution.
 #' @importFrom magrittr "%>%"
 #' @param unitid Numeric `unitid value.
 #' @param return_tibble Logical indicating whether to return the data as a tibble rather than formatted output. Defaults to formatted output.
@@ -100,7 +104,9 @@ ipeds_inst_lookup <- function(unitid, return_tibble = FALSE) {
 }
 
 #' Find unitids that match a string in the institution name
-#' @description Show's unitid's for institution names that match the string provided
+#' @description
+#' \lifecycle{experimental}
+#' Shows unitid's for institution names that match the string provided
 #' @importFrom magrittr "%>%"
 #' @param instname Full or partial string to detect in instution name.
 #' @return Printed info about the institution.
@@ -130,7 +136,9 @@ ipeds_unitid_lookup <- function(instname) {
 
 
 #' vis_dat for ipeds
-#' @description Produce a vis_dat plot for ipeds data split by year with optional sampling.
+#' @description
+#' \lifecycle{deprecated}
+#' Produce a vis_dat plot for ipeds data split by year with optional sampling.
 #' @importFrom magrittr "%>%"
 #' @param years Single year or vector of years to plot.  Defaults to all years in data.
 #' @param .sample_frac Percent of observations to sample from each year.  Defaults to .10.
@@ -142,7 +150,7 @@ ipeds_unitid_lookup <- function(instname) {
 #' @export
 
 ipeds_visdat <- function(.data, years = "all", .sample_frac = .10) {
-  .Deprecated("sorensonimpact::si_visdat_grouped()")
+  lifecycle::deprecate_warn(when = "0.0.1.9035", what = "ipeds_visdat()", with = "si_visdat_grouped()")
   #Check that data is ipeds survey
   if(!all(c("unitid", "year") %in% names(.data))) warning(".data does not contain a unitid or year column.  Are you sure you passed an ipeds survey?")
 
@@ -185,7 +193,9 @@ ipeds_visdat <- function(.data, years = "all", .sample_frac = .10) {
 }
 
 #' Table of cleaned IPEDs data
-#' @description Shows a table of the cleaned IPEDs data.
+#' @description
+#' \lifecycle{experimental}
+#' Shows a table of the cleaned IPEDs data.
 #' @importFrom magrittr "%>%"
 #' @param .show_details Include the path and the survey description? Defaults to FALSE for easier reading
 #' @return IPEDS data table
@@ -221,7 +231,9 @@ ipeds_data <- function(.show_details = F) {
 }
 
 #' Quick load cleaned ipeds data
-#' @description Convenience function to quick load a cleaned IPEDs rds.
+#' @description
+#' \lifecycle{experimental}
+#' Convenience function to quick load a cleaned IPEDs rds.
 #' @importFrom magrittr "%>%"
 #' @param survey_file string containing all or part of the filename. The extension is not required. If the string matches more than one file, the list of matching files will be returned instead of the data. If the string exactly matches a file despite their being other partial matches, that file is returned.
 #' @return Cleaned IPEDS survey data from rds file.  Or, if multiple matches are found, a table of matches.

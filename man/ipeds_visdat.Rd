@@ -15,6 +15,7 @@ ipeds_visdat(.data, years = "all", .sample_frac = 0.1)
 Plot of ipeds survey by year.
 }
 \description{
+\lifecycle{deprecated}
 Produce a vis_dat plot for ipeds data split by year with optional sampling.
 }
 \examples{

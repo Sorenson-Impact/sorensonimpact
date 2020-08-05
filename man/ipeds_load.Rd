@@ -13,6 +13,7 @@ ipeds_load(survey_file)
 Cleaned IPEDS survey data from rds file.  Or, if multiple matches are found, a table of matches.
 }
 \description{
+\lifecycle{experimental}
 Convenience function to quick load a cleaned IPEDs rds.
 }
 \examples{

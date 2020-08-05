@@ -13,7 +13,8 @@ ipeds_unitid_lookup(instname)
 Printed info about the institution.
 }
 \description{
-Show's unitid's for institution names that match the string provided
+\lifecycle{experimental}
+Shows unitid's for institution names that match the string provided
 }
 \examples{
 \dontrun{

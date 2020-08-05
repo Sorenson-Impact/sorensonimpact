@@ -13,6 +13,7 @@ ipeds_data(.show_details = F)
 IPEDS data table
 }
 \description{
+\lifecycle{experimental}
 Shows a table of the cleaned IPEDs data.
 }
 \examples{
