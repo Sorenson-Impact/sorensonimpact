@@ -1,4 +1,4 @@
-# sorensonimpact 0.0.1.9036
+# sorensonimpact 0.0.1.9038
 
 * Added `common_vars()` which shows common variable names between two or more tibbles.
 * Added `si_news()` which shows news updates for version bumps
