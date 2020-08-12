@@ -124,7 +124,7 @@ si_news <- function(recent = FALSE, in_viewer = TRUE) {
 #' \lifecycle{experimental}
 #' Automatically unloads, updates, and reloads the sorensonimpact package.
 #' @export
-update_si <- function() {
+si_update <- function() {
   old_version <- packageVersion("sorensonimpact")
 
   if(remotes::package_deps("sorensonimpact")$diff == 0) return(cli::cli_alert_success("Package is already up to date."))

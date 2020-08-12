@@ -6,7 +6,7 @@ check_si_up_to_date <- function() {
   x <- remotes::package_deps("sorensonimpact")
 
   if(x$installed != x$available) {
-    cli::cli_alert_info(cli::bg_red(cli::col_white(cli::style_bold("A newer version of \`sorensonimpact\` is available.  Run \`update_si()\` to update."))))
+    cli::cli_alert_info(cli::bg_red(cli::col_white(cli::style_bold("A newer version of \`sorensonimpact\` is available.  Run \`si_update()\` to update."))))
   }
 
 }
