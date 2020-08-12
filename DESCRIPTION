@@ -4,8 +4,6 @@ Title: Sorenson Impact Internal R Package
 Version: 0.0.1.9035
 Authors@R: c(
   person("Jonathan", "Zadra", email = "jonathan.zadra@sorensonimpact.com", role = c("aut", "cre")),
-  person("Daniel", "Hadley", email = "daniel.hadley@sorensonimpact.com", role = "ctb"),
-  person("Gwendolyn", "Reynolds", email = "gwendolyn.reynolds@sorensonimpact.com", role = "ctb"),
   person("Sreeja", "Nair", email = "sreeja.nair@sorensonimpact.com", role = "ctb"))
 Maintainer: Jonathan Zadra <jonathan.zadra@sorensonimpact.com>
 Description: Package with custom functions and settings used internally by the Sorenson Impact Data Science Team.
