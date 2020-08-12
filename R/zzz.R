@@ -4,8 +4,8 @@
 
 check_si_up_to_date <- function() {
 
-  if("sorensonimpact" %in% installed.packages()[,"Package"]) { #This is dumb, but for some reason it tries to run this during an initial install
-    if(remotes:::local_sha("sorensonimpact") != remotes:::package2remote("sorensonimpact")$sha) {
+  if("sorensonimpact" %in% utils::installed.packages()[,"Package"]) { #This is dumb, but for some reason it tries to run this during an initial install
+    if(remotes:::local_sha("sorensonimpact") != remotes:::remote_sha(structure(remotes:::package2remote("sorensonimpact"), class = "github_remote"))) {
       cli::cli_alert_info(cli::bg_red(cli::col_white(cli::style_bold("A newer version of \`sorensonimpact\` is available.  Run \`si_update()\` to update."))))
     }
   }
