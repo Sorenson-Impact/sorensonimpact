@@ -139,6 +139,7 @@ si_update <- function() {
   devtools::update_packages("sorensonimpact", upgrade = "always")
   library(sorensonimpact)
   cli::cli_alert_success("Successfully updated \`sorensonimpact\`")
+
   new_version <- packageVersion("sorensonimpact")
 
   if(old_version != new_version) {
