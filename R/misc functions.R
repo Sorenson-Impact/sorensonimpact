@@ -108,7 +108,12 @@ si_news <- function(recent = FALSE, in_viewer = TRUE) {
         line_col = "yellow"
         ))
 
-    newstext <- newsdb$Text %>% stringr::str_remove("^\\s*-\\s") %>% stringr::str_remove("\\\n") %>% stringr::str_squish()
+    newstext <- newsdb$Text %>%
+      stringr::str_split("  - ") %>%
+      unlist() %>%
+      stringr::str_remove("\\\n") %>%
+      stringr::str_squish() %>%
+      .[-1] #end up with an empty first line
 
     cli::cat_line()
     cli::cli_li(newstext)
