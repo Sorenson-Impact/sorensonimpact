@@ -84,18 +84,61 @@ si_scale_big_dollar <- function(x, sep = " ", suffix_n = F) {
 }
 
 
+#' Show news for new version
+#' @description
+#' \lifecycle{experimental}
+#' Shows the news for the package
+#' @param recent Logical. Show only the most recent version changes (defaults to FALSE)
+#' @param in_viewer Logical. Show news in viewer instead of console (defaults to TRUE)
+#' @export
+si_news <- function(recent = FALSE, in_viewer = TRUE) {
+
+  if(recent) {
+    newsdb <- news(Version == as.character(packageVersion("sorensonimpact")), package = "sorensonimpact")
+  } else newsdb <- news(package = "sorensonimpact")
+
+  if(in_viewer) {
+    newsdb
+  } else {
+
+    cli::cat_line()
+
+    print(cli::rule(
+        center = paste0("Update news for sorensonimpact ", packageVersion("sorensonimpact"), ""),
+        line_col = "yellow"
+        ))
+
+    newstext <- newsdb$Text %>% stringr::str_remove("^\\s*-\\s") %>% stringr::str_remove("\\\n") %>% stringr::str_squish()
+
+    cli::cat_line()
+    cli::cli_li(newstext)
+    cli::cat_line()
+
+  }
+
+}
+
+
 #' Update the sorensonimpact package
 #' @description
 #' \lifecycle{experimental}
 #' Automatically unloads, updates, and reloads the sorensonimpact package.
 #' @export
 update_si <- function() {
+  old_version <- packageVersion("sorensonimpact")
+
   if(remotes::package_deps("sorensonimpact")$diff == 0) return(cli::cli_alert_success("Package is already up to date."))
+
   cli::cli_alert_info("Unloading and updating \`sorensonimpact\`...")
   devtools::unload("sorensonimpact")
   devtools::update_packages("sorensonimpact", upgrade = "always")
   library(sorensonimpact)
   cli::cli_alert_success("Successfully updated \`sorensonimpact\`")
+  new_version <- packageVersion("sorensonimpact")
+
+  if(old_version != new_version) {
+    si_news(recent = T, in_viewer = F)
+  }
 }
 
 
