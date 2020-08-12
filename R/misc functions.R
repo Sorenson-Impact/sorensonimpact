@@ -132,7 +132,7 @@ si_news <- function(recent = FALSE, in_viewer = TRUE) {
 si_update <- function() {
   old_version <- packageVersion("sorensonimpact")
 
-  if(remotes::package_deps("sorensonimpact")$diff == 0) return(cli::cli_alert_success("Package is already up to date."))
+  if(remotes:::local_sha("sorensonimpact") == remotes:::remote_sha(structure(remotes:::package2remote("sorensonimpact"), class = "github_remote"))) return(cli::cli_alert_success("Package is already up to date."))
 
   cli::cli_alert_info("Unloading and updating \`sorensonimpact\`...")
   devtools::unload("sorensonimpact")
