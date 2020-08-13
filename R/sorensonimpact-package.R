@@ -9,3 +9,5 @@ NULL
 #'
 #' @name sorensonimpact
 #' @docType package
+#' @keywords internal
+NULL
