@@ -3,8 +3,10 @@
 }
 
 check_si_up_to_date <- function() {
+  loc <- remotes:::local_sha("sorensonimpact")
+  if(is.na(loc)) return()
 
-  if(remotes:::local_sha("sorensonimpact") != remotes:::remote_sha(structure(remotes:::package2remote("sorensonimpact"), class = "github_remote"))) {
+  if(loc != remotes:::remote_sha(structure(remotes:::package2remote("sorensonimpact"), class = "github_remote"))) {
     cli::cli_alert_info(cli::bg_red(cli::col_white(cli::style_bold("A newer version of \`sorensonimpact\` is available.  Run \`si_update()\` to update."))))
   }
 
