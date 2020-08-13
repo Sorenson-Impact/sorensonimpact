@@ -88,18 +88,15 @@ si_scale_big_dollar <- function(x, sep = " ", suffix_n = F) {
 #' @description
 #' \lifecycle{experimental}
 #' Shows the news for the package
-#' @param recent Logical. Show only the most recent version changes (defaults to FALSE)
 #' @param in_viewer Logical. Show news in viewer instead of console (defaults to TRUE)
 #' @export
-si_news <- function(recent = FALSE, in_viewer = TRUE) {
-
-  if(recent) {
-    newsdb <- news(Version == as.character(packageVersion("sorensonimpact")), package = "sorensonimpact")
-  } else newsdb <- news(package = "sorensonimpact")
+si_news <- function(in_viewer = TRUE) {
 
   if(in_viewer) {
-    newsdb
+    news(package = "sorensonimpact")
   } else {
+
+    newsdb <- news(Version == as.character(packageVersion("sorensonimpact")), package = "sorensonimpact")
 
     cli::cat_line()
 
@@ -143,7 +140,7 @@ si_update <- function() {
   new_version <- packageVersion("sorensonimpact")
 
   if(old_version != new_version) {
-    si_news(recent = T, in_viewer = F)
+    si_news(in_viewer = F)
   } else {
     cli::cat_line()
 

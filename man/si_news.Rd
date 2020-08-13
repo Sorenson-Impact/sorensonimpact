@@ -4,11 +4,9 @@
 \alias{si_news}
 \title{Show news for new version}
 \usage{
-si_news(recent = FALSE, in_viewer = TRUE)
+si_news(in_viewer = TRUE)
 }
 \arguments{
-\item{recent}{Logical. Show only the most recent version changes (defaults to FALSE)}
-
 \item{in_viewer}{Logical. Show news in viewer instead of console (defaults to TRUE)}
 }
 \description{
