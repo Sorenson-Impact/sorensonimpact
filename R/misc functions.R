@@ -144,6 +144,17 @@ si_update <- function() {
 
   if(old_version != new_version) {
     si_news(recent = T, in_viewer = F)
+  } else {
+    cli::cat_line()
+
+    print(cli::rule(
+      left = paste0("sorensonimpact update"),
+      line_col = "blue"
+    ))
+
+    cli::cat_line()
+    cli::cli_alert_info("Minor update, no new features added.  Run \'si_news()\` to view changelog.")
+    cli::cat_line()
   }
 }
 
