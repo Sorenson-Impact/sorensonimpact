@@ -150,7 +150,7 @@ si_update <- function() {
     ))
 
     cli::cat_line()
-    cli::cli_alert_info("Minor update, no new features added.  Run \'si_news()\` to view changelog.")
+    cli::cli_alert_info("Minor update, no new features added.  Run \'si_news()\` to view changelog for previous major updates.")
     cli::cat_line()
   }
 }
