@@ -234,7 +234,7 @@ idf <- function(.data, id = .last_id, glimpse = F) {
   result <- .data %>%
     dplyr::filter(!!key == !!id)
 
-  if(glimpse) result %>% dplyr::glimpse
+  if(glimpse) result %>% dplyr::glimpse()
     else result
 
 }
