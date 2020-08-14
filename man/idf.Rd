@@ -12,6 +12,8 @@ df \%>\% idf(id = .last_id)
 \item{id}{The key value you want to filter. After the first time the function
 is called with a specified key value, the value is stored in a hidden
 object and does not need to be specified again.}
+
+\item{glimpse}{Print output using dplyr::glimpse, defaults to FALSE.}
 }
 \value{
 The data filtered by the key value on the key column stored in options("idf_data_key")

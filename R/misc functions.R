@@ -218,9 +218,10 @@ common_vars <- function(...) {
 #' @param id The key value you want to filter. After the first time the function
 #'   is called with a specified key value, the value is stored in a hidden
 #'   object and does not need to be specified again.
+#' @param glimpse Print output using dplyr::glimpse, defaults to FALSE.
 #' @return The data filtered by the key value on the key column stored in options("idf_data_key")
 #' @export
-idf <- function(.data, id = .last_id) {
+idf <- function(.data, id = .last_id, glimpse = F) {
 
   .last_id <<- id
 
@@ -228,10 +229,13 @@ idf <- function(.data, id = .last_id) {
 
   if(is.null(key)) return(cli::cli_alert_danger("{.val idf_data_key} is not set. Use {.code options(idf_data_key = \"your_data_key_column\"} at the start of the script."))
 
-  key <- sym(key)
+  key <- rlang::sym(key)
 
-  .data %>%
-    filter(!!key == !!id)
+  result <- .data %>%
+    dplyr::filter(!!key == !!id)
+
+  if(glimpse) result %>% dplyr::glimpse
+    else result
 
 }
 
