@@ -1,7 +1,6 @@
 # sorensonimpact 0.0.1.9048
 
-- Internal changes only.
-
+* Added `idf()`. This function makes it easy to look up an individual based on a key column in multiple tables from the same dataset when working interactively (ie ipeds `unitid`). See ?idf for details.
 
 # sorensonimpact 0.0.1.9047
 
