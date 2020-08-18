@@ -232,7 +232,7 @@ idf <- function(.data, id = .last_id, glimpse = F) {
   key <- rlang::sym(key)
 
   result <- .data %>%
-    dplyr::filter(!!key == !!id)
+    dplyr::filter(!!key %in% !!id)
 
   if(glimpse) result %>% dplyr::glimpse()
     else result
