@@ -9,7 +9,7 @@ options(idf_data_key = "your_data_key_column")
 df \%>\% idf(id = .last_id)
 }
 \arguments{
-\item{id}{The key value you want to filter. After the first time the function
+\item{id}{A vector containing the key value(s) you want to filter. After the first time the function
 is called with a specified key value, the value is stored in a hidden
 object and does not need to be specified again.}
 

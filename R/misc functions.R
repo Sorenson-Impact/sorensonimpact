@@ -215,7 +215,7 @@ common_vars <- function(...) {
 #'
 #' df \%>\% idf(id = .last_id)
 #'
-#' @param id The key value you want to filter. After the first time the function
+#' @param id A vector containing the key value(s) you want to filter. After the first time the function
 #'   is called with a specified key value, the value is stored in a hidden
 #'   object and does not need to be specified again.
 #' @param glimpse Print output using dplyr::glimpse, defaults to FALSE.
@@ -227,7 +227,15 @@ idf <- function(.data, id = .last_id, glimpse = F) {
 
   key <- getOption("idf_data_key")
 
-  if(is.null(key)) return(cli::cli_alert_danger("{.val idf_data_key} is not set. Use {.code options(idf_data_key = \"your_data_key_column\"} at the start of the script."))
+  if(is.null(key)) {
+    cli::cli_alert_danger("{.val idf_data_key} is not set.")
+    key <- readline(prompt = "Please enter the column name: ") %>%
+      stringr::str_remove_all(., pattern = "\"|\'")
+
+    options("idf_data_key" = key)
+    cli::cli_alert_success("{.val idf_data_key} set to {.val {key}}.")
+    cli::cli_alert_info("You can avoid this prompt by setting {.code options(idf_data_key = \"your_data_key_column\"} at the start of a script.")
+  }
 
   key <- rlang::sym(key)
 
@@ -239,3 +247,9 @@ idf <- function(.data, id = .last_id, glimpse = F) {
 
 }
 
+
+# Start of working on a quick summary of vars with few categories
+# hd %>%
+#   select_if(~n_distinct(.) < 10) %>%
+#   mutate(across(everything(), as.character)) %>%
+#   pivot_longer(everything()) %>% ggplot(aes(x = name, fill = value, label = value)) + geom_bar(position = "fill") + coord_flip()  + guides(fill = F)
