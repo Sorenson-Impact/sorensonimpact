@@ -250,7 +250,9 @@ ipeds_load <- function(survey_file) {
 
    if(nrow(file_match) == 1) {
     cli::cli_alert_info("Loading {file_match$file} ...")
-    readr::read_rds(file_match$file)
+    ipeds_tbl <- readr::read_rds(file_match$file)
+    if(!is.null(comment(ipeds_tbl))) cli::cli_alert_info(comment(ipeds_tbl))
+    return(ipeds_tbl)
   } else
     if(nrow(file_match) == 0) {
       cli::cli_alert_info("No matching files found. The available files are:")
@@ -264,7 +266,10 @@ ipeds_load <- function(survey_file) {
         longname <- file_match %>% dplyr::filter(stringr::str_detect(name, stringr::fixed("long"))) %>% dplyr::pull(name)
         cli::cli_alert_warning("Loading the wide version of this survey filename. However, a (long) version of this survey filename exists:\n \t\"{longname}\". \nTo load the long version, further specify the survey_file string to match the long version.")
         file_match <- file_match %>% dplyr::filter(!stringr::str_detect(name, stringr::fixed("(long)")))
-        return(readr::read_rds(file_match$file))
+
+        ipeds_tbl <- readr::read_rds(file_match$file)
+        if(!is.null(comment(ipeds_tbl))) cli::cli_alert_info(comment(ipeds_tbl))
+        return(ipeds_tbl)
       }
 
 
@@ -275,7 +280,9 @@ ipeds_load <- function(survey_file) {
 
         file_match <- file_match[mrow, ]
 
-        return(readr::read_rds(file_match$file))
+        ipeds_tbl <- readr::read_rds(file_match$file)
+        if(!is.null(comment(ipeds_tbl))) cli::cli_alert_info(comment(ipeds_tbl))
+        return(ipeds_tbl)
       }
 
 
