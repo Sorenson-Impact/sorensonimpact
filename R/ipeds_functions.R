@@ -254,7 +254,8 @@ ipeds_load <- function(survey_file) {
   } else
     if(nrow(file_match) == 0) {
       cli::cli_alert_info("No matching files found. The available files are:")
-      sorensonimpact::ipeds_data()
+      print(sorensonimpact::ipeds_data())
+      return()
   } else
     if(nrow(file_match) > 1) {
 
