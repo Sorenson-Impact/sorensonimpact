@@ -244,6 +244,8 @@ ipeds_data <- function(.show_details = F) {
 #' @export
 ipeds_load <- function(survey_file) {
 
+    #TODO Fix return of NULL when returning ipeds_data() for non or multiple matches
+
   files <- tibble::enframe(fs::dir_ls("~/Google Drive/SI/DataScience/data/maps_project/cleaned_data/ipeds/", glob = "*.rds"), name = NULL, value = "file")
 
   file_match <- files %>% dplyr::mutate(name = basename(file)) %>% dplyr::filter(stringr::str_detect(name, stringr::fixed(!!survey_file)))
