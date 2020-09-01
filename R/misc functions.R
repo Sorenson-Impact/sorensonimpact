@@ -133,7 +133,7 @@ si_update <- function() {
 
   cli::cli_alert_info("Unloading and updating \`sorensonimpact\`...")
   devtools::unload("sorensonimpact")
-  devtools::update_packages("sorensonimpact", upgrade = "always")
+  devtools::update_packages("sorensonimpact", upgrade = "always", dependencies = FALSE)
   library(sorensonimpact)
   cli::cli_alert_success("Successfully updated \`sorensonimpact\`")
 
