@@ -140,7 +140,9 @@ si_update <- function() {
   new_version <- packageVersion("sorensonimpact")
 
   if(old_version != new_version) {
-    #sorensonimpact::si_news(in_viewer = F)
+    #sorensonimpact::si_news(in_viewer = F) #Removed for now.
+      #See: https://github.com/jimhester/devtools/commit/f2f077b6c8c8180ae71c53d6fb6744368c5225b7
+      #and: https://github.com/r-lib/devtools/issues/942
     cli::cat_line()
 
     print(cli::rule(
