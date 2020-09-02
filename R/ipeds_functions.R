@@ -17,7 +17,7 @@ ipeds_info <- function(survey_group) {
 
   if(!exists("ipeds_dictionary")) ipeds_dictionary <<- readr::read_rds("~/Google Drive/SI/DataScience/data/maps_project/cleaned_data/ipeds/ipeds_dictionary.rds")
 
-  survey_group <- str_to_lower(survey_group)
+  survey_group <- stringr::str_to_lower(survey_group)
 
   avail_sgs <- ipeds_dictionary %>% dplyr::distinct(survey_group) %>% dplyr::pull(survey_group)
   if(!(survey_group %in% avail_sgs)) {
