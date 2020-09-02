@@ -1,4 +1,4 @@
-# sorensonimpact 0.0.1.9051
+# sorensonimpact 0.0.1.9052
 
 * Added experimental feature for ipeds usage that provides information about a survey and details about variables and terms using the standard help syntax, i.e. `?gr`.  Only available on `gr` and `efd`. Please offer feedback as I'll be waiting to roll this out for the other surveys until I gather some usage experience from you all.
 
