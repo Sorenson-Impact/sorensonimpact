@@ -90,9 +90,9 @@ si_scale_big_dollar <- function(x, sep = " ", suffix_n = F) {
 #' Shows the news for the package
 #' @param in_viewer Logical. Show news in viewer instead of console (defaults to TRUE)
 #' @export
-si_news <- function(in_viewer = TRUE) {
+si_news <- function(all = FALSE) {
 
-  if(in_viewer) {
+  if(all) {
     news(package = "sorensonimpact")
   } else {
 
@@ -140,19 +140,19 @@ si_update <- function() {
   new_version <- packageVersion("sorensonimpact")
 
   if(old_version != new_version) {
-    #sorensonimpact::si_news(in_viewer = F) #Removed for now.
+    #sorensonimpact::si_news() #Removed for now.
       #See: https://github.com/jimhester/devtools/commit/f2f077b6c8c8180ae71c53d6fb6744368c5225b7
       #and: https://github.com/r-lib/devtools/issues/942
     cli::cat_line()
 
     print(cli::rule(
       center = paste0("Major Update"),
-      line_col = "yellow"
+      line_col = "red"
     ))
     cli::cat_line()
-    cli::cli_alert_info("New features added. Run \`si_news(in_viewer = F)\` to view notes.")
+    cli::cli_alert_info("New features added. Run \`si_news()\` to view notes.")
     cli::cat_line()
-
+    si_news()
   } else {
     cli::cat_line()
 
@@ -162,7 +162,7 @@ si_update <- function() {
     ))
 
     cli::cat_line()
-    cli::cli_alert_info("Minor update, no new features added.  Run \'si_news()\` to view changelog for previous major updates.")
+    cli::cli_alert_info("Minor update, no new features added.  Run \'si_news(all = T)\` to view changelog for previous major updates.")
     cli::cat_line()
   }
 }
