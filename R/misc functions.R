@@ -152,7 +152,7 @@ si_update <- function() {
     cli::cat_line()
     cli::cli_alert_info("New features added. Run \`si_news()\` to view notes.")
     cli::cat_line()
-    si_news()
+
   } else {
     cli::cat_line()
 
