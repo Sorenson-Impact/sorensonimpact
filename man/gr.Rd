@@ -9,7 +9,7 @@ cohort of full-time, first-time degree/certificate-seeking undergraduates
 in both four year and two year institutions.
 }
 
-\section{Four Year Institutions}{
+\section{Four-Year Institutions}{
 Data for four year institutions include:
 \itemize{
   \item the number of bachelor degree-seeking students who were enrolled 6 years prior (the cohort)
@@ -23,12 +23,12 @@ Data for students seeking a degree/certificate other than a bachelor's degree ar
 for four year institutions.
 }
 
-\section{Two Year Institutions}{
+\section{Two-Year Institutions}{
 Data for two year institutions include:
 \itemize{
-  \item the number of full-time, first-time students who were enrolled 3 years prior (the cohort)
+  \item the number of full-time, first-time students who were enrolled 3 years prior (the cohort).
   \item the number of students who completed any degree/certificate within 100 or 150 percent of normal
-time
+time.
   \item the number of students who transferred out.
   }
 }
