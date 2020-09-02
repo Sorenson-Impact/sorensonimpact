@@ -88,7 +88,7 @@ si_scale_big_dollar <- function(x, sep = " ", suffix_n = F) {
 #' @description
 #' \lifecycle{experimental}
 #' Shows the news for the package
-#' @param in_viewer Logical. Show news in viewer instead of console (defaults to TRUE)
+#' @param all Logical. Show all previous news in viewer. Defaults to FALSE.
 #' @export
 si_news <- function(all = FALSE) {
 

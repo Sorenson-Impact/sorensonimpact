@@ -4,10 +4,10 @@
 \alias{si_news}
 \title{Show news for new version}
 \usage{
-si_news(in_viewer = TRUE)
+si_news(all = FALSE)
 }
 \arguments{
-\item{in_viewer}{Logical. Show news in viewer instead of console (defaults to TRUE)}
+\item{all}{Logical. Show all previous news in viewer. Defaults to FALSE.}
 }
 \description{
 \lifecycle{experimental}
