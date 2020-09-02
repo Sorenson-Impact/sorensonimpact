@@ -140,7 +140,17 @@ si_update <- function() {
   new_version <- packageVersion("sorensonimpact")
 
   if(old_version != new_version) {
-    si_news(in_viewer = F)
+    #sorensonimpact::si_news(in_viewer = F)
+    cli::cat_line()
+
+    print(cli::rule(
+      center = paste0("Major Update"),
+      line_col = "yellow"
+    ))
+    cli::cat_line()
+    cli::cli_alert_info("New features added. Run \`si_news(in_viewer = F)\` to view notes.")
+    cli::cat_line()
+
   } else {
     cli::cat_line()
 
