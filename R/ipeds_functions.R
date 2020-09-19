@@ -239,7 +239,7 @@ ipeds_data <- function(.show_details = F) {
 #' @return Cleaned IPEDS survey data from rds file.  Or, if multiple matches are found, a table of matches.
 #' @examples
 #' \dontrun{
-#' hd %>% ipeds_visdat(years = 2008:2011)
+#' efd <- ipeds_load("efd")
 #' }
 #' @export
 ipeds_load <- function(survey_file) {
