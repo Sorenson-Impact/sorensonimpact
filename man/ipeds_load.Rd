@@ -18,6 +18,6 @@ Convenience function to quick load a cleaned IPEDs rds.
 }
 \examples{
 \dontrun{
-hd \%>\% ipeds_visdat(years = 2008:2011)
+efd <- ipeds_load("efd")
 }
 }
