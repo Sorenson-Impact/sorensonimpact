@@ -8,6 +8,8 @@
 #' You will want to use the zoom window to view the result, and be aware that you can zoom in on it using the standard mouse actions, as some will be quite large and will appear impossible to read at the default zoom.
 #' @param file The .R or .Rmd file you want to trace. Can be a partial match, extension not required.
 #' @param direction A string either "down" (the default) or "right" specifying the direction the relationships are drawn.
+#' @param code_path The top-level path to search for .R and .Rmd files. The search is recursive to cover all child directories. Defaults to "project" which will search the active project directory.
+#' @param trim_data_path Optional string to remove from the final displayed output for data file nodes. If most of the data files are in a common directory and thus the information is not informative, specifying that directory will clean up the output by shortening the full path to only the relative path.
 #' @param levels_up_max \Sexpr[results=rd]{lifecycle::badge("experimental")} How many levels up the hierarchy to search and draw. Defaults to 10, values less than 2 are ignored.
 #' @param levels_down_max \Sexpr[results=rd]{lifecycle::badge("experimental")} How many levels down the hierarchy to search and draw. Defaults to 10, values less than 3 are ignored.
 #' @return A connection graphic of code files and data files leading into the specified file, and resulting from the specified file.
@@ -16,12 +18,15 @@
 #' file_trace("institution_base")
 #' }
 #' @export
-file_trace <- function(file, direction = "down", levels_up_max = 10, levels_down_max = 10) {
+file_trace <- function(file, code_path = "project", trim_data_path = NULL, direction = "down", levels_up_max = 10, levels_down_max = 10) {
 
-  rw <- sorensonimpact:::rw_lines()
+  if(code_path == "project") code_path <- usethis::proj_get()
+
+
+  rw <- sorensonimpact:::rw_lines(code_path, trim_data_path)
 
     origin <- rw %>%
-    dplyr::filter(stringr::str_detect(file, !!file))
+    dplyr::filter(stringr::str_detect(file, stringr::str_remove(!!file, code_path)))
 
   #Check for match
   if(nrow(origin) == 0) stop(cli::cli_alert_danger(paste0("No files found that match `", file, "`.")))
@@ -102,16 +107,16 @@ nom) %>% nomnoml::nomnoml()
 
 }
 
-rw_lines <- function(base_path = "~/Github/maps_project/", data_path = "~/Google Drive/SI/DataScience/data/maps_project/") {
+rw_lines <- function(code_path, data_path) {
 
-  if(!fs::dir_exists(base_path)) stop(cli::cli_alert_danger(paste("Path `", base_path, "` does not exist.")))
-  if(!fs::dir_exists(data_path)) stop(cli::cli_alert_danger(paste("Path `", data_path, "` does not exist.")))
+  if(!fs::dir_exists(code_path)) stop(cli::cli_alert_danger(paste("Path `", code_path, "` does not exist.")))
+  if(!is.null(data_path) && !fs::dir_exists(data_path)) stop(cli::cli_alert_danger(paste("Path `", data_path, "` does not exist.")))
 
-  base_path <- fs::path_expand(base_path) %>% paste0(.,"/")
-  data_path <- fs::path_expand(data_path) %>% paste0(.,"/")
+  code_path <- fs::path_expand(code_path) %>% paste0(.,"/")
+  if(!is.null(data_path)) data_path <- fs::path_expand(data_path) %>% paste0(.,"/")
 
 
-  rfiles <- fs::dir_ls(base_path, type = "file", recurse = T, regexp = ".*\\.(R|r|Rmd)$")
+  rfiles <- fs::dir_ls(code_path, type = "file", recurse = T, regexp = ".*\\.(R|r|Rmd)$")
 
   all_code <- rfiles %>%
     purrr::map(function(rfile) {
@@ -137,14 +142,17 @@ rw_lines <- function(base_path = "~/Github/maps_project/", data_path = "~/Google
     dplyr::mutate(target_full = stringr::str_replace(target_full, "/Volumes/GoogleDrive/My Drive", fs::path_expand("~/Google Drive"))) %>%
     dplyr::mutate(target_full = fs::path_expand(target_full)) %>%
     dplyr::mutate(target_full = stringr::str_replace(target_full, "Google Drive File Stream", "Google Drive")) %>%
-    dplyr::mutate(non_base_path_target = !fs::path_has_parent(target_full, data_path)) %>%
-    dplyr::mutate(target = stringr::str_remove(target_full, data_path)) %>%
+    # {if(!is.null(data_path)) dplyr::mutate(non_code_path_target = !fs::path_has_parent(target_full, data_path)) else .} %>%
+    dplyr::mutate(target = ifelse(!is.null(!!data_path),
+                                  stringr::str_remove(target_full, data_path),
+                                  target_full)) %>%
     dplyr::mutate(target = stringr::str_remove(target, fs::path_expand("~/Google Drive/SI/DataScience"))) %>%
-    dplyr::mutate(file = stringr::str_remove(file_full, base_path)) %>%
+    dplyr::mutate(file = stringr::str_remove(file_full, code_path)) %>%
     dplyr::mutate(object = stringr::str_extract(code, ".*(?= <-)")) %>%
     dplyr::mutate(gates_pointer = stringr::str_detect(target, "data/gates")) %>%
     dplyr::mutate(code = stringr::str_trim(code)) %>%
     dplyr::filter(!stringr::str_detect(code, "^#")) #remove lines that are commented out
+
 
 
   #Now deal with dynpaths
