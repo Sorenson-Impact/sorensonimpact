@@ -4,10 +4,21 @@
 \alias{file_trace}
 \title{Trace inputs and outputs for a file}
 \usage{
-file_trace(file, direction = "down", levels_up_max = 10, levels_down_max = 10)
+file_trace(
+  file,
+  code_path = "project",
+  trim_data_path = NULL,
+  direction = "down",
+  levels_up_max = 10,
+  levels_down_max = 10
+)
 }
 \arguments{
 \item{file}{The .R or .Rmd file you want to trace. Can be a partial match, extension not required.}
+
+\item{code_path}{The top-level path to search for .R and .Rmd files. The search is recursive to cover all child directories. Defaults to "project" which will search the active project directory.}
+
+\item{trim_data_path}{Optional string to remove from the final displayed output for data file nodes. If most of the data files are in a common directory and thus the information is not informative, specifying that directory will clean up the output by shortening the full path to only the relative path.}
 
 \item{direction}{A string either "down" (the default) or "right" specifying the direction the relationships are drawn.}
 
