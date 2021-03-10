@@ -34,9 +34,7 @@ file_trace <- function(file, code_path = "project", trim_data_path = NULL, direc
                                                         paste0("<", type_from, ">", from))) %>%
       dplyr::mutate(to = ifelse(stringr::str_detect(to, !!file),
                                 paste0("<origin>", to),
-                                paste0("<", type_to, ">", to)
-      )
-      ) %>%
+                                paste0("<", type_to, ">", to))) %>%
       dplyr::distinct(from, to)
 
     nom <- tree_formatted %>%
@@ -176,7 +174,6 @@ rw_lines <- function(code_path, data_path) {
     dplyr::mutate(code = stringr::str_remove(code, " %>%.*")) %>%
     dplyr::mutate(target_full = stringr::str_extract(code, "(?<=\\\")(.*?)(?=\\\")")) %>% #get the file name between quotes
     dplyr::filter(stringr::str_detect(target_full, "~\\/Google Drive|\\/Volumes\\/GoogleDrive")) %>% #temporarily filter out anything that isn't an actual legitimate path (no objects and no fucking PC paths)
-    dplyr::mutate(rw_index = row_number()) %>%
     dplyr::mutate(target_full = stringr::str_replace(target_full, "/Volumes/GoogleDrive/My Drive", fs::path_expand("~/Google Drive"))) %>%
     dplyr::mutate(target_full = fs::path_expand(target_full)) %>%
     dplyr::mutate(target_full = stringr::str_replace(target_full, "Google Drive File Stream", "Google Drive")) %>% dplyr::mutate(target = target_full)
