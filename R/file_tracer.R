@@ -6,7 +6,7 @@
 #' This is a very early alpha release.  Please provide feedback and bug reports.
 #'
 #' You will want to use the zoom window to view the result, and be aware that you can zoom in on it using the standard mouse actions, as some will be quite large and will appear impossible to read at the default zoom.
-#' @param file The .R or .Rmd file you want to trace. Can be a partial match, extension not required.
+#' @param file The .R or .Rmd file you want to trace. Can be a partial match for code file, extension not required. For data file, full file name is required with extension.
 #' @param direction A string either "down" (the default) or "right" specifying the direction the relationships are drawn.
 #' @param code_path The top-level path to search for .R and .Rmd files. The search is recursive to cover all child directories. Defaults to "project" which will search the active project directory.
 #' @param trim_data_path Optional string to remove from the final displayed output for data file nodes. If most of the data files are in a common directory and thus the information is not informative, specifying that directory will clean up the output by shortening the full path to only the relative path.
@@ -20,12 +20,47 @@
 #' @export
 file_trace <- function(file, code_path = "project", trim_data_path = NULL, direction = "down", levels_up_max = 10, levels_down_max = 10) {
 
-  if(code_path == "project") code_path <- usethis::proj_get()
+  if(code_path == "project") code_path <- usethis::proj_path()
 
 
   rw <- sorensonimpact:::rw_lines(code_path, trim_data_path)
 
-    origin <- rw %>%
+  #if it's a data file, we'll do that first and exit
+  if(stringr::str_detect(file, "\\.csv$|\\.xls$|\\.xlsx$|\\.txt$|\\.rds$")) {
+    x <- rw %>% dplyr::filter(stringr::str_detect(to, !!file) | stringr::str_detect(from, !!file))
+
+    tree_formatted <- x %>% dplyr::mutate(from = ifelse(stringr::str_detect(from, !!file),
+                                                        paste0("<origin>", from),
+                                                        paste0("<", type_from, ">", from))) %>%
+      dplyr::mutate(to = ifelse(stringr::str_detect(to, !!file),
+                                paste0("<origin>", to),
+                                paste0("<", type_to, ">", to)
+      )
+      ) %>%
+      dplyr::distinct(from, to)
+
+    nom <- tree_formatted %>%
+      dplyr::mutate(nom = glue::glue("[{from}] --> [{to}]")) %>%
+      dplyr::pull(nom) %>%
+      as.character() %>%
+      paste(collapse = "\n")
+
+    nom_out <- paste0("#direction: ", direction, "
+#font: Menlo
+#.origin: visual=database fill=#ff5330 bold
+#.datar: visual=database fill=#fadb75
+#.datatext: visual=database fill=#45ff30
+#.code: visual=note fill=#75affa
+#.dynpathsithink: fill=#f58142
+
+",
+nom)
+
+    return(nomnoml::nomnoml(nom_out))
+
+  }
+
+  origin <- rw %>%
     dplyr::filter(stringr::str_detect(file, stringr::str_remove(!!file, code_path)))
 
   #Check for match
@@ -80,8 +115,8 @@ file_trace <- function(file, code_path = "project", trim_data_path = NULL, direc
   tree_formatted <- full_tree %>%
     dplyr::mutate(from = paste0("<", type_from, ">", from)) %>%
     dplyr::mutate(to = ifelse(position == 0,
-                       paste0("<origin>", to),
-                       paste0("<", type_to, ">", to)
+                              paste0("<origin>", to),
+                              paste0("<", type_to, ">", to)
     )
     ) %>%
     dplyr::distinct(from, to)
@@ -92,18 +127,20 @@ file_trace <- function(file, code_path = "project", trim_data_path = NULL, direc
     as.character() %>%
     paste(collapse = "\n")
 
-  #print(tree_formatted)
+  print(tree_formatted)
 
-  paste0("#direction:", direction, "
+nom_out <- paste0("#direction: ", direction, "
 #font: Menlo
-#.origin: visual=state fill=#ff5330 bold
+#.origin: visual=roundrect fill=#ff5330 bold
 #.datar: visual=database fill=#fadb75
 #.datatext: visual=database fill=#45ff30
 #.code: visual=note fill=#75affa
-#.dynpathsithink: filll=#f58142
+#.dynpathsithink: fill=#f58142
 
 ",
-nom) %>% nomnoml::nomnoml()
+nom)
+
+  nomnoml::nomnoml(nom_out)
 
 }
 
@@ -127,25 +164,29 @@ rw_lines <- function(code_path, data_path) {
     }) %>%
     dplyr::bind_rows()
 
-  rw <- all_code %>%
+  rw <- all_code %>% #filter(file_full == "/Users/u0982704/Github/maps_project/modify/ipeds/adult_learners.R") %>%
     dplyr::mutate(rl = stringr::str_detect(code, "read_"),
-           wl = stringr::str_detect(code, "write_"),
-           path_assign = stringr::str_detect(code, "path")) %>%
+                  wl = stringr::str_detect(code, "write_"),
+                  path_assign = stringr::str_detect(code, "path")) %>%
     dplyr::filter(rl|wl) %>%
     dplyr::mutate(operation = dplyr::case_when(rl ~ "read",
-                                 wl ~ "write",
-                                 path_assign ~ "set path")) %>%
+                                               wl ~ "write",
+                                               path_assign ~ "set path")) %>%
     dplyr::mutate(is_dynamic_path = stringr::str_detect(code, "paste|glue")) %>%
     dplyr::mutate(code = stringr::str_remove(code, " %>%.*")) %>%
     dplyr::mutate(target_full = stringr::str_extract(code, "(?<=\\\")(.*?)(?=\\\")")) %>% #get the file name between quotes
     dplyr::filter(stringr::str_detect(target_full, "~\\/Google Drive|\\/Volumes\\/GoogleDrive")) %>% #temporarily filter out anything that isn't an actual legitimate path (no objects and no fucking PC paths)
+    dplyr::mutate(rw_index = row_number()) %>%
     dplyr::mutate(target_full = stringr::str_replace(target_full, "/Volumes/GoogleDrive/My Drive", fs::path_expand("~/Google Drive"))) %>%
     dplyr::mutate(target_full = fs::path_expand(target_full)) %>%
-    dplyr::mutate(target_full = stringr::str_replace(target_full, "Google Drive File Stream", "Google Drive")) %>%
-    # {if(!is.null(data_path)) dplyr::mutate(non_code_path_target = !fs::path_has_parent(target_full, data_path)) else .} %>%
-    dplyr::mutate(target = ifelse(!is.null(!!data_path),
-                                  stringr::str_remove(target_full, data_path),
-                                  target_full)) %>%
+    dplyr::mutate(target_full = stringr::str_replace(target_full, "Google Drive File Stream", "Google Drive")) %>% dplyr::mutate(target = target_full)
+  # {if(!is.null(data_path)) dplyr::mutate(non_code_path_target = !fs::path_has_parent(target_full, data_path)) else .} %>%
+
+  if(!is.null(data_path)) {
+    rw <- rw %>% mutate(target = stringr::str_remove(target_full, data_path))
+  }
+
+  rw <- rw %>%
     dplyr::mutate(target = stringr::str_remove(target, fs::path_expand("~/Google Drive/SI/DataScience"))) %>%
     dplyr::mutate(file = stringr::str_remove(file_full, code_path)) %>%
     dplyr::mutate(object = stringr::str_extract(code, ".*(?= <-)")) %>%
@@ -194,10 +235,10 @@ rw_lines <- function(code_path, data_path) {
     dplyr::mutate(ext_from = fs::path_ext(from) %>% stringr::str_to_lower()) %>%
     dplyr::mutate(type_to = dplyr::case_when(ext_to %in% c("r", "rmd") ~ "code",
                                ext_to == "rds" ~ "datar",
-                               ext_to %in% c("csv", "xls", "xlsx") ~ "datatext")) %>%
+                               ext_to %in% c("csv", "xls", "xlsx", "txt") ~ "datatext")) %>%
     dplyr::mutate(type_from = dplyr::case_when(ext_from %in% c("r", "rmd") ~ "code",
                                  ext_from == "rds" ~ "datar",
-                                 ext_from %in% c("csv", "xls", "xlsx") ~ "datatext")) %>%
+                                 ext_from %in% c("csv", "xls", "xlsx", "txt") ~ "datatext")) %>%
     sorensonimpact::deselect(dplyr::ends_with("_full"), target, code, operation, path_assign)
 
   return(rw)

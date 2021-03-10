@@ -14,7 +14,7 @@ file_trace(
 )
 }
 \arguments{
-\item{file}{The .R or .Rmd file you want to trace. Can be a partial match, extension not required.}
+\item{file}{The .R or .Rmd file you want to trace. Can be a partial match for code file, extension not required. For data file, full file name is required with extension.}
 
 \item{code_path}{The top-level path to search for .R and .Rmd files. The search is recursive to cover all child directories. Defaults to "project" which will search the active project directory.}
 
