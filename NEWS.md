@@ -1,3 +1,7 @@
+# sorensonimpact 0.0.1.9056
+
+* Minor changes to file_trace.r
+
 # sorensonimpact 0.0.1.9054
 
 * Are you tired of trying to figure out where an rds came from? Especially when you have to go through multiple files to trace back a variable? I've added experimental feature for tracing all the inputs to and outputs from a file.  See ?file_trace or try `file_trace("institution_base")` now!  This has currently only been tested for the maps project.
