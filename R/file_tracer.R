@@ -125,7 +125,7 @@ nom)
     as.character() %>%
     paste(collapse = "\n")
 
-  print(tree_formatted)
+  #print(tree_formatted)
 
 nom_out <- paste0("#direction: ", direction, "
 #font: Menlo
@@ -162,7 +162,7 @@ rw_lines <- function(code_path, data_path) {
     }) %>%
     dplyr::bind_rows()
 
-  rw <- all_code %>% #filter(file_full == "/Users/u0982704/Github/maps_project/modify/ipeds/adult_learners.R") %>%
+  rw <- all_code %>%
     dplyr::mutate(rl = stringr::str_detect(code, "read_"),
                   wl = stringr::str_detect(code, "write_"),
                   path_assign = stringr::str_detect(code, "path")) %>%
