@@ -9,16 +9,20 @@
 #' @param file The .R or .Rmd file you want to trace. Can be a partial match for code file, extension not required. For data file, full file name is required with extension.
 #' @param direction A string either "down" (the default) or "right" specifying the direction the relationships are drawn.
 #' @param code_path The top-level path to search for .R and .Rmd files. The search is recursive to cover all child directories. Defaults to "project" which will search the active project directory.
-#' @param trim_data_path Optional string to remove from the final displayed output for data file nodes. If most of the data files are in a common directory and thus the information is not informative, specifying that directory will clean up the output by shortening the full path to only the relative path.
+#' @param trim_data_path Optional regex string to remove from the final displayed output for data file nodes. If most of the data files are in a common directory and thus the information is not informative, specifying that directory will clean up the output by shortening the full path to only the relative path.
 #' @param levels_up_max \Sexpr[results=rd]{lifecycle::badge("experimental")} How many levels up the hierarchy to search and draw. Defaults to 10, values less than 2 are ignored.
 #' @param levels_down_max \Sexpr[results=rd]{lifecycle::badge("experimental")} How many levels down the hierarchy to search and draw. Defaults to 10, values less than 3 are ignored.
+#' @param svg Use 'svg' output instead of 'png'? Notice that rendering in 'svg' is not at a par with 'png' and renders incorrectly at times.
+#' @param width Passed to nomnoml. Optional width in pixels for the exported 'png'.
+#' @param height Passed to nomnoml. Optional height in pixels for the exported 'png'.
+#' @param return_uml Set to TRUE if you want the UML code to be returned instead of the diagram. Defaults to FALSE.
 #' @return A connection graphic of code files and data files leading into the specified file, and resulting from the specified file.
 #' @examples
 #' \dontrun{
 #' file_trace("institution_base")
 #' }
 #' @export
-file_trace <- function(file, code_path = "project", trim_data_path = NULL, direction = "down", levels_up_max = 10, levels_down_max = 10) {
+file_trace <- function(file, code_path = "project", trim_data_path = NULL, direction = "down", levels_up_max = 10, levels_down_max = 10, width = NULL, height = NULL, svg = FALSE, return_uml = FALSE) {
 
   if(code_path == "project") code_path <- usethis::proj_path()
 
@@ -138,17 +142,32 @@ nom_out <- paste0("#direction: ", direction, "
 ",
 nom)
 
-  nomnoml::nomnoml(nom_out)
+if(return_uml) return(nom_out) else
+
+  return(nomnoml::nomnoml(code =nom_out,
+                          height = height,
+                          width = width,
+                          svg = svg))
 
 }
 
-rw_lines <- function(code_path, data_path) {
+rw_lines <- function(code_path, trim_data_path) {
 
   if(!fs::dir_exists(code_path)) stop(cli::cli_alert_danger(paste("Path `", code_path, "` does not exist.")))
-  if(!is.null(data_path) && !fs::dir_exists(data_path)) stop(cli::cli_alert_danger(paste("Path `", data_path, "` does not exist.")))
+
 
   code_path <- fs::path_expand(code_path) %>% paste0(.,"/")
-  if(!is.null(data_path)) data_path <- fs::path_expand(data_path) %>% paste0(.,"/")
+
+  #I'm temporarily disabling this as I"m just going to allow the user to specify regex
+  # if(!is.null(trim_data_path)) trim_data_path <- fs::path_expand(trim_data_path) %>% paste0(., "/")
+  #
+  # if(!is.null(trim_data_path) && !fs::dir_exists(trim_data_path)) stop(cli::cli_alert_danger(paste("Path `", trim_data_path, "` does not exist.")))
+  #
+  # #Also add a possibility of the volumes path to google drive
+  # if(str_detect(trim_data_path, "Volumes") & str_detect(trim_data_path, "My Drive")) {
+  #   trim_data_path <- paste0(trim_data_path,
+  #                            trim_data_path)
+  #     }
 
 
   rfiles <- fs::dir_ls(code_path, type = "file", recurse = T, regexp = ".*\\.(R|r|Rmd)$")
@@ -177,10 +196,10 @@ rw_lines <- function(code_path, data_path) {
     dplyr::mutate(target_full = stringr::str_replace(target_full, "/Volumes/GoogleDrive/My Drive", fs::path_expand("~/Google Drive"))) %>%
     dplyr::mutate(target_full = fs::path_expand(target_full)) %>%
     dplyr::mutate(target_full = stringr::str_replace(target_full, "Google Drive File Stream", "Google Drive")) %>% dplyr::mutate(target = target_full)
-  # {if(!is.null(data_path)) dplyr::mutate(non_code_path_target = !fs::path_has_parent(target_full, data_path)) else .} %>%
+  # {if(!is.null(trim_data_path)) dplyr::mutate(non_code_path_target = !fs::path_has_parent(target_full, trim_data_path)) else .} %>%
 
-  if(!is.null(data_path)) {
-    rw <- rw %>% mutate(target = stringr::str_remove(target_full, data_path))
+  if(!is.null(trim_data_path)) {
+    rw <- rw %>% mutate(target = stringr::str_remove(target_full, trim_data_path))
   }
 
   rw <- rw %>%

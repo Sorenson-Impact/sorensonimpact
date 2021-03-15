@@ -10,7 +10,11 @@ file_trace(
   trim_data_path = NULL,
   direction = "down",
   levels_up_max = 10,
-  levels_down_max = 10
+  levels_down_max = 10,
+  width = NULL,
+  height = NULL,
+  svg = FALSE,
+  return_uml = FALSE
 )
 }
 \arguments{
@@ -18,13 +22,21 @@ file_trace(
 
 \item{code_path}{The top-level path to search for .R and .Rmd files. The search is recursive to cover all child directories. Defaults to "project" which will search the active project directory.}
 
-\item{trim_data_path}{Optional string to remove from the final displayed output for data file nodes. If most of the data files are in a common directory and thus the information is not informative, specifying that directory will clean up the output by shortening the full path to only the relative path.}
+\item{trim_data_path}{Optional regex string to remove from the final displayed output for data file nodes. If most of the data files are in a common directory and thus the information is not informative, specifying that directory will clean up the output by shortening the full path to only the relative path.}
 
 \item{direction}{A string either "down" (the default) or "right" specifying the direction the relationships are drawn.}
 
 \item{levels_up_max}{\Sexpr[results=rd]{lifecycle::badge("experimental")} How many levels up the hierarchy to search and draw. Defaults to 10, values less than 2 are ignored.}
 
 \item{levels_down_max}{\Sexpr[results=rd]{lifecycle::badge("experimental")} How many levels down the hierarchy to search and draw. Defaults to 10, values less than 3 are ignored.}
+
+\item{width}{Passed to nomnoml. Optional width in pixels for the exported 'png'.}
+
+\item{height}{Passed to nomnoml. Optional height in pixels for the exported 'png'.}
+
+\item{svg}{Use 'svg' output instead of 'png'? Notice that rendering in 'svg' is not at a par with 'png' and renders incorrectly at times.}
+
+\item{return_uml}{Set to TRUE if you want the UML code to be returned instead of the diagram. Defaults to FALSE.}
 }
 \value{
 A connection graphic of code files and data files leading into the specified file, and resulting from the specified file.
