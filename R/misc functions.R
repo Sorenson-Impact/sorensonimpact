@@ -246,7 +246,7 @@ idf <- function(.data, id = .last_id, glimpse = F) {
 
     options("idf_data_key" = key)
     cli::cli_alert_success("{.val idf_data_key} set to {.val {key}}.")
-    cli::cli_alert_info("You can avoid this prompt by setting {.code options(idf_data_key = \"your_data_key_column\"} at the start of a script.")
+    cli::cli_alert_info("You can avoid this prompt by setting {.code options(idf_data_key = \"{key}\"} at the start of a script.")
   }
 
   key <- rlang::sym(key)
@@ -299,6 +299,12 @@ idf <- function(.data, id = .last_id, glimpse = F) {
 # function body
 signif_column <- function(data, p, ...) {
   # add new significance column based on standard APA guidelines
+
+  p <- rlang::ensym(p)
+
+
+  if(!(rlang::as_string(p)  %in% names(data))) {stop("Specified p value column not found in data.")}
+
   data %>%
     dplyr::mutate(
       .data = .,
