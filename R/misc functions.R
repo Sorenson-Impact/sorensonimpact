@@ -280,7 +280,6 @@ idf <- function(.data, id = .last_id, glimpse = F) {
 #' @param p The column containing *p*-values.
 #' @param ... Currently ignored.
 #'
-#' @importFrom dplyr mutate case_when
 #'
 #' @family helper_stats
 #'
@@ -316,4 +315,21 @@ signif_column <- function(data, p, ...) {
       )
     ) %>% # convert to tibble dataframe
     tibble::as_tibble(.)
+}
+
+
+#' @title Round a value and indicate how precise zeros are
+#' @name round_trailing_zeros
+#' @description This function will take a value and round it.  If the rounded value becomes zero, trailing zeros are added to indicate how precise the 0 value is.
+#' @return Returns a character vector of rounded values including accurate zero values. Note that this rounds .5 to 1 (janitor::round_half_up) unlike base::round()
+#'
+#' @param x Numeric values to be rounded.
+#'
+#' @examples
+#' # round_trailing_zeros(0.005, digits = 2)
+
+#' @export
+round_trailing_zeros <- function(x, digits = 2) {
+  dplyr::case_when(x != 0 & janitor::round_half_up(x, digits = digits) == 0 ~ glue::glue("<{stringr::str_pad(\"0.\", width = digits+2, side = \"right\", pad = \"0\")}"),
+            TRUE ~ janitor::round_half_up(x, digits = digits) %>% as.character())
 }
