@@ -1,6 +1,10 @@
 .onLoad <- function(...) {
   try(check_si_up_to_date())
-}
+
+  if(get_os() == "osx" & !fs::dir_exists(fs::path_expand("~/Google Drive/SI"))) {
+    cli::cli_alert_danger("Warning: The Google Drive File Stream path is not configured correctly on your system. Run `si_google_drive_path_fix()` to correct this.")
+  }
+  }
 
 check_si_up_to_date <- function() {
   rem <- structure(remotes:::package2remote("sorensonimpact"), class = "github_remote")

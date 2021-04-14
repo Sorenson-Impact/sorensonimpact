@@ -318,6 +318,9 @@ signif_column <- function(data, p, ...) {
 }
 
 
+
+
+#I think this might actually be dumb.  You can't have <0.00.  It's 0.  So really it needs to be <0.01
 #' @title Round a value and indicate how precise zeros are
 #' @name round_trailing_zeros
 #' @description This function will take a value and round it.  If the rounded value becomes zero, trailing zeros are added to indicate how precise the 0 value is.
@@ -332,4 +335,58 @@ signif_column <- function(data, p, ...) {
 round_trailing_zeros <- function(x, digits = 2) {
   dplyr::case_when(x != 0 & janitor::round_half_up(x, digits = digits) == 0 ~ glue::glue("<{stringr::str_pad(\"0.\", width = digits+2, side = \"right\", pad = \"0\")}"),
             TRUE ~ janitor::round_half_up(x, digits = digits) %>% as.character())
+}
+
+
+
+#' @title Check for correct google drive file stream path and correct if necessary.
+#' @name si_google_drive_path_fix
+#' @description Checks for the existence of the correct google drive file stream path and optionally fix it.
+#' \lifecycle{experimental}
+#'
+#' @param check_only Tests if correct path exists but does not fix it (default: FALSE)
+#' @param osx_check_msg Should a message be returned if not run on OSX. Defaults to TRUE. FALSE is used internal during package startup to generate warning.
+#'
+#' @return FALSE if path is not correct and check_only = TRUE. Otherwise informative message.
+#'
+#' @examples
+#' # si_google_drive_path_fix(check_only = T)
+
+#' @export
+si_google_drive_path_fix <- function(check_only = F, osx_check_msg = T) {
+
+  os <- get_os()
+
+  #Return message if not on a mac
+  if(os != "osx") return(cli::cli_alert_info("This function only works on OSX. You are running {os}"))
+
+  if(fs::dir_exists(fs::path_expand("~/Google Drive/SI"))) {
+      return(cli::cli_alert_success("The Google Drive File Stream path is correct."))
+    } else
+    cli::cli_alert_danger("The Google Drive File Stream path is not linked correctly.")
+
+  if(!check_only) {
+    if(fs::link_exists(fs::path_expand("~/Google Drive"))) fs::link_delete(fs::path_expand("~/Google Drive"))
+    fs::link_create("/Volumes/GoogleDrive/My Drive/", "~/Google Drive")
+    return(cli::cli_alert_success("Successfully created correct Google Drive File Stream path link."))
+  }
+
+}
+
+
+#Internal only. Get OS (from https://conjugateprior.org/2015/06/identifying-the-os-from-r/)
+get_os <- function(){
+  sysinf <- Sys.info()
+  if (!is.null(sysinf)){
+    os <- sysinf['sysname']
+    if (os == 'Darwin')
+      os <- "osx"
+  } else { ## mystery machine
+    os <- .Platform$OS.type
+    if (grepl("^darwin", R.version$os))
+      os <- "osx"
+    if (grepl("linux-gnu", R.version$os))
+      os <- "linux"
+  }
+  tolower(os)
 }

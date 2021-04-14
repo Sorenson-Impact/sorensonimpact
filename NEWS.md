@@ -1,3 +1,8 @@
+# sorensonimpact 0.0.1.9057
+
+* Added function `si_google_drive_path_fix()` to check for the correct GDFS path and correct it (only for OSX).
+* Added check on package load to warn OSX users if the GDFS path is not set correctly.
+
 # sorensonimpact 0.0.1.9056
 
 * Minor changes to file_trace.r
