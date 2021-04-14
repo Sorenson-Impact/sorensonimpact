@@ -150,8 +150,7 @@ si_update <- function() {
       line_col = "red"
     ))
     cli::cat_line()
-    #cli::cli_alert_info("New features added. Run \`si_news()\` to view notes.")
-    si_news()
+    cli::cli_alert_info("New features added. Run \`si_news()\` to view notes.")
     cli::cat_line()
 
   } else {
