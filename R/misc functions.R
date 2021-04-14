@@ -345,7 +345,6 @@ round_trailing_zeros <- function(x, digits = 2) {
 #' \lifecycle{experimental}
 #'
 #' @param check_only Tests if correct path exists but does not fix it (default: FALSE)
-#' @param osx_check_msg Should a message be returned if not run on OSX. Defaults to TRUE. FALSE is used internal during package startup to generate warning.
 #'
 #' @return FALSE if path is not correct and check_only = TRUE. Otherwise informative message.
 #'
@@ -353,7 +352,7 @@ round_trailing_zeros <- function(x, digits = 2) {
 #' # si_google_drive_path_fix(check_only = T)
 
 #' @export
-si_google_drive_path_fix <- function(check_only = F, osx_check_msg = T) {
+si_google_drive_path_fix <- function(check_only = F) {
 
   os <- get_os()
 

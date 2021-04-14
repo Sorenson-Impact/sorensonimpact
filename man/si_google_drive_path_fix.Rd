@@ -4,12 +4,10 @@
 \alias{si_google_drive_path_fix}
 \title{Check for correct google drive file stream path and correct if necessary.}
 \usage{
-si_google_drive_path_fix(check_only = F, osx_check_msg = T)
+si_google_drive_path_fix(check_only = F)
 }
 \arguments{
 \item{check_only}{Tests if correct path exists but does not fix it (default: FALSE)}
-
-\item{osx_check_msg}{Should a message be returned if not run on OSX. Defaults to TRUE. FALSE is used internal during package startup to generate warning.}
 }
 \value{
 FALSE if path is not correct and check_only = TRUE. Otherwise informative message.
