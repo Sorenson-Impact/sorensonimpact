@@ -304,16 +304,22 @@ ipeds_load <- function(survey_file) {
 #' Convenience function to add school info to an IPEDS table. Includes institution_entity_name, sector, and state.  More can be added if useful, contact JZ with suggestions.
 #' @importFrom magrittr "%>%"
 #' @param .data An IPEDS table (must contain unitid and year).
+#' @param cache_hd Store a local hidden copy to avoid reloading each time. Defaults to TRUE.
 #' @return Original IPEDS table with school info added
 #' @examples
 #' \dontrun{
 #' efd <- efd %>% ipeds_add_info()
 #' }
 #' @export
-ipeds_add_info <- function(.data) {
+ipeds_add_info <- function(.data, cache_hd = T) {
   if("unitid" %ni% names(.data) | "year" %ni% names(.data)) return(cli::cli_alert_danger("An IPEDs table with unitid and year columns is required."))
 
+  if(cache_hd) {
+    if(!exists(".hd_info")) .hd_info <<- ipeds_load("hd")
+    } else .hd_info <- ipeds_load("hd")
+
+
   .data %>%
-    dplyr::left_join(ipeds_load("hd") %>% select(unitid, year, sector, institution_entity_name, state_abbreviation_label)) %>%
+    dplyr::left_join(.hd_info %>% select(unitid, year, sector, institution_entity_name)) %>%
     relocate(sector, institution_entity_name, .after = year)
 }

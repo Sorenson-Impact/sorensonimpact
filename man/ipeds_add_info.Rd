@@ -4,10 +4,12 @@
 \alias{ipeds_add_info}
 \title{Conveniently add school info to an IPEDS table.}
 \usage{
-ipeds_add_info(.data)
+ipeds_add_info(.data, cache_hd = T)
 }
 \arguments{
 \item{.data}{An IPEDS table (must contain unitid and year).}
+
+\item{cache_hd}{Store a local hidden copy to avoid reloading each time. Defaults to TRUE.}
 }
 \value{
 Original IPEDS table with school info added
