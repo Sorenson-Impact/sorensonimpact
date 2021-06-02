@@ -246,7 +246,7 @@ idf <- function(.data, id = .last_id, glimpse = F) {
 
     options("idf_data_key" = key)
     cli::cli_alert_success("{.val idf_data_key} set to {.val {key}}.")
-    cli::cli_alert_info("You can avoid this prompt by setting {.code options(idf_data_key = \"{key}\"} at the start of a script.")
+    cli::cli_alert_info("You can avoid this prompt by setting {.code options(idf_data_key = \"{key}\")} at the start of a script.")
   }
 
   key <- rlang::sym(key)
