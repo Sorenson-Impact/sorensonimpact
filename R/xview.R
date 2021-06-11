@@ -25,7 +25,7 @@
 #' Show a table in Excel
 #' @description
 #' \lifecycle{experimental}
-#' Opens the table in a temporary file in excel.
+#' Opens the table in a temporary file in excel.  Currently only works on Mac OS.
 #' @param .data A table.
 #' @examples
 #' \dontrun{
@@ -60,8 +60,8 @@ xview <- function (.data) {
     silent = TRUE)
   if ("try-error" %in% class(WriteAttempt)) {
     WriteXLS::WriteXLS(as.character(bquote(.data)), ExcelFileName=tempFilePath, FreezeRow=1, FreezeCol=1, BoldHeaderRow=T, AdjWidth=F, AutoFilter=T, row.names=F)
-    shell.exec(tempFilePath)
+    system2("open", tempFilePath) #TODO: add windows functionality back in replacing this with shell.exec(tempFilePath)
   } else {
-    shell.exec(preferredFilePath)
+    system2("open", preferredFilePath)
   }
 }
