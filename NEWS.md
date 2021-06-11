@@ -1,3 +1,7 @@
+# sorensonimpact 0.0.1.9060
+
+* Added `xview()` which opens a table in Excel.  
+
 # sorensonimpact 0.0.1.9059
 
 * Added convenience function `ipeds_add_info()` that will add details from HD to any ipeds table. Currently adds sector, institution_entity_name, and state_abbreviation_label. Contact JZ if you have suggestions for other vars to add that are frequently wanted.
