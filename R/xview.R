@@ -52,6 +52,9 @@ xview <- function (.data) {
   #}
   #rownames(.data) = NULL
   #.data = data.frame(RowLabels = tmp, .data)
+
+  if(tibble::has_rownames(data)) .data <- .data %>% tibble::rownames_to_column()
+
   WriteAttempt = try(
     WriteXLS::WriteXLS(as.character(bquote(.data)), ExcelFileName=preferredFilePath, FreezeRow=1, FreezeCol=1, BoldHeaderRow=T, AdjWidth=F, AutoFilter=T, row.names=F),
     silent = TRUE)
