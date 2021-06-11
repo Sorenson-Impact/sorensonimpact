@@ -4,14 +4,16 @@
 \alias{xview}
 \title{Show a table in Excel}
 \usage{
-xview(.data)
+xview(.data, add_rownames = TRUE)
 }
 \arguments{
 \item{.data}{A table.}
+
+\item{add_rownames}{Logical. Convert rownames to column? Default: TRUE}
 }
 \description{
 \lifecycle{experimental}
-Opens the table in a temporary file in excel.
+Opens the table in a temporary file in excel.  Currently only works on Mac OS.
 }
 \examples{
 \dontrun{
