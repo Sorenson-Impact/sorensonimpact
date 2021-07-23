@@ -2,6 +2,8 @@
 #' @description
 #' \lifecycle{experimental}
 #' Produce a vis_dat plot for ipeds data split by year with optional sampling.
+#'
+#' Note that parallel processing is built in if a `future::plan()` is set
 #' @importFrom magrittr "%>%"
 #' @param ... bare, unquoted column(s) to use as the index to group by. Alternatively will accept a grouped df.
 #' @param .sample_frac Percent of observations to sample from each year.  Default "auto" samples down to 100,000 rows, split evenly between groups for vis_dat. For vis_miss and vis_value, "auto" uses all data.
@@ -62,7 +64,7 @@ si_visdat_grouped <- function(.data, ..., method = "vis_dat", .sample_frac = "au
   #Methods for each visdat graph
   if(method == "dat") {
     plist <- .data %>%
-      purrr::map(function(...) {
+      furrr::future_map(function(...) {
         .data <- as_tibble(...)
 
         group_name <- .data %>% dplyr::distinct(group_name) %>% pull(group_name)
@@ -87,7 +89,7 @@ si_visdat_grouped <- function(.data, ..., method = "vis_dat", .sample_frac = "au
 
   if(method == "val") {
     plist <- .data %>%
-      purrr::map(function(...) {
+      furrr::future_map(function(...) {
         .data <- as_tibble(...)
 
         group_name <- .data %>% dplyr::distinct(group_name) %>% pull(group_name)
@@ -111,7 +113,7 @@ si_visdat_grouped <- function(.data, ..., method = "vis_dat", .sample_frac = "au
 
   if(method == "miss") {
     plist <- .data %>%
-      purrr::map(function(...) {
+      furrr::future_map(function(...) {
         .data <- as_tibble(...)
 
         group_name <- .data %>% dplyr::distinct(group_name) %>% pull(group_name)
