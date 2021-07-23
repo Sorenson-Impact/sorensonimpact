@@ -1,3 +1,7 @@
+#sorensonimpact 0.0.1.9061
+
+* Added `zscore()` as a convenience function wrapper around `scale()` that returns a vector instead of a matrix.
+
 # sorensonimpact 0.0.1.9060
 
 * Added `xview()` which opens a table in Excel.  

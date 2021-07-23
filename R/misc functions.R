@@ -389,3 +389,22 @@ get_os <- function(){
   }
   tolower(os)
 }
+
+#' @title Convenience wrapper for scale that returns a vector instead of a matrix / array
+#' @name zscore
+#' @description Wrapper for scale() that returns a vector.
+#' @return A vector of scaled values.
+#'
+#' @param .data numeric vector of values to be scaled
+#' @param center either a logical value or numeric-alike vector of length equal to the number of columns of x, where ‘numeric-alike’ means that as.numeric(.) will be applied successfully if is.numeric(.) is not true.
+#' @param scale either a logical value or a numeric-alike vector of length equal to the number of columns of x.
+#'
+#' @examples
+#' # 1:20 %>% zscore()
+#' #
+#' # zscore(1:20)
+
+#' @export
+zscore <- function(.data, center = TRUE, scale = TRUE) {
+  scale(.data, center = center, scale = scale)[,1]
+}
