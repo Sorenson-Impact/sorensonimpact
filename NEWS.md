@@ -1,4 +1,4 @@
-# sorensonimpact 0.0.1.9063
+# sorensonimpact 0.0.1.9064
 
 * Added `zscore()` as a convenience function wrapper around `scale()` that returns a vector instead of a matrix.
 
