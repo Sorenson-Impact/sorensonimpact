@@ -8,7 +8,7 @@ Authors@R: c(
 Maintainer: Jonathan Zadra <jonathan.zadra@sorensonimpact.com>
 Description: Package with custom functions and settings used internally by the Sorenson Impact Data Science Team.
 StagedInstall: no
-License: GPL-3
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.3.0)
